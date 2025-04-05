@@ -1,41 +1,46 @@
 package backend.stocks.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import backend.stocks.CustomEnums.AccountType;
+import jakarta.persistence.*;
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
-public class Investor {
+@Table(name = "investors")
+public class Investors {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "Name is required")
     private String name;
     @NotBlank(message = "Name is required")
-    @Min(3)
+    @Size(min=3)
     private String password;
     @NotBlank(message = "Mail is required")
     private String email;
+    @NotNull
+    @Min(18)
+    private int age;
     @NotBlank(message = "Phone number is required")
     private String phone;
     @NotBlank(message = "Address is required")
     private String address;
+    @Enumerated(EnumType.STRING)
     @NotBlank(message = "Account need to be Investor or Trader")
-    private String accountType;
+    private AccountType accountType;
     @NotNull
     private Boolean isInvestorAccountEnable;
 
     // Work with Portfolio
 
-    public Investor() {}
-
-    public Investor(String name, String password, String email, String phone, String address, String accountType, Boolean isInvestorAccountEnable) {
+    public Investors() {}
+    public Investors(String name, String password, String email, String phone, String address, AccountType accountType, Boolean isInvestorAccountEnable, int age) {
         this.name = name;
         this.password = password;
+        this.age = age;
         this.email = email;
         this.phone = phone;
         this.address = address;
@@ -51,6 +56,16 @@ public class Investor {
         this.id = id;
     }
 
+    @NotNull
+    @Min(18)
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(@NotNull @Min(18) int age) {
+        this.age = age;
+    }
+
     public @NotBlank(message = "Name is required") String getName() {
         return name;
     }
@@ -59,11 +74,11 @@ public class Investor {
         this.name = name;
     }
 
-    public @NotBlank(message = "Name is required") @Min(3) String getPassword() {
+    public @NotBlank(message = "Name is required") @Size(min = 3) String getPassword() {
         return password;
     }
 
-    public void setPassword(@NotBlank(message = "Name is required") @Min(3) String password) {
+    public void setPassword(@NotBlank(message = "Name is required") @Size(min = 3) String password) {
         this.password = password;
     }
 
@@ -91,11 +106,11 @@ public class Investor {
         this.address = address;
     }
 
-    public @NotBlank(message = "Account need to be Investor or Trader") String getAccountType() {
+    public @NotBlank(message = "Account need to be Investor or Trader") AccountType getAccountType() {
         return accountType;
     }
 
-    public void setAccountType(@NotBlank(message = "Account need to be Investor or Trader") String accountType) {
+    public void setAccountType(@NotBlank(message = "Account need to be Investor or Trader") AccountType accountType) {
         this.accountType = accountType;
     }
 

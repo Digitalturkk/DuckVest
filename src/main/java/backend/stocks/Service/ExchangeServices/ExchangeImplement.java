@@ -1,4 +1,4 @@
-package backend.stocks.Service;
+package backend.stocks.Service.ExchangeServices;
 
 import backend.stocks.Models.StockExchange;
 import backend.stocks.Repositories.ExchangeRepo;

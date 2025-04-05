@@ -1,7 +1,7 @@
 package backend.stocks.Controllers;
 
 import backend.stocks.Models.StockExchange;
-import backend.stocks.Service.ExchangeService;
+import backend.stocks.Service.ExchangeServices.ExchangeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

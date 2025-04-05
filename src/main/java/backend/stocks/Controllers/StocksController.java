@@ -26,7 +26,7 @@ public class StocksController {
 
     @PostMapping("/add")
     public void addStocks(@RequestBody Stocks stocks) {
-        stockService.addStocks(stocks);
+        stockService.saveStocks(stocks);
     }
 
     @DeleteMapping("/delete/{id}")

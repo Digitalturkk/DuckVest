@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface OrderService {
     void saveOrders(Orders order);
-    void deleteOrders(Orders order);
-    Orders getOrder(Long id);
+    void deleteOrder(Long id);
+    void deleteAllOrders();
+    Orders getOrderByID(Long id);
     List<Orders> getOrders();
 }

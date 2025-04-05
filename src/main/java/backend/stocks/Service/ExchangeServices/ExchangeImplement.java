@@ -14,7 +14,7 @@ public class ExchangeImplement implements ExchangeService {
     ExchangeRepo exchangeRepo;
 
     @Override
-    public void addExchange(StockExchange stockExchange) {
+    public void saveExchange(StockExchange stockExchange) {
         exchangeRepo.save(stockExchange);
     }
 

@@ -21,7 +21,7 @@ public class ExchangeController {
 
     @PostMapping("/add")
     public String addExchange(@RequestBody StockExchange stockExchange) {
-        exchangeService.addExchange(stockExchange);
+        exchangeService.saveExchange(stockExchange);
         return "Exchange added successfully";
     }
 

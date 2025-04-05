@@ -37,6 +37,7 @@ public class Investors {
     // Work with Portfolio
 
     public Investors() {}
+
     public Investors(String name, String password, String email, String phone, String address, AccountType accountType, Boolean isInvestorAccountEnable, int age) {
         this.name = name;
         this.password = password;

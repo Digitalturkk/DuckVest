@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class InverstorService implements InvestorService {
+public class InverstorImplement implements InvestorService {
 
     @Autowired
     InvestorsRepo investorsRepo;

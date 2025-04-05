@@ -14,7 +14,7 @@ public class StocksImplement implements StockService {
     StocksRepo stocksRepo;
 
     @Override
-    public void addStocks(Stocks stock) {
+    public void saveStocks(Stocks stock) {
         stocksRepo.save(stock);
     }
 

@@ -19,7 +19,7 @@ public class Stocks {
     @JoinColumn(name = "stock_exchange_id", referencedColumnName = "id")
     private StockExchange stockExchange;
     @Column(name = "price")
-    private int price;
+    private Double price;
     @Column(name = "ask")
     private int ask;
     @Column(name = "bid")
@@ -28,7 +28,7 @@ public class Stocks {
     public Stocks() {
     }
 
-    public Stocks(Long id, String companyName, String currency, String industry, StockExchange stockExchange, int ask, int price, int bid) {
+    public Stocks(Long id, String companyName, String currency, String industry, StockExchange stockExchange, int ask, Double price, int bid) {
         this.id = id;
         this.companyName = companyName;
         this.currency = currency;
@@ -64,11 +64,11 @@ public class Stocks {
         this.ask = ask;
     }
 
-    public int getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

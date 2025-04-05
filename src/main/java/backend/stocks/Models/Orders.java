@@ -1,5 +1,6 @@
 package backend.stocks.Models;
 
+import backend.stocks.CustomEnums.OrderStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -21,8 +22,9 @@ public class Orders {
     private Stocks stocks;
     @NotNull
     private Double quantity;
-    @NotNull
-    private Double stockPrice;
+    @OneToOne
+    @JoinColumn(name = "bid")
+    private Stocks stockPrice;
     @NotNull
     private Double brokerFee;
     @NotNull
@@ -32,15 +34,23 @@ public class Orders {
 
     private String executionType; // Will be null if isThereExecution gets false
     @NotBlank
-    private String orderStatus;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
     @NotNull
     private String orderMessage;
     @NotNull
     private Date date;
 
+    public String executionType() {
+        if (this.isThereExecution = false) {
+            return this.executionType = null;
+        }
+        return this.executionType;
+    }
+
     public Orders() {}
 
-    public Orders(Long id, String orderType, Investors investor, Stocks stocks, Double quantity, Double stockPrice, Double brokerFee, Double totalPrice, Boolean isThereExecution, String executionType, String orderStatus, String orderMessage, Date date) {
+    public Orders(Long id, String orderType, Investors investor, Stocks stocks, Double quantity, Stocks stockPrice, Double brokerFee, Double totalPrice, Boolean isThereExecution, String executionType, OrderStatus orderStatus, String orderMessage, Date date) {
         this.id = id;
         this.orderType = orderType;
         this.investor = investor;
@@ -96,11 +106,11 @@ public class Orders {
         this.quantity = quantity;
     }
 
-    public @NotNull Double getStockPrice() {
+    public @NotNull Stocks getStockPrice() {
         return stockPrice;
     }
 
-    public void setStockPrice(@NotNull Double stockPrice) {
+    public void setStockPrice(@NotNull Stocks stockPrice) {
         this.stockPrice = stockPrice;
     }
 
@@ -136,11 +146,11 @@ public class Orders {
         this.executionType = executionType;
     }
 
-    public @NotBlank String getOrderStatus() {
+    public @NotBlank OrderStatus getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(@NotBlank String orderStatus) {
+    public void setOrderStatus(@NotBlank OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
     }
 

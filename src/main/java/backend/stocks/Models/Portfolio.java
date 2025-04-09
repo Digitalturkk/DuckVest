@@ -17,6 +17,7 @@ public class Portfolio {
     private int reservedBalance;
     private int availableBalance;
     private Instant lastUpdate = Instant.now();
+    private List<Stocks> stocks;
 
     public int totalBalance(List<Stocks> Stocks) {
         this.totalBalance = 0;

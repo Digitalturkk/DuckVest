@@ -17,28 +17,85 @@ public class Portfolio {
     private int reservedBalance;
     private int availableBalance;
     private Instant lastUpdate = Instant.now();
-    private List<Stocks> stocks;
+    @OneToMany
+    private List<Stocks> stocksList;
+    @OneToMany
+    private List<Orders> ordersList;
 
-    public int totalBalance(List<Stocks> Stocks) {
-        this.totalBalance = 0;
-        for (Stocks s : Stocks) {
-            this.totalBalance += s.getBid();
-        }
-        this.totalBalance += this.availableBalance;
-        return this.totalBalance;
+    public Portfolio(Long portfolioId, Investors investor, int totalBalance, int reservedBalance, int availableBalance, Instant lastUpdate, List<Stocks> stocksList, List<Orders> ordersList) {
+        this.portfolioId = portfolioId;
+        this.investor = investor;
+        this.totalBalance = totalBalance;
+        this.reservedBalance = reservedBalance;
+        this.availableBalance = availableBalance;
+        this.lastUpdate = lastUpdate;
+        this.stocksList = stocksList;
+        this.ordersList = ordersList;
     }
 
-    public int reservedBalance(List<Orders> OrdersList) {
-        this.reservedBalance = 0;
-        for (Orders r : OrdersList) {
-            if (r.getOrderStatus().equals("IN_PROGRESS")) {
-                Double quantity = r.getQuantity();
-                Stocks stockPrice = r.getStockPrice();
-                this.reservedBalance += quantity * stockPrice.getBid();
-            }
-        }
-        return this.reservedBalance;
+    public Portfolio() {}
+
+    public Long getPortfolioId() {
+        return portfolioId;
     }
 
+    public void setPortfolioId(Long portfolioId) {
+        this.portfolioId = portfolioId;
+    }
 
+    public Investors getInvestor() {
+        return investor;
+    }
+
+    public void setInvestor(Investors investor) {
+        this.investor = investor;
+    }
+
+    public int getTotalBalance() {
+        return totalBalance;
+    }
+
+    public void setTotalBalance(int totalBalance) {
+        this.totalBalance = totalBalance;
+    }
+
+    public int getReservedBalance() {
+        return reservedBalance;
+    }
+
+    public void setReservedBalance(int reservedBalance) {
+        this.reservedBalance = reservedBalance;
+    }
+
+    public int getAvailableBalance() {
+        return availableBalance;
+    }
+
+    public void setAvailableBalance(int availableBalance) {
+        this.availableBalance = availableBalance;
+    }
+
+    public Instant getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Instant lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public List<Stocks> getStocksList() {
+        return stocksList;
+    }
+
+    public void setStocksList(List<Stocks> stocksList) {
+        this.stocksList = stocksList;
+    }
+
+    public List<Orders> getOrdersList() {
+        return ordersList;
+    }
+
+    public void setOrdersList(List<Orders> ordersList) {
+        this.ordersList = ordersList;
+    }
 }

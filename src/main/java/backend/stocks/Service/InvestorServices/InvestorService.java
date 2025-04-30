@@ -1,15 +1,15 @@
 package backend.stocks.Service.InvestorServices;
 
 import backend.stocks.CustomEnums.AccountType;
-import backend.stocks.Models.Investors;
+import backend.stocks.Models.Investor;
 
 import java.util.List;
 
 public interface InvestorService {
-    void saveInvestor(Investors investor);
+    void saveInvestor(Investor investor);
     void deleteInvestor(Long id);
-    Investors getInvestor(Long id);
-    List<Investors> getAllInvestors();
+    Investor getInvestor(Long id);
+    List<Investor> getAllInvestors();
     void enableInvestorAccount(Long id);
     void disableInvestorAccount(Long id);
     void changeAccountType(Long id, AccountType type);

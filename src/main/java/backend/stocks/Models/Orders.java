@@ -17,13 +17,13 @@ public class Orders {
     private String orderType;
     @ManyToOne
     @NotNull
-    private Investors investor;
+    private Investor investor;
     @OneToOne
     private Stocks stocks;
     @NotNull
     private Double quantity;
     @OneToOne
-    @JoinColumn(name = "bid")
+    @JoinColumn(name = "stock_price_id")
     private Stocks stockPrice;
     @NotNull
     private Double brokerFee;
@@ -33,24 +33,23 @@ public class Orders {
     private Boolean isThereExecution;
 
     private String executionType; // Will be null if isThereExecution gets false
-    @NotBlank
+    @NotNull
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
     @NotNull
     private String orderMessage;
     @NotNull
     private Date date;
+    @ManyToOne
+    @JoinColumn(name = "portfolio_id")
+    private Portfolio portfolio;
 
-    public String executionType() {
-        if (this.isThereExecution = false) {
-            return this.executionType = null;
-        }
-        return this.executionType;
+    public String getExecutionTypeChecked() {
+        return Boolean.FALSE.equals(isThereExecution) ? null : executionType;
     }
-
     public Orders() {}
 
-    public Orders(Long id, String orderType, Investors investor, Stocks stocks, Double quantity, Stocks stockPrice, Double brokerFee, Double totalPrice, Boolean isThereExecution, String executionType, OrderStatus orderStatus, String orderMessage, Date date) {
+    public Orders(Long id, String orderType, Investor investor, Stocks stocks, Double quantity, Stocks stockPrice, Double brokerFee, Double totalPrice, Boolean isThereExecution, String executionType, OrderStatus orderStatus, String orderMessage, Date date, Portfolio portfolio) {
         this.id = id;
         this.orderType = orderType;
         this.investor = investor;
@@ -64,6 +63,7 @@ public class Orders {
         this.orderStatus = orderStatus;
         this.orderMessage = orderMessage;
         this.date = date;
+        this.portfolio = portfolio;
     }
 
     public Long getId() {
@@ -82,11 +82,11 @@ public class Orders {
         this.orderType = orderType;
     }
 
-    public @NotNull Investors getInvestor() {
+    public @NotNull Investor getInvestor() {
         return investor;
     }
 
-    public void setInvestor(@NotNull Investors investor) {
+    public void setInvestor(@NotNull Investor investor) {
         this.investor = investor;
     }
 
@@ -146,11 +146,11 @@ public class Orders {
         this.executionType = executionType;
     }
 
-    public @NotBlank OrderStatus getOrderStatus() {
+    public @NotNull OrderStatus getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(@NotBlank OrderStatus orderStatus) {
+    public void setOrderStatus(@NotNull OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
     }
 
@@ -168,5 +168,13 @@ public class Orders {
 
     public void setDate(@NotNull Date date) {
         this.date = date;
+    }
+
+    public Portfolio getPortfolio() {
+        return portfolio;
+    }
+
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
     }
 }

@@ -21,14 +21,17 @@ public class Stocks {
     @Column(name = "price")
     private Double price;
     @Column(name = "ask")
-    private int ask;
+    private Double ask;
     @Column(name = "bid")
-    private int bid;
+    private Double bid;
+    @ManyToOne
+    @JoinColumn(name = "portfolio_id")
+    private Portfolio portfolio;
 
     public Stocks() {
     }
 
-    public Stocks(Long id, String companyName, String currency, String industry, StockExchange stockExchange, int ask, Double price, int bid) {
+    public Stocks(Long id, String companyName, String currency, String industry, StockExchange stockExchange, Double ask, Double price, Double bid, Portfolio portfolio) {
         this.id = id;
         this.companyName = companyName;
         this.currency = currency;
@@ -37,6 +40,7 @@ public class Stocks {
         this.ask = ask;
         this.price = price;
         this.bid = bid;
+        this.portfolio = portfolio;
     }
 
 
@@ -48,19 +52,19 @@ public class Stocks {
         this.id = id;
     }
 
-    public int getBid() {
+    public Double getBid() {
         return bid;
     }
 
-    public void setBid(int bid) {
+    public void setBid(Double bid) {
         this.bid = bid;
     }
 
-    public int getAsk() {
+    public Double getAsk() {
         return ask;
     }
 
-    public void setAsk(int ask) {
+    public void setAsk(Double ask) {
         this.ask = ask;
     }
 
@@ -102,5 +106,13 @@ public class Stocks {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public Portfolio getPortfolio() {
+        return portfolio;
+    }
+
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
     }
 }

@@ -1,7 +1,7 @@
 package backend.stocks.Repositories;
 
-import backend.stocks.Models.Investors;
+import backend.stocks.Models.Investor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface InvestorsRepo extends JpaRepository<Investors, Long> {
+public interface InvestorsRepo extends JpaRepository<Investor, Long> {
 }

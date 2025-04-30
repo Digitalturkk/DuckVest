@@ -27,36 +27,40 @@ public class PortfolioImplement implements PortfolioService {
         portfolioRepo.save(portfolio);
     }
 
-    public int getTotalBalance(Long id) {
+    public Double getTotalBalance(Long id) {
         Portfolio workingPortfolio = portfolioRepo.findById(id).get();
-        workingPortfolio.setTotalBalance(0);
 
         List<Stocks> portfolioStocks = workingPortfolio.getStocksList();
-        int totalBalance = 0;
+        double totalBalance = 0.0;
 
         for (Stocks s : portfolioStocks) { // Geting all stocks' bid price, then + available balance on account
             totalBalance += s.getBid();
         }
         totalBalance += workingPortfolio.getAvailableBalance();
         workingPortfolio.setTotalBalance(totalBalance);
+
+        portfolioRepo.save(workingPortfolio);
+
         return totalBalance;
     }
 
-    public int getReservedBalance(Long id) {
+    public Double getReservedBalance(Long id) {
         Portfolio workingPortfolio = portfolioRepo.findById(id).get();
-        workingPortfolio.setReservedBalance(0);
 
         List<Orders> portfolioOrders = workingPortfolio.getOrdersList();
-        int reservedBalance = 0;
+        double reservedBalance = 0.0;
 
         for (Orders r : portfolioOrders) {
-            if (r.getOrderStatus().equals("IN_PROGRESS")) { // multiplying stock's quantity to its price
+            if ("IN_PROGRESS".equals(r.getOrderStatus())) { // multiplying stock's quantity to its price
                 Double quantity = r.getQuantity();
                 Stocks stockPrice = r.getStockPrice();
                 reservedBalance += quantity * stockPrice.getBid();
             }
         }
         workingPortfolio.setReservedBalance(reservedBalance);
+
+        portfolioRepo.save(workingPortfolio);
+
         return reservedBalance;
     }
 }

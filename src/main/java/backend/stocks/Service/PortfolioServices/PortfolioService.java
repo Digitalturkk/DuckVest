@@ -8,6 +8,6 @@ public interface PortfolioService {
     List<Portfolio> getAllPortfolios();
     Portfolio getPortfolioById(Long id);
     void savePortfolio(Portfolio portfolio);
-    int getTotalBalance(Long id);
-    int getReservedBalance(Long id);
+    Double getTotalBalance(Long id);
+    Double getReservedBalance(Long id);
 }

@@ -11,18 +11,21 @@ public class Portfolio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long portfolioId;
-    @OneToOne
-    private Investors investor;
-    private int totalBalance;
-    private int reservedBalance;
-    private int availableBalance;
-    private Instant lastUpdate = Instant.now();
-    @OneToMany
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Investor investor;
+
+    private Double totalBalance;
+    private Double reservedBalance;
+    private Double availableBalance;
+    private Instant lastUpdate;
+
+    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL)
     private List<Stocks> stocksList;
-    @OneToMany
+    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL)
     private List<Orders> ordersList;
 
-    public Portfolio(Long portfolioId, Investors investor, int totalBalance, int reservedBalance, int availableBalance, Instant lastUpdate, List<Stocks> stocksList, List<Orders> ordersList) {
+    public Portfolio(Long portfolioId, Investor investor, Double totalBalance, Double reservedBalance, Double availableBalance, Instant lastUpdate, List<Stocks> stocksList, List<Orders> ordersList) {
         this.portfolioId = portfolioId;
         this.investor = investor;
         this.totalBalance = totalBalance;
@@ -35,6 +38,12 @@ public class Portfolio {
 
     public Portfolio() {}
 
+    @PrePersist
+    @PreUpdate
+    public void updateTimestamp() {
+        this.lastUpdate = Instant.now();
+    }
+
     public Long getPortfolioId() {
         return portfolioId;
     }
@@ -43,35 +52,35 @@ public class Portfolio {
         this.portfolioId = portfolioId;
     }
 
-    public Investors getInvestor() {
+    public Investor getInvestor() {
         return investor;
     }
 
-    public void setInvestor(Investors investor) {
+    public void setInvestor(Investor investor) {
         this.investor = investor;
     }
 
-    public int getTotalBalance() {
+    public Double getTotalBalance() {
         return totalBalance;
     }
 
-    public void setTotalBalance(int totalBalance) {
+    public void setTotalBalance(Double totalBalance) {
         this.totalBalance = totalBalance;
     }
 
-    public int getReservedBalance() {
+    public Double getReservedBalance() {
         return reservedBalance;
     }
 
-    public void setReservedBalance(int reservedBalance) {
+    public void setReservedBalance(Double reservedBalance) {
         this.reservedBalance = reservedBalance;
     }
 
-    public int getAvailableBalance() {
+    public Double getAvailableBalance() {
         return availableBalance;
     }
 
-    public void setAvailableBalance(int availableBalance) {
+    public void setAvailableBalance(Double availableBalance) {
         this.availableBalance = availableBalance;
     }
 

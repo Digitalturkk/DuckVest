@@ -1,6 +1,6 @@
 package backend.stocks.Controllers;
 
-import backend.stocks.Models.Investors;
+import backend.stocks.Models.Investor;
 import backend.stocks.Service.InvestorServices.InvestorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,17 +15,17 @@ public class InvestorController {
     InvestorService investorService;
 
     @GetMapping("/get-all")
-    public List<Investors> getAllInvestors() {
+    public List<Investor> getAllInvestors() {
         return investorService.getAllInvestors();
     }
 
     @GetMapping("/get-id={id}")
-    public Investors getInvestorById(@PathVariable Long id) {
+    public Investor getInvestorById(@PathVariable Long id) {
         return investorService.getInvestor(id);
     }
 
     @PostMapping("/add")
-    public void addInvestor(@RequestBody Investors investor) {
+    public void addInvestor(@RequestBody Investor investor) {
         investorService.saveInvestor(investor);
     }
 

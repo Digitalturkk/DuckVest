@@ -8,9 +8,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.List;
+
 @Entity
 @Table(name = "investors")
-public class Investors {
+public class Investor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,6 +22,7 @@ public class Investors {
     @Size(min=3)
     private String password;
     @NotBlank(message = "Mail is required")
+    @Column(unique = true)
     private String email;
     @NotNull
     @Min(18)
@@ -29,16 +32,20 @@ public class Investors {
     @NotBlank(message = "Address is required")
     private String address;
     @Enumerated(EnumType.STRING)
-    @NotBlank(message = "Account need to be Investor or Trader")
+    @NotNull(message = "Account need to be Investor or Trader")
     private AccountType accountType;
     @NotNull
     private Boolean isInvestorAccountEnable;
 
+    @OneToMany(mappedBy = "investor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Portfolio> portfolios;
+
+
     // Work with Portfolio
 
-    public Investors() {}
+    public Investor() {}
 
-    public Investors(String name, String password, String email, String phone, String address, AccountType accountType, Boolean isInvestorAccountEnable, int age) {
+    public Investor(String name, String password, String email, String phone, String address, AccountType accountType, Boolean isInvestorAccountEnable, int age, List<Portfolio> portfolios) {
         this.name = name;
         this.password = password;
         this.age = age;
@@ -47,6 +54,7 @@ public class Investors {
         this.address = address;
         this.accountType = accountType;
         this.isInvestorAccountEnable = isInvestorAccountEnable;
+        this.portfolios = portfolios;
     }
 
     public Long getId() {
@@ -121,5 +129,13 @@ public class Investors {
 
     public void setInvestorAccountEnable(@NotNull Boolean investorAccountEnable) {
         isInvestorAccountEnable = investorAccountEnable;
+    }
+
+    public List<Portfolio> getPortfolios() {
+        return portfolios;
+    }
+
+    public void setPortfolios(List<Portfolio> portfolios) {
+        this.portfolios = portfolios;
     }
 }

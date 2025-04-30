@@ -22,7 +22,7 @@ public class StockExchange {
     public StockExchange() {
     }
 
-    public StockExchange(Long id, String name, String city, String country, List<Stocks> stocks) {
+    public StockExchange(Long id, String name, String city, String country) {
         this.id = id;
         this.name = name;
         this.city = city;

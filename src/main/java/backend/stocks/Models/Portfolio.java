@@ -12,7 +12,7 @@ public class Portfolio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long portfolioId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Investor investor;
 
     private Double totalBalance;
@@ -20,7 +20,7 @@ public class Portfolio {
     private Double availableBalance;
     private Instant lastUpdate;
 
-    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "portfolio")
     private List<Stocks> stocksList;
     @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL)
     private List<Orders> ordersList;

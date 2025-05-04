@@ -1,6 +1,7 @@
 package backend.stocks.Models;
 
 import backend.stocks.CustomEnums.OrderStatus;
+import backend.stocks.CustomEnums.OrderType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,8 +14,8 @@ public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "Choose order type")
-    private String orderType;
+    @NotNull(message = "Choose order type")
+    private OrderType orderType;
     @ManyToOne
     @NotNull
     private Investor investor;
@@ -49,7 +50,7 @@ public class Orders {
     }
     public Orders() {}
 
-    public Orders(Long id, String orderType, Investor investor, Stocks stocks, Double quantity, Stocks stockPrice, Double brokerFee, Double totalPrice, Boolean isThereExecution, String executionType, OrderStatus orderStatus, String orderMessage, Date date, Portfolio portfolio) {
+    public Orders(Long id, OrderType orderType, Investor investor, Stocks stocks, Double quantity, Stocks stockPrice, Double brokerFee, Double totalPrice, Boolean isThereExecution, String executionType, OrderStatus orderStatus, String orderMessage, Date date, Portfolio portfolio) {
         this.id = id;
         this.orderType = orderType;
         this.investor = investor;
@@ -74,11 +75,11 @@ public class Orders {
         this.id = id;
     }
 
-    public @NotBlank(message = "Choose order type") String getOrderType() {
+    public @NotNull(message = "Choose order type") OrderType getOrderType() {
         return orderType;
     }
 
-    public void setOrderType(@NotBlank(message = "Choose order type") String orderType) {
+    public void setOrderType(@NotNull(message = "Choose order type") OrderType orderType) {
         this.orderType = orderType;
     }
 

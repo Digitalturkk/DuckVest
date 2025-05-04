@@ -15,6 +15,7 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull(message = "Choose order type")
+    @Enumerated(EnumType.STRING)
     private OrderType orderType;
     @ManyToOne
     @NotNull
@@ -48,6 +49,7 @@ public class Orders {
     public String getExecutionTypeChecked() {
         return Boolean.FALSE.equals(isThereExecution) ? null : executionType;
     }
+
     public Orders() {}
 
     public Orders(Long id, OrderType orderType, Investor investor, Stocks stocks, Double quantity, Stocks stockPrice, Double brokerFee, Double totalPrice, Boolean isThereExecution, String executionType, OrderStatus orderStatus, String orderMessage, Date date, Portfolio portfolio) {

@@ -25,7 +25,7 @@ public class Stocks {
     @Column(name = "bid")
     private Double bid;
     @ManyToOne
-    @JoinColumn(name = "portfolio_id")
+    @JoinColumn(name = "portfolio_id", referencedColumnName = "portfolioId")
     private Portfolio portfolio;
 
     public Stocks() {

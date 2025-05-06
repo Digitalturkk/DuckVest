@@ -1,7 +1,8 @@
 package backend.stocks.Controllers;
 
+import backend.stocks.DTOs.InvestorAccountDTO;
 import backend.stocks.Models.Investor;
-import backend.stocks.Service.InvestorServices.InvestorService;
+import backend.stocks.Services.InvestorServices.InvestorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,5 +33,12 @@ public class InvestorController {
     @DeleteMapping("/delete-id={id}")
     public void deleteInvestor(@PathVariable Long id) {
         investorService.deleteInvestor(id);
+    }
+
+    // Working with investor account (DTO)
+
+    @GetMapping("/get-account-information-id={investorId}-{portfolioId}")
+    public InvestorAccountDTO getInvestorAccountInformation(@PathVariable Long investorId, @PathVariable int portfolioId) {
+        return investorService.getInvestorAccountInformation(investorId, portfolioId);
     }
 }

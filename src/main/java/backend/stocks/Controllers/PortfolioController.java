@@ -1,7 +1,7 @@
 package backend.stocks.Controllers;
 
 import backend.stocks.Models.Portfolio;
-import backend.stocks.Service.PortfolioServices.PortfolioService;
+import backend.stocks.Services.PortfolioServices.PortfolioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

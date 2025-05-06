@@ -1,7 +1,7 @@
 package backend.stocks.Controllers;
 
 import backend.stocks.Models.Orders;
-import backend.stocks.Service.OrdersServices.OrderService;
+import backend.stocks.Services.OrdersServices.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

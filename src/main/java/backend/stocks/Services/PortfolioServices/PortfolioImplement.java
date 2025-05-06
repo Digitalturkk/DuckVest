@@ -1,4 +1,4 @@
-package backend.stocks.Service.PortfolioServices;
+package backend.stocks.Services.PortfolioServices;
 
 import backend.stocks.Models.Orders;
 import backend.stocks.Models.Portfolio;

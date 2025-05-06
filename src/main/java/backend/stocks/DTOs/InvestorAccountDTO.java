@@ -1,4 +1,4 @@
-package backend.stocks.DTO;
+package backend.stocks.DTOs;
 
 import backend.stocks.CustomEnums.AccountType;
 

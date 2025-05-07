@@ -123,11 +123,11 @@ public class Investor {
         this.accountType = accountType;
     }
 
-    public @NotNull Boolean getInvestorAccountEnable() {
+    public @NotNull Boolean getIsInvestorAccountEnable() {
         return isInvestorAccountEnable;
     }
 
-    public void setInvestorAccountEnable(@NotNull Boolean investorAccountEnable) {
+    public void setIsInvestorAccountEnable(@NotNull Boolean investorAccountEnable) {
         isInvestorAccountEnable = investorAccountEnable;
     }
 

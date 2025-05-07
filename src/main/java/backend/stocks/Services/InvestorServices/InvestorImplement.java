@@ -39,13 +39,13 @@ public class InvestorImplement implements InvestorService {
     @Override
     public void enableInvestorAccount(Long id) {
         Investor investor = investorsRepo.findById(id).get();
-        investor.setInvestorAccountEnable(true);
+        investor.setIsInvestorAccountEnable(true);
     }
 
     @Override
     public void disableInvestorAccount(Long id) {
         Investor investor = investorsRepo.findById(id).get();
-        investor.setInvestorAccountEnable(false);
+        investor.setIsInvestorAccountEnable(false);
     }
 
     @Override
@@ -72,6 +72,7 @@ public class InvestorImplement implements InvestorService {
         investorAccountDTO.setAccountType(investor.getAccountType());
         investorAccountDTO.setPortfolioBalance(portfolio.getTotalBalance());
         investorAccountDTO.setBuyingPower(portfolio.getAvailableBalance());
+        investorAccountDTO.setIsAccountActive(investor.getIsInvestorAccountEnable());
         return investorAccountDTO;
     }
 

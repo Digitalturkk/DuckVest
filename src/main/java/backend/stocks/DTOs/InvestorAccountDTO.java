@@ -9,14 +9,18 @@ public class InvestorAccountDTO {
     private AccountType AccountType;
     private Double PortfolioBalance;
     private Double BuyingPower;
+    private boolean isAccountActive;
 
-    public InvestorAccountDTO(String name, String email, String phone, AccountType accountType, Double portfolioBalance, Double buyingPower) {
+    // Make commit -m "Added active condition" (don't forget to work service and refill database)
+
+    public InvestorAccountDTO(String name, String email, String phone, AccountType accountType, Double portfolioBalance, Double buyingPower, boolean isAccountActive) {
         this.name = name;
         this.email = email;
         this.phone = phone;
-        AccountType = accountType;
-        PortfolioBalance = portfolioBalance;
-        BuyingPower = buyingPower;
+        this.AccountType = accountType;
+        this.PortfolioBalance = portfolioBalance;
+        this.BuyingPower = buyingPower;
+        this.isAccountActive = isAccountActive;
     }
 
     public InvestorAccountDTO() {
@@ -51,7 +55,7 @@ public class InvestorAccountDTO {
     }
 
     public void setAccountType(backend.stocks.CustomEnums.AccountType accountType) {
-        AccountType = accountType;
+        this.AccountType = accountType;
     }
 
     public Double getPortfolioBalance() {
@@ -59,7 +63,7 @@ public class InvestorAccountDTO {
     }
 
     public void setPortfolioBalance(Double portfolioBalance) {
-        PortfolioBalance = portfolioBalance;
+        this.PortfolioBalance = portfolioBalance;
     }
 
     public Double getBuyingPower() {
@@ -67,6 +71,14 @@ public class InvestorAccountDTO {
     }
 
     public void setBuyingPower(Double buyingPower) {
-        BuyingPower = buyingPower;
+        this.BuyingPower = buyingPower;
+    }
+
+    public boolean getIsAccountActive() {
+        return this.isAccountActive;
+    }
+
+    public void setIsAccountActive(boolean isAccountActive) {
+        this.isAccountActive = isAccountActive;
     }
 }

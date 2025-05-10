@@ -2,8 +2,6 @@ package backend.stocks.Models;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "stock_exchange")
 public class StockExchange {

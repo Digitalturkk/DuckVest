@@ -11,8 +11,6 @@ public class InvestorAccountDTO {
     private Double BuyingPower;
     private boolean isAccountActive;
 
-    // Make commit -m "Added active condition" (don't forget to work service and refill database)
-
     public InvestorAccountDTO(String name, String email, String phone, AccountType accountType, Double portfolioBalance, Double buyingPower, boolean isAccountActive) {
         this.name = name;
         this.email = email;

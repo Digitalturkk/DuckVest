@@ -1,12 +1,10 @@
 package com.DuckVest.Controllers;
 
+import com.DuckVest.DTOs.PortfolioDTO;
 import com.DuckVest.Models.Portfolio;
 import com.DuckVest.Services.PortfolioServices.PortfolioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,32 +21,37 @@ public class PortfolioController {
     }
 
     @GetMapping("/get-id={id}")
-    public Portfolio getPortfolioById(Long id) {
+    public Portfolio getPortfolioById(@PathVariable Long id) {
         return portfolioService.getPortfolioById(id);
     }
 
     @GetMapping("/get-total-balance={id}")
-    public Double getTotalBalance(Long id) {
+    public Double getTotalBalance(@PathVariable Long id) {
         return portfolioService.getTotalBalance(id);
     }
 
     @GetMapping("/get-reserved-balance={id}")
-    public Double getReservedBalance(Long id) {
+    public Double getReservedBalance(@PathVariable Long id) {
         return portfolioService.getReservedBalance(id);
     }
 
     @GetMapping("/get-available-balance={id}")
-    public Double getAvailableBalance(Long id) {
+    public Double getAvailableBalance(@PathVariable Long id) {
         return portfolioService.getTotalBalance(id) - portfolioService.getReservedBalance(id);
     }
 
     @GetMapping("/get-portfolio-value={id}")
-    public Double getPortfolioValue(Long id) {
+    public Double getPortfolioValue(@PathVariable Long id) {
         return portfolioService.getTotalBalance(id) + portfolioService.getReservedBalance(id);
     }
 
+    @GetMapping("/get-portfolio-info={portfolioId}&{investorId}")
+    public PortfolioDTO getPortfolioInformantion(@PathVariable Long portfolioId, @PathVariable Long investorId) {
+        return portfolioService.getPortfolioDTOById(portfolioId, investorId);
+    }
+
     @PostMapping("/add")
-    public void addPortfolio(Portfolio portfolio) {
+    public void addPortfolio(@RequestBody Portfolio portfolio) {
         portfolioService.savePortfolio(portfolio);
     }
 

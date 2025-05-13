@@ -2,12 +2,11 @@ package com.DuckVest.DTOs;
 
 import com.DuckVest.Models.Orders;
 import com.DuckVest.Models.Stocks;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.ManyToMany;
 
 import java.time.Instant;
 import java.util.List;
 
+// DTOs service is in com.DuckVest.Services.PortfolioService
 public class PortfolioDTO {
 
     private Long portfolioId;

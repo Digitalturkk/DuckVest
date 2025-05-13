@@ -1,5 +1,6 @@
 package com.DuckVest.Services.PortfolioServices;
 
+import com.DuckVest.DTOs.PortfolioDTO;
 import com.DuckVest.Models.Portfolio;
 
 import java.util.List;
@@ -10,4 +11,6 @@ public interface PortfolioService {
     void savePortfolio(Portfolio portfolio);
     Double getTotalBalance(Long id);
     Double getReservedBalance(Long id);
+
+    PortfolioDTO getPortfolioDTOById(Long portfolioId, Long investorId);
 }

@@ -16,10 +16,7 @@ public class PortfolioDTO {
     private Double reservedBalance;
     private Double availableBalance;
     private Instant lastUpdate;
-
-    @ManyToMany(mappedBy = "PortfolioDTO", cascade = CascadeType.PERSIST)
     private List<Stocks> stocksList;
-    @ManyToMany(mappedBy = "PortfolioDTO", cascade = CascadeType.PERSIST )
     private List<Orders> ordersList;
 
     public PortfolioDTO(Long portfolioId, String investorName, Double totalBalance, Double reservedBalance, Double availableBalance, Instant lastUpdate, List<Stocks> stocksList, List<Orders> ordersList) {
@@ -32,6 +29,7 @@ public class PortfolioDTO {
         this.stocksList = stocksList;
         this.ordersList = ordersList;
     }
+
     public PortfolioDTO() {
     }
 

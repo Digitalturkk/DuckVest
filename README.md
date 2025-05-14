@@ -40,16 +40,6 @@ Because a wise duck always invests smart. Be like the duck.
 git clone https://github.com/DigitalTurkk/DuckVest.git
 cd duckvest
 ```
-
----
-## 🧠 Architecture Overview
-```text
-[Controller] → [Service] → [Repository] → [PostgreSQL]
-                     ↓
-               [Scheduler Task]
-                     ↓
-               [Stock Exchange]
-```
 ## 📌 Possible Extensions
 
     ✅ Real-time stock price integration (e.g., Alpha Vantage, Yahoo Finance)

@@ -37,7 +37,7 @@ Because a wise duck always invests smart. Be like the duck.
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-name/duckvest.git
+git clone https://github.com/DigitalTurkk/DuckVest.git
 cd duckvest
 ```
 

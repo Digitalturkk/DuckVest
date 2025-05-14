@@ -27,6 +27,7 @@ public class Security {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
                 //.formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults());

@@ -9,4 +9,6 @@ public interface StockService {
      void deleteStocks(Long id);
      Stocks getStocks(Long id);
      List<Stocks> getAllStocks();
+
+     String buyStock(Long portfolioId, Long stockId, int quantity);
 }

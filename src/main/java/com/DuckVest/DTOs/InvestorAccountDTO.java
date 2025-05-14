@@ -2,7 +2,7 @@ package com.DuckVest.DTOs;
 
 import com.DuckVest.CustomEnums.AccountType;
 
-// DTOs service is in com.DuckVest.Services.InvestorAccountService
+// investorAccountDTOs service is in com.DuckVest.Services.InvestorAccountService
 public class InvestorAccountDTO {
     private String name;
     private String email;

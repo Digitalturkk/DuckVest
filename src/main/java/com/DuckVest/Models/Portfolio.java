@@ -3,6 +3,7 @@ package com.DuckVest.Models;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,11 +33,12 @@ public class Portfolio {
         this.reservedBalance = reservedBalance;
         this.availableBalance = availableBalance;
         this.lastUpdate = lastUpdate;
-        this.stocksList = stocksList;
-        this.ordersList = ordersList;
+        this.stocksList = new ArrayList<>();
+        this.ordersList = new ArrayList<>();
     }
 
-    public Portfolio() {}
+    public Portfolio() {
+    }
 
     @PrePersist
     @PreUpdate

@@ -33,4 +33,9 @@ public class StocksController {
     public void deleteStocks(@PathVariable Long id) {
         stockService.deleteStocks(id);
     }
+
+    @PostMapping("/buy-stk={stockId}-prtfl={portfolioId}-qnt={quantity}")
+    public String buyStock(@PathVariable Long portfolioId, @PathVariable Long stockId, @PathVariable int quantity) {
+        return stockService.buyStock(portfolioId, stockId, quantity);
+    }
 }

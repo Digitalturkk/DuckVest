@@ -21,7 +21,7 @@ public class Portfolio {
     private Double availableBalance;
     private Instant lastUpdate;
 
-    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Stocks> stocksList;
     @OneToMany(mappedBy = "portfolio", cascade = CascadeType.PERSIST )
     private List<Orders> ordersList;

@@ -3,8 +3,6 @@ package com.DuckVest.DTOs;
 import com.DuckVest.Models.Orders;
 import com.DuckVest.Models.Stocks;
 
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 // portfolioDTOs service is in com.DuckVest.Services.PortfolioService
@@ -15,10 +13,10 @@ public class PortfolioDTO {
     private Double totalBalance;
     private Double reservedBalance;
     private Double availableBalance;
-    private List<Stocks> stocksList;
+    private List<StockDTO> stocksList;
     private List<Orders> ordersList;
 
-    public PortfolioDTO(Long portfolioId, String investorName, Double totalBalance, Double reservedBalance, Double availableBalance, List<Stocks> stocksList, List<Orders> ordersList) {
+    public PortfolioDTO(Long portfolioId, String investorName, Double totalBalance, Double reservedBalance, Double availableBalance, List<StockDTO> stocksList, List<Orders> ordersList) {
         this.portfolioId = portfolioId;
         this.investorName = investorName;
         this.totalBalance = totalBalance;
@@ -39,11 +37,11 @@ public class PortfolioDTO {
         this.ordersList = ordersList;
     }
 
-    public List<Stocks> getStocksList() {
+    public List<StockDTO> getStocksList() {
         return stocksList;
     }
 
-    public void setStocksList(List<Stocks> stocksList) {
+    public void setStocksList(List<StockDTO> stocksList) {
         this.stocksList = stocksList;
     }
 

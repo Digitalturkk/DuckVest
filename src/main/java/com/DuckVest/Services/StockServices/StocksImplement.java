@@ -1,5 +1,6 @@
 package com.DuckVest.Services.StockServices;
 
+import com.DuckVest.DTOs.StockDTO;
 import com.DuckVest.Models.Portfolio;
 import com.DuckVest.Models.Stocks;
 import com.DuckVest.Repositories.StocksRepo;
@@ -38,17 +39,35 @@ public class StocksImplement implements StockService {
     }
 
     @Override
+    public StockDTO getStockDTO(Long id) {
+        Stocks stock = stocksRepo.findById(id).get();
+        StockDTO stockDTO = new StockDTO();
+        stockDTO.setStockID(stock.getId());
+        stockDTO.setCompanyName(stock.getCompanyName());
+        stockDTO.setStockExchange(stock.getStockExchange());
+        stockDTO.setCurrency(stock.getCurrency());
+        stockDTO.setPrice(stock.getPrice());
+        stockDTO.setAsk(stock.getAsk());
+        stockDTO.setBid(stock.getBid());
+        return stockDTO;
+    }
+
+    @Override
     public String buyStock(Long portfolioId, Long stockId, int quantity) {
         Stocks stock = stocksRepo.findById(stockId).get();
         Portfolio portfolio = portfolioService.getPortfolioById(portfolioId);
+
         List<Stocks> stocksList = portfolio.getStocksList();
-        if (portfolio.getTotalBalance() >= stock.getBid() * quantity) {
+
+        if (portfolio.getAvailableBalance() >= stock.getBid() * quantity) {
             portfolio.setAvailableBalance(portfolio.getAvailableBalance() - stock.getBid() * quantity);
             stocksList.add(stock);
+            System.out.println(stocksList);
             portfolio.setStocksList(stocksList);
-            portfolioService.getTotalBalance(portfolioId);
-            portfolioService.savePortfolio(portfolio);
-            String bill = "Stock: " + stock.getCompanyName() + "bought successfully! \n" + "Quantity: " + quantity + "\n" + "Total price: " + stock.getBid() * quantity + "\n" + "Available balance: " + portfolio.getAvailableBalance() + "\n";
+            portfolioService.getTotalBalance(portfolioId); // Updating total balance
+            portfolioService.updatePortfolio(portfolio);
+
+            String bill = "Stock: '" + stock.getCompanyName() + "' bought successfully! \n" + "Quantity: " + quantity + "\n" + "Total price: " + stock.getBid() * quantity + "\n" + "Available balance: " + portfolio.getAvailableBalance() + "\n";
             return bill;
         }
         else {

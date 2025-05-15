@@ -2,6 +2,8 @@ package com.DuckVest.Models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "stocks")
 public class Stocks {
@@ -24,14 +26,13 @@ public class Stocks {
     private Double ask;
     @Column(name = "bid")
     private Double bid;
-    @ManyToOne
-    @JoinColumn(name = "portfolio_id", referencedColumnName = "portfolioId")
-    private Portfolio portfolio;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Portfolio> portfolios;
 
     public Stocks() {
     }
 
-    public Stocks(Long id, String companyName, String currency, String industry, StockExchange stockExchange, Double ask, Double price, Double bid, Portfolio portfolio) {
+    public Stocks(Long id, String companyName, String currency, String industry, StockExchange stockExchange, Double ask, Double price, Double bid, List<Portfolio> portfolios) {
         this.id = id;
         this.companyName = companyName;
         this.currency = currency;
@@ -40,7 +41,7 @@ public class Stocks {
         this.ask = ask;
         this.price = price;
         this.bid = bid;
-        this.portfolio = portfolio;
+        this.portfolios = portfolios;
     }
 
 
@@ -108,11 +109,11 @@ public class Stocks {
         this.companyName = companyName;
     }
 
-    public Portfolio getPortfolio() {
-        return portfolio;
+    public List<Portfolio> getPortfolio() {
+        return portfolios;
     }
 
-    public void setPortfolio(Portfolio portfolio) {
-        this.portfolio = portfolio;
+    public void setPortfolio(List<Portfolio> portfolio) {
+        this.portfolios = portfolio;
     }
 }

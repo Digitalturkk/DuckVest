@@ -14,7 +14,7 @@ Because a wise duck always invests smart. Be like the duck.
 - 📈 Manage stocks ~and simulate stock price updates~
 - 🧑 Manage users and their account balances
 - 🏛️ Simulate multiple stock exchanges
-- 💸 Buy and sell stocks ~with automatic balance updates~
+- 💸 Buy and sell stocks with automatic balance updates
 - ⏱️ Scheduled tasks for periodic operations
 - 📡 REST API for all operations
 - 🛠️ Modular, layered architecture

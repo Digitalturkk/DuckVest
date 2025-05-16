@@ -3,8 +3,6 @@ package com.DuckVest.DTOs;
 import com.DuckVest.Models.StockExchange;
 
 // stockDTO's service is in
-// Change StockDTO in buyStock method in StocksImplement
-
 public class StockDTO {
     private Long stockID;
     private String companyName;

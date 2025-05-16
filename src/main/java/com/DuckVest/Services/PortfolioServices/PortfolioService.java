@@ -1,7 +1,6 @@
 package com.DuckVest.Services.PortfolioServices;
 
 import com.DuckVest.DTOs.PortfolioDTO;
-import com.DuckVest.DTOs.StockDTO;
 import com.DuckVest.Models.Portfolio;
 
 import java.util.List;

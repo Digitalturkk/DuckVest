@@ -1,5 +1,6 @@
 package com.DuckVest.Controllers;
 
+import com.DuckVest.DTOs.OrderDTO;
 import com.DuckVest.Models.Stocks;
 import com.DuckVest.Services.StockServices.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class StocksController {
 
     @GetMapping("/{id}")
     public Stocks getStocks(@PathVariable Long id) {
-        return stockService.getStocks(id);
+        return stockService.getStockById(id);
     }
 
     @PostMapping("/add")
@@ -34,8 +35,8 @@ public class StocksController {
         stockService.deleteStocks(id);
     }
 
-    @PostMapping("/buy-stk={stockId}-prtfl={portfolioId}-qnt={quantity}")
-    public String buyStock(@PathVariable Long portfolioId, @PathVariable Long stockId, @PathVariable int quantity) {
-        return stockService.buyStock(portfolioId, stockId, quantity);
+    @PostMapping("/buy-stk={stockId}-prtfl={portfolioId}-qnt={quantity}-fee={brokerFee}")
+    public OrderDTO buyStock(@PathVariable Long portfolioId, @PathVariable Long stockId, @PathVariable Double quantity, @PathVariable Double brokerFee) {
+        return stockService.buyStock(portfolioId, stockId, quantity, brokerFee);
     }
 }

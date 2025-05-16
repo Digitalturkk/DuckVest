@@ -76,8 +76,8 @@ public class PortfolioImplement implements PortfolioService {
         for (Orders r : portfolioOrders) {
             if ("IN_PROGRESS".equals(r.getOrderStatus())) { // multiplying stock's quantity to its price
                 Double quantity = r.getQuantity();
-                Stocks stockPrice = r.getStockPrice();
-                reservedBalance += quantity * stockPrice.getBid();
+                Double stockPrice = r.getStockPrice();
+                //reservedBalance += quantity * stockPrice.getBid();
             }
         }
         workingPortfolio.setReservedBalance(reservedBalance);

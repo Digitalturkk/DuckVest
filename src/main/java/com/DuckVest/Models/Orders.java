@@ -19,13 +19,14 @@ public class Orders {
     @ManyToOne
     @NotNull
     private Investor investor;
-    @OneToOne
-    private Stocks stocks;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "stock_id")
+    @NotNull
+    private Stocks stock;
     @NotNull
     private Double quantity;
-    @OneToOne
-    @JoinColumn(name = "stock_price_id")
-    private Stocks stockPrice;
+    @NotNull
+    private Double stockPrice;
     @NotNull
     private Double brokerFee;
     @NotNull
@@ -51,11 +52,11 @@ public class Orders {
 
     public Orders() {}
 
-    public Orders(Long id, OrderType orderType, Investor investor, Stocks stocks, Double quantity, Stocks stockPrice, Double brokerFee, Double totalPrice, Boolean isThereExecution, String executionType, OrderStatus orderStatus, String orderMessage, Date date, Portfolio portfolio) {
+    public Orders(Long id, OrderType orderType, Investor investor, Stocks stock, Double quantity, Double stockPrice, Double brokerFee, Double totalPrice, Boolean isThereExecution, String executionType, OrderStatus orderStatus, String orderMessage, Date date, Portfolio portfolio) {
         this.id = id;
         this.orderType = orderType;
         this.investor = investor;
-        this.stocks = stocks;
+        this.stock = stock;
         this.quantity = quantity;
         this.stockPrice = stockPrice;
         this.brokerFee = brokerFee;
@@ -92,12 +93,12 @@ public class Orders {
         this.investor = investor;
     }
 
-    public Stocks getStocks() {
-        return stocks;
+    public Stocks getStock() {
+        return stock;
     }
 
-    public void setStocks(Stocks stocks) {
-        this.stocks = stocks;
+    public void setStock(Stocks stock) {
+        this.stock = stock;
     }
 
     public @NotNull Double getQuantity() {
@@ -108,11 +109,11 @@ public class Orders {
         this.quantity = quantity;
     }
 
-    public @NotNull Stocks getStockPrice() {
+    public @NotNull Double getStockPrice() {
         return stockPrice;
     }
 
-    public void setStockPrice(@NotNull Stocks stockPrice) {
+    public void setStockPrice(@NotNull Double stockPrice) {
         this.stockPrice = stockPrice;
     }
 

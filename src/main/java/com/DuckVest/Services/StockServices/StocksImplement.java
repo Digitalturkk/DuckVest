@@ -1,13 +1,20 @@
 package com.DuckVest.Services.StockServices;
 
+import com.DuckVest.CustomEnums.OrderStatus;
+import com.DuckVest.CustomEnums.OrderType;
+import com.DuckVest.DTOs.OrderDTO;
 import com.DuckVest.DTOs.StockDTO;
+import com.DuckVest.Models.Orders;
 import com.DuckVest.Models.Portfolio;
 import com.DuckVest.Models.Stocks;
 import com.DuckVest.Repositories.StocksRepo;
+import com.DuckVest.Services.OrdersServices.OrderService;
 import com.DuckVest.Services.PortfolioServices.PortfolioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,6 +24,8 @@ public class StocksImplement implements StockService {
     StocksRepo stocksRepo;
     @Autowired
     PortfolioService portfolioService;
+    @Autowired
+    OrderService orderService;
 
     @Override
     public void saveStocks(Stocks stock) {
@@ -29,7 +38,7 @@ public class StocksImplement implements StockService {
     }
 
     @Override
-    public Stocks getStocks(Long id) {
+    public Stocks getStockById(Long id) {
         return stocksRepo.findById(id).get();
     }
 
@@ -53,7 +62,7 @@ public class StocksImplement implements StockService {
     }
 
     @Override
-    public String buyStock(Long portfolioId, Long stockId, int quantity) {
+    public OrderDTO buyStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee) {
         Stocks stock = stocksRepo.findById(stockId).get();
         Portfolio portfolio = portfolioService.getPortfolioById(portfolioId);
 
@@ -67,12 +76,48 @@ public class StocksImplement implements StockService {
             portfolioService.getTotalBalance(portfolioId); // Updating total balance
             portfolioService.updatePortfolio(portfolio);
 
-            String bill = "Stock: '" + stock.getCompanyName() + "' bought successfully! \n" + "Quantity: " + quantity + "\n" + "Total price: " + stock.getBid() * quantity + "\n" + "Available balance: " + portfolio.getAvailableBalance() + "\n";
-            return bill;
+            Long orderId = stock.getOrders().size() + 1L;
+
+            Orders order = new Orders();
+            order.setOrderMessage("Order completed successfully!");
+            order.setId(orderId);
+            order.setDate(Date.from(Instant.now()));
+            order.setOrderStatus(OrderStatus.COMPLETED);
+            order.setStockPrice(stock.getBid());
+            order.setQuantity(quantity);
+            order.setOrderType(OrderType.BUY);
+            order.setInvestor(portfolio.getInvestor());
+            order.setStock(stock);
+            order.setBrokerFee(brokerFee);
+            order.setTotalPrice(stock.getBid() * quantity + brokerFee);
+            order.setExecutionType("BUY");
+            order.setThereExecution(false);
+            order.setPortfolio(portfolio);
+            orderService.saveOrders(order);
+
+            return orderService.createOrderDTO(orderId, portfolio.getInvestor().getId(), stockId, portfolioId.intValue());
         }
         else {
-            String bill = "Not enough money on your account! \n" + "Available balance: " + portfolio.getAvailableBalance() + "\n" + "Stock price: " + stock.getBid() * quantity + "\n";
-            return bill;
+            Long orderId = stock.getOrders().size() + 1L;
+
+            Orders order = new Orders();
+            order.setOrderMessage("Order completed successfully!");
+            order.setId(orderId);
+            order.setDate(Date.from(Instant.now()));
+            order.setOrderStatus(OrderStatus.CANCELLED);
+            order.setStockPrice(stock.getBid());
+            order.setQuantity(quantity);
+            order.setOrderType(OrderType.BUY);
+            order.setInvestor(portfolio.getInvestor());
+            order.setStock(stock);
+            order.setBrokerFee(brokerFee);
+            order.setTotalPrice(stock.getBid() * quantity + brokerFee);
+            order.setExecutionType("BUY");
+            order.setThereExecution(true);
+            order.setPortfolio(portfolio);
+            orderService.saveOrders(order);
+
+            return orderService.createOrderDTO(orderId, portfolio.getInvestor().getId(), stockId, portfolioId.intValue());
         }
     }
 }

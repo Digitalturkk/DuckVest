@@ -48,7 +48,7 @@ public class StocksImplement implements StockService {
     }
 
     @Override
-    public StockDTO getStockDTO(Long id) {
+    public StockDTO createStockDTO(Long id) {
         Stocks stock = stocksRepo.findById(id).get();
         StockDTO stockDTO = new StockDTO();
         stockDTO.setStockID(stock.getId());
@@ -68,56 +68,42 @@ public class StocksImplement implements StockService {
 
         List<Stocks> stocksList = portfolio.getStocksList();
 
+        Orders order = new Orders();
+        order.setDate(Date.from(Instant.now()));
+        order.setStockPrice(stock.getBid());
+        order.setQuantity(quantity);
+        order.setOrderType(OrderType.BUY);
+        order.setInvestor(portfolio.getInvestor());
+        order.setStock(stock);
+        order.setBrokerFee(brokerFee);
+        order.setTotalPrice(stock.getBid() * quantity + brokerFee);
+        order.setExecutionType("BUY");
+
         if (portfolio.getAvailableBalance() >= stock.getBid() * quantity) {
             portfolio.setAvailableBalance(portfolio.getAvailableBalance() - stock.getBid() * quantity);
             stocksList.add(stock);
             System.out.println(stocksList);
             portfolio.setStocksList(stocksList);
+            portfolio.setReservedBalance(portfolio.getReservedBalance() + stock.getBid() * quantity);
+            portfolio.setAvailableBalance(portfolio.getAvailableBalance() - stock.getBid() * quantity - brokerFee);
+            portfolio.setTotalBalance(portfolio.getTotalBalance() - stock.getBid() * quantity - brokerFee);
             portfolioService.getTotalBalance(portfolioId); // Updating total balance
             portfolioService.updatePortfolio(portfolio);
 
-            Long orderId = stock.getOrders().size() + 1L;
-
-            Orders order = new Orders();
             order.setOrderMessage("Order completed successfully!");
-            order.setId(orderId);
-            order.setDate(Date.from(Instant.now()));
             order.setOrderStatus(OrderStatus.COMPLETED);
-            order.setStockPrice(stock.getBid());
-            order.setQuantity(quantity);
-            order.setOrderType(OrderType.BUY);
-            order.setInvestor(portfolio.getInvestor());
-            order.setStock(stock);
-            order.setBrokerFee(brokerFee);
-            order.setTotalPrice(stock.getBid() * quantity + brokerFee);
             order.setExecutionType("BUY");
             order.setThereExecution(false);
-            order.setPortfolio(portfolio);
-            orderService.saveOrders(order);
 
-            return orderService.createOrderDTO(orderId, portfolio.getInvestor().getId(), stockId, portfolioId.intValue());
         }
         else {
-            Long orderId = stock.getOrders().size() + 1L;
-
-            Orders order = new Orders();
-            order.setOrderMessage("Order completed successfully!");
-            order.setId(orderId);
-            order.setDate(Date.from(Instant.now()));
+            order.setOrderMessage("Not enough money on account!");
             order.setOrderStatus(OrderStatus.CANCELLED);
-            order.setStockPrice(stock.getBid());
-            order.setQuantity(quantity);
-            order.setOrderType(OrderType.BUY);
-            order.setInvestor(portfolio.getInvestor());
-            order.setStock(stock);
-            order.setBrokerFee(brokerFee);
-            order.setTotalPrice(stock.getBid() * quantity + brokerFee);
-            order.setExecutionType("BUY");
             order.setThereExecution(true);
-            order.setPortfolio(portfolio);
-            orderService.saveOrders(order);
-
-            return orderService.createOrderDTO(orderId, portfolio.getInvestor().getId(), stockId, portfolioId.intValue());
         }
+        order.setPortfolio(portfolio);
+        orderService.saveOrders(order);
+
+        return orderService.createOrderDTO(order.getId(), portfolio.getInvestor().getId(), stockId, portfolioId.intValue());
     }
 }

@@ -39,6 +39,6 @@ public class InvestorController {
 
     @GetMapping("/get-account-information-id={investorId}-{portfolioId}")
     public InvestorAccountDTO getInvestorAccountInformation(@PathVariable Long investorId, @PathVariable int portfolioId) {
-        return investorService.getInvestorAccountInformation(investorId, portfolioId);
+        return investorService.createInvestorDTO(investorId, portfolioId);
     }
 }

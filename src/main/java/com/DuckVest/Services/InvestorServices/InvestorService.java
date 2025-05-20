@@ -16,5 +16,5 @@ public interface InvestorService {
     void changeAccountType(Long id, AccountType type);
     void updateAge(Long id, Integer age);
 
-    InvestorAccountDTO getInvestorAccountInformation(Long id, int portfolioId); // We use int here because we have list of portfolios, so we need to get it by its index
+    InvestorAccountDTO createInvestorDTO(Long id, int portfolioId); // We use int here because we have list of portfolios, so we need to get it by its index
  }

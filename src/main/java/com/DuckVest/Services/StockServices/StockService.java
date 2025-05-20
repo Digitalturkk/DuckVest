@@ -11,7 +11,7 @@ public interface StockService {
      void deleteStocks(Long id);
      Stocks getStockById(Long id);
      List<Stocks> getAllStocks();
-     StockDTO getStockDTO(Long id);
+     StockDTO createStockDTO(Long id);
 
      OrderDTO buyStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee);
 }

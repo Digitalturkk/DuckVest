@@ -61,7 +61,7 @@ public class InvestorImplement implements InvestorService {
     }
 
     @Override
-    public InvestorAccountDTO getInvestorAccountInformation(Long id, int portfolioId) {
+    public InvestorAccountDTO createInvestorDTO(Long id, int portfolioId) {
         Investor investor = investorsRepo.findById(id).get();
         Portfolio portfolio = investor.getPortfolios().get(portfolioId - 1); // Assuming the investor has at least one portfolio and portfolioId is 1-based index
 

@@ -1,5 +1,6 @@
 package com.DuckVest.Services.PortfolioServices;
 
+import com.DuckVest.DTOs.OrderDTO;
 import com.DuckVest.DTOs.PortfolioDTO;
 import com.DuckVest.DTOs.StockDTO;
 import com.DuckVest.Models.Investor;
@@ -8,6 +9,7 @@ import com.DuckVest.Models.Portfolio;
 import com.DuckVest.Models.Stocks;
 import com.DuckVest.Repositories.InvestorsRepo;
 import com.DuckVest.Repositories.PortfolioRepo;
+import com.DuckVest.Services.OrdersServices.OrderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ public class PortfolioImplement implements PortfolioService {
     InvestorsRepo investorsRepo;
     @Autowired
     ModelMapper modelMapper;
+    @Autowired
+    OrderService orderService;
 
     @Override
     public List<Portfolio> getAllPortfolios() {
@@ -88,7 +92,7 @@ public class PortfolioImplement implements PortfolioService {
     }
 
     @Override
-    public PortfolioDTO getPortfolioDTOById(Long portfolioId, Long investorId) {
+    public PortfolioDTO createPortfolioDTO(Long portfolioId, Long investorId) {
         Portfolio portfolio = portfolioRepo.findById(portfolioId).get();
         Investor investor = investorsRepo.findById(investorId).get();
 
@@ -109,7 +113,11 @@ public class PortfolioImplement implements PortfolioService {
                         stock.getBid()
                 ))
                 .toList());
-        portfolioDTO.setOrdersList(portfolio.getOrdersList());
+        portfolioDTO.setOrdersList(
+                portfolio.getOrdersList().stream()
+                        .map(order -> orderService.createOrderDTO(order.getId(), investorId, order.getStock().getId(), portfolioId.intValue()))
+                        .toList()
+        );
 
         return portfolioDTO;
     }

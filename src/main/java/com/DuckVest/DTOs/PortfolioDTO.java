@@ -13,9 +13,9 @@ public class PortfolioDTO {
     private Double reservedBalance;
     private Double availableBalance;
     private List<StockDTO> stocksList;
-    private List<Orders> ordersList;
+    private List<OrderDTO> ordersList;
 
-    public PortfolioDTO(Long portfolioId, String investorName, Double totalBalance, Double reservedBalance, Double availableBalance, List<StockDTO> stocksList, List<Orders> ordersList) {
+    public PortfolioDTO(Long portfolioId, String investorName, Double totalBalance, Double reservedBalance, Double availableBalance, List<StockDTO> stocksList, List<OrderDTO> ordersList) {
         this.portfolioId = portfolioId;
         this.investorName = investorName;
         this.totalBalance = totalBalance;
@@ -28,11 +28,11 @@ public class PortfolioDTO {
     public PortfolioDTO() {
     }
 
-    public List<Orders> getOrdersList() {
+    public List<OrderDTO> getOrdersList() {
         return ordersList;
     }
 
-    public void setOrdersList(List<Orders> ordersList) {
+    public void setOrdersList(List<OrderDTO> ordersList) {
         this.ordersList = ordersList;
     }
 

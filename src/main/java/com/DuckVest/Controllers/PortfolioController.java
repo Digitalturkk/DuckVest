@@ -47,7 +47,7 @@ public class PortfolioController {
 
     @GetMapping("/get-portfolio-info={portfolioId}&{investorId}")
     public PortfolioDTO getPortfolioInformantion(@PathVariable Long portfolioId, @PathVariable Long investorId) {
-        return portfolioService.getPortfolioDTOById(portfolioId, investorId);
+        return portfolioService.createPortfolioDTO(portfolioId, investorId);
     }
 
     @PostMapping("/add")

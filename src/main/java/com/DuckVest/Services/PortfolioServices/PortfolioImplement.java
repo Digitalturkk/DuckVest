@@ -1,6 +1,6 @@
 package com.DuckVest.Services.PortfolioServices;
 
-import com.DuckVest.DTOs.OrderDTO;
+import com.DuckVest.CustomEnums.OrderStatus;
 import com.DuckVest.DTOs.PortfolioDTO;
 import com.DuckVest.DTOs.StockDTO;
 import com.DuckVest.Models.Investor;
@@ -52,15 +52,16 @@ public class PortfolioImplement implements PortfolioService {
     @Override
     public Double getTotalBalance(Long id) {
         Portfolio workingPortfolio = portfolioRepo.findById(id).get();
-        double reservedBalance = workingPortfolio.getReservedBalance();
+        double reservedBalance = getReservedBalance(id);
 
-        List<Stocks> portfolioStocks = workingPortfolio.getStocksList();
+        List<Orders> portfolioOrders = portfolioRepo.findOrdersByPortfolioIdAndOrderStatus(id, OrderStatus.COMPLETED);
 
         double totalBalance = 0.0;
 
-        for (Stocks s : portfolioStocks) { // Geting all stocks' bid price, then + available balance on account
-            totalBalance += s.getBid();
+        for (Orders o : portfolioOrders) { // Getting all stocks' bid price, then + available balance on account
+            totalBalance += o.getStockPrice() * o.getQuantity();
         }
+
         totalBalance += workingPortfolio.getAvailableBalance();
         totalBalance += reservedBalance;
         workingPortfolio.setTotalBalance(totalBalance);
@@ -74,16 +75,15 @@ public class PortfolioImplement implements PortfolioService {
     public Double getReservedBalance(Long id) {
         Portfolio workingPortfolio = portfolioRepo.findById(id).get();
 
-        List<Orders> portfolioOrders = workingPortfolio.getOrdersList();
+        List<Orders> portfolioOrders = portfolioRepo.findOrdersByPortfolioIdAndOrderStatus(id, OrderStatus.IN_PROGRESS);
         double reservedBalance = 0.0;
 
-        for (Orders r : portfolioOrders) {
-            if ("IN_PROGRESS".equals(r.getOrderStatus())) { // multiplying stock's quantity to its price
-                Double quantity = r.getQuantity();
-                Double stockPrice = r.getStockPrice();
-                //reservedBalance += quantity * stockPrice.getBid();
-            }
+        for (Orders r : portfolioOrders) { // Getting all stocks' bid price, then + available balance on account
+            Double quantity = r.getQuantity();
+            Double stockPrice = r.getStockPrice();
+            reservedBalance += quantity * stockPrice;
         }
+
         workingPortfolio.setReservedBalance(reservedBalance);
 
         portfolioRepo.save(workingPortfolio);
@@ -100,8 +100,8 @@ public class PortfolioImplement implements PortfolioService {
         portfolioDTO.setPortfolioId(portfolio.getPortfolioId());
         portfolioDTO.setInvestorName(investor.getName());
         portfolioDTO.setAvailableBalance(portfolio.getAvailableBalance());
-        portfolioDTO.setReservedBalance(portfolio.getReservedBalance());
-        portfolioDTO.setTotalBalance(portfolio.getTotalBalance());
+        portfolioDTO.setReservedBalance(getReservedBalance(portfolioId));
+        portfolioDTO.setTotalBalance(getTotalBalance(portfolioId));
         portfolioDTO.setStocksList(portfolio.getStocksList().stream()
                 .map(stock -> new StockDTO(
                         stock.getId(),

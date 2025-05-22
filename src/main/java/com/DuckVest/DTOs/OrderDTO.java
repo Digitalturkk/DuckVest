@@ -5,6 +5,7 @@ import com.DuckVest.CustomEnums.OrderType;
 
 import java.util.Date;
 
+// OrderDTOs service is in com.DuckVest.Services.OrderService
 public class OrderDTO {
     private Long id;
     private OrderType orderType;

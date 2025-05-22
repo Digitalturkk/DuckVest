@@ -80,19 +80,62 @@ public class StocksImplement implements StockService {
         order.setExecutionType("BUY");
 
         if (portfolio.getAvailableBalance() >= stock.getBid() * quantity) {
-            portfolio.setAvailableBalance(portfolio.getAvailableBalance() - stock.getBid() * quantity);
+
             stocksList.add(stock);
-            System.out.println(stocksList);
             portfolio.setStocksList(stocksList);
+
             portfolio.setReservedBalance(portfolio.getReservedBalance() + stock.getBid() * quantity);
             portfolio.setAvailableBalance(portfolio.getAvailableBalance() - stock.getBid() * quantity - brokerFee);
-            portfolio.setTotalBalance(portfolio.getTotalBalance() - stock.getBid() * quantity - brokerFee);
             portfolioService.getTotalBalance(portfolioId); // Updating total balance
             portfolioService.updatePortfolio(portfolio);
 
             order.setOrderMessage("Order completed successfully!");
             order.setOrderStatus(OrderStatus.COMPLETED);
-            order.setExecutionType("BUY");
+            order.setThereExecution(false);
+
+        }
+        else {
+            order.setOrderMessage("Not enough money on account!");
+            order.setOrderStatus(OrderStatus.CANCELLED);
+            order.setThereExecution(true);
+        }
+        order.setPortfolio(portfolio);
+        orderService.saveOrders(order);
+
+        return orderService.createOrderDTO(order.getId(), portfolio.getInvestor().getId(), stockId, portfolioId.intValue());
+    }
+
+    @Override
+    public OrderDTO sellStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee) {
+        Stocks stock = stocksRepo.findById(stockId).get();
+        Portfolio portfolio = portfolioService.getPortfolioById(portfolioId);
+
+        Stocks stockToSell = getStockById(stockId);
+        List<Stocks> stocksList = portfolio.getStocksList();
+
+        Orders order = new Orders();
+        order.setDate(Date.from(Instant.now()));
+        order.setStockPrice(stock.getBid());
+        order.setQuantity(quantity);
+        order.setOrderType(OrderType.SELL);
+        order.setInvestor(portfolio.getInvestor());
+        order.setStock(stock);
+        order.setBrokerFee(brokerFee);
+        order.setTotalPrice(stock.getAsk() * quantity + brokerFee);
+        order.setExecutionType("SELL");
+
+        if (portfolio.getStocksList().contains(stockToSell)) {
+
+            stocksList.add(stock);
+            portfolio.setStocksList(stocksList);
+
+            portfolio.setReservedBalance(portfolio.getReservedBalance() - stock.getAsk() * quantity);
+            portfolio.setAvailableBalance(portfolio.getAvailableBalance() + stock.getAsk() * quantity - brokerFee);
+            portfolioService.getTotalBalance(portfolioId); // Updating total balance
+            portfolioService.updatePortfolio(portfolio);
+
+            order.setOrderMessage("Order completed successfully!");
+            order.setOrderStatus(OrderStatus.COMPLETED);
             order.setThereExecution(false);
 
         }

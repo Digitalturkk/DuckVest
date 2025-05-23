@@ -6,7 +6,6 @@ import com.DuckVest.DTOs.StockDTO;
 import com.DuckVest.Models.Investor;
 import com.DuckVest.Models.Orders;
 import com.DuckVest.Models.Portfolio;
-import com.DuckVest.Models.Stocks;
 import com.DuckVest.Repositories.InvestorsRepo;
 import com.DuckVest.Repositories.PortfolioRepo;
 import com.DuckVest.Services.OrdersServices.OrderService;
@@ -54,12 +53,14 @@ public class PortfolioImplement implements PortfolioService {
         Portfolio workingPortfolio = portfolioRepo.findById(id).get();
         double reservedBalance = getReservedBalance(id);
 
-        List<Orders> portfolioOrders = portfolioRepo.findOrdersByPortfolioIdAndOrderStatus(id, OrderStatus.COMPLETED);
+        List<Orders> portfolioOrders = workingPortfolio.getOrdersList();
 
         double totalBalance = 0.0;
 
         for (Orders o : portfolioOrders) { // Getting all stocks' bid price, then + available balance on account
-            totalBalance += o.getStockPrice() * o.getQuantity();
+            if (o.getOrderStatus() == OrderStatus.COMPLETED) {
+                totalBalance += o.getStockPrice() * o.getQuantity();
+            }
         }
 
         totalBalance += workingPortfolio.getAvailableBalance();
@@ -75,13 +76,15 @@ public class PortfolioImplement implements PortfolioService {
     public Double getReservedBalance(Long id) {
         Portfolio workingPortfolio = portfolioRepo.findById(id).get();
 
-        List<Orders> portfolioOrders = portfolioRepo.findOrdersByPortfolioIdAndOrderStatus(id, OrderStatus.IN_PROGRESS);
+        List<Orders> portfolioOrders = workingPortfolio.getOrdersList();
         double reservedBalance = 0.0;
 
         for (Orders r : portfolioOrders) { // Getting all stocks' bid price, then + available balance on account
-            Double quantity = r.getQuantity();
-            Double stockPrice = r.getStockPrice();
-            reservedBalance += quantity * stockPrice;
+            if (r.getOrderStatus() == OrderStatus.IN_PROGRESS) {
+                Double quantity = r.getQuantity();
+                Double stockPrice = r.getStockPrice();
+                reservedBalance += quantity * stockPrice;
+            }
         }
 
         workingPortfolio.setReservedBalance(reservedBalance);

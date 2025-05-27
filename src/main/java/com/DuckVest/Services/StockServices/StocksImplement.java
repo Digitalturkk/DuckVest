@@ -124,9 +124,9 @@ public class StocksImplement implements StockService {
         order.setTotalPrice(stock.getAsk() * quantity + brokerFee);
         order.setExecutionType("SELL");
 
-        if (portfolio.getStocksList().contains(stockToSell)) {
+        if (stocksList.contains(stockToSell) && stocksList.get(stocksList.indexOf(stockToSell))) {
 
-            stocksList.add(stock);
+            stocksList.remove(stock);
             portfolio.setStocksList(stocksList);
 
             portfolio.setReservedBalance(portfolio.getReservedBalance() - stock.getAsk() * quantity);
@@ -137,7 +137,6 @@ public class StocksImplement implements StockService {
             order.setOrderMessage("Order completed successfully!");
             order.setOrderStatus(OrderStatus.COMPLETED);
             order.setThereExecution(false);
-
         }
         else {
             order.setOrderMessage("Not enough money on account!");

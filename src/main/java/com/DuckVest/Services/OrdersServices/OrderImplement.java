@@ -63,7 +63,7 @@ public class OrderImplement implements OrderService {
         orderDTO.setBrokerFee(order.getBrokerFee());
         orderDTO.setDate(Date.from(Instant.now()));
         orderDTO.setOrderStatus(order.getOrderStatus());
-        orderDTO.setOrderMessage(orderDTO.getOrderMessage());
+        orderDTO.setOrderMessage(order.getOrderMessage());
         return orderDTO;
     }
 }

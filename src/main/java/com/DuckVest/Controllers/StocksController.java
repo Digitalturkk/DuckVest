@@ -39,4 +39,9 @@ public class StocksController {
     public OrderDTO buyStock(@PathVariable Long portfolioId, @PathVariable Long stockId, @PathVariable Double quantity, @PathVariable Double brokerFee) {
         return stockService.buyStock(portfolioId, stockId, quantity, brokerFee);
     }
+
+    @PostMapping("/sell-stk={stockId}-prtfl={portfolioId}-qnt={quantity}-fee={brokerFee}")
+    public OrderDTO sellStock(@PathVariable Long portfolioId, @PathVariable Long stockId, @PathVariable Double quantity, @PathVariable Double brokerFee) {
+        return stockService.sellStock(portfolioId, stockId, quantity, brokerFee);
+    }
 }

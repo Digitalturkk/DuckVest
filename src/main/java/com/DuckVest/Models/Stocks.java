@@ -26,15 +26,15 @@ public class Stocks {
     private Double ask;
     @Column(name = "bid")
     private Double bid;
-    @ManyToMany
-    private List<Portfolio> portfolios;
     @OneToMany(mappedBy = "stock", cascade = CascadeType.PERSIST)
     private List<Orders> orders;
+    @OneToMany(mappedBy = "stocks", cascade = CascadeType.PERSIST)
+    private List<PortfolioStocks> portfolioStocks;
 
     public Stocks() {
     }
 
-    public Stocks(Long id, String companyName, String currency, String industry, StockExchange stockExchange, Double ask, Double price, Double bid, List<Portfolio> portfolios, List<Orders> orders) {
+    public Stocks(Long id, String companyName, String currency, String industry, StockExchange stockExchange, Double ask, Double price, Double bid, List<Orders> orders, List<PortfolioStocks> portfolioStocks) {
         this.id = id;
         this.companyName = companyName;
         this.currency = currency;
@@ -43,16 +43,8 @@ public class Stocks {
         this.ask = ask;
         this.price = price;
         this.bid = bid;
-        this.portfolios = portfolios;
         this.orders = orders;
-    }
-
-    public List<Portfolio> getPortfolios() {
-        return portfolios;
-    }
-
-    public void setPortfolios(List<Portfolio> portfolios) {
-        this.portfolios = portfolios;
+        this.portfolioStocks = portfolioStocks;
     }
 
     public List<Orders> getOrders() {
@@ -127,11 +119,12 @@ public class Stocks {
         this.companyName = companyName;
     }
 
-    public List<Portfolio> getPortfolio() {
-        return portfolios;
+    public List<PortfolioStocks> getPortfolioStocks() {
+        return portfolioStocks;
     }
 
-    public void setPortfolio(List<Portfolio> portfolio) {
-        this.portfolios = portfolio;
+    public void setPortfolioStocks(List<PortfolioStocks> portfolioStocks) {
+        this.portfolioStocks = portfolioStocks;
     }
+
 }

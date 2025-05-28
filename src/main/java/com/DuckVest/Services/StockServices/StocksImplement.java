@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class StocksImplement implements StockService {
+public class StocksImplement implements StockService { // Добавь проверку количества акций в портфеле перед продажей!!! 
 
     @Autowired
     StocksRepo stocksRepo;

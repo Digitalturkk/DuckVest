@@ -3,7 +3,6 @@ package com.DuckVest.Models;
 import jakarta.persistence.*;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,20 +20,20 @@ public class Portfolio {
     private Double availableBalance;
     private Instant lastUpdate;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    private List<Stocks> stocksList;
     @OneToMany(mappedBy = "portfolio", cascade = CascadeType.PERSIST )
     private List<Orders> ordersList;
+    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.PERSIST)
+    private List<PortfolioStocks> portfolioStocks;
 
-    public Portfolio(Long portfolioId, Investor investor, Double totalBalance, Double reservedBalance, Double availableBalance, Instant lastUpdate, List<Stocks> stocksList, List<Orders> ordersList) {
+    public Portfolio(Long portfolioId, Investor investor, Double totalBalance, Double reservedBalance, Double availableBalance, Instant lastUpdate, List<Orders> ordersList, List<PortfolioStocks> portfolioStocks) {
         this.portfolioId = portfolioId;
         this.investor = investor;
         this.totalBalance = totalBalance;
         this.reservedBalance = reservedBalance;
         this.availableBalance = availableBalance;
         this.lastUpdate = lastUpdate;
-        this.stocksList = new ArrayList<>();
-        this.ordersList = new ArrayList<>();
+        this.ordersList = ordersList;
+        this.portfolioStocks = portfolioStocks;
     }
 
     public Portfolio() {
@@ -93,20 +92,19 @@ public class Portfolio {
     public void setLastUpdate(Instant lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
-
-    public List<Stocks> getStocksList() {
-        return stocksList;
-    }
-
-    public void setStocksList(List<Stocks> stocksList) {
-        this.stocksList = stocksList;
-    }
-
     public List<Orders> getOrdersList() {
         return ordersList;
     }
 
     public void setOrdersList(List<Orders> ordersList) {
         this.ordersList = ordersList;
+    }
+
+    public List<PortfolioStocks> getPortfolioStocks() {
+        return portfolioStocks;
+    }
+
+    public void setPortfolioStocks(List<PortfolioStocks> portfolioStocks) {
+        this.portfolioStocks = portfolioStocks;
     }
 }

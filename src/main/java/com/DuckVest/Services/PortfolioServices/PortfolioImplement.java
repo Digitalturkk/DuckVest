@@ -3,16 +3,18 @@ package com.DuckVest.Services.PortfolioServices;
 import com.DuckVest.CustomEnums.OrderStatus;
 import com.DuckVest.DTOs.PortfolioDTO;
 import com.DuckVest.DTOs.StockDTO;
-import com.DuckVest.Models.Investor;
-import com.DuckVest.Models.Orders;
-import com.DuckVest.Models.Portfolio;
+import com.DuckVest.Models.*;
 import com.DuckVest.Repositories.InvestorsRepo;
 import com.DuckVest.Repositories.PortfolioRepo;
+import com.DuckVest.Repositories.PortfolioStocksRepo;
 import com.DuckVest.Services.OrdersServices.OrderService;
+import com.DuckVest.Services.PortfolioStocksServices.PortfolioStocksService;
+import com.DuckVest.Services.StockServices.StockService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,9 +25,11 @@ public class PortfolioImplement implements PortfolioService {
     @Autowired
     InvestorsRepo investorsRepo;
     @Autowired
-    ModelMapper modelMapper;
-    @Autowired
     OrderService orderService;
+    @Autowired
+    PortfolioStocksRepo portfolioStocksRepo;
+    @Autowired
+    ModelMapper modelMapper;
 
     @Override
     public List<Portfolio> getAllPortfolios() {
@@ -95,9 +99,27 @@ public class PortfolioImplement implements PortfolioService {
     }
 
     @Override
-    public PortfolioDTO createPortfolioDTO(Long portfolioId, Long investorId) {
+    public PortfolioDTO createPortfolioDTO(Long portfolioId, Long investorId, Long portfolioStocksID) {
         Portfolio portfolio = portfolioRepo.findById(portfolioId).get();
         Investor investor = investorsRepo.findById(investorId).get();
+
+        List<PortfolioStocks> portfolioStocksList = portfolioStocksRepo.findAllByPortfolio(portfolio);
+
+        List<StockDTO> stocksList = new ArrayList<>();
+
+        for (PortfolioStocks ps : portfolioStocksList) {
+            Stocks stock = ps.getStock();
+            StockDTO stockDTO = new StockDTO();
+            stockDTO.setStockID(stock.getId());
+            stockDTO.setCompanyName(stock.getCompanyName());
+            stockDTO.setCurrency(stock.getCurrency());
+            stockDTO.setStockExchange(stock.getStockExchange());
+            stockDTO.setPrice(stock.getPrice());
+            stockDTO.setAsk(stock.getAsk());
+            stockDTO.setBid(stock.getBid());
+            stocksList.add(stockDTO);
+        }
+
 
         PortfolioDTO portfolioDTO = new PortfolioDTO();
         portfolioDTO.setPortfolioId(portfolio.getPortfolioId());
@@ -105,17 +127,7 @@ public class PortfolioImplement implements PortfolioService {
         portfolioDTO.setAvailableBalance(portfolio.getAvailableBalance());
         portfolioDTO.setReservedBalance(getReservedBalance(portfolioId));
         portfolioDTO.setTotalBalance(getTotalBalance(portfolioId));
-        portfolioDTO.setStocksList(portfolio.getStocksList().stream()
-                .map(stock -> new StockDTO(
-                        stock.getId(),
-                        stock.getCompanyName(),
-                        stock.getCurrency(),
-                        stock.getStockExchange(),
-                        stock.getPrice(),
-                        stock.getAsk(),
-                        stock.getBid()
-                ))
-                .toList());
+        portfolioDTO.setStocksList(stocksList);
         portfolioDTO.setOrdersList(
                 portfolio.getOrdersList().stream()
                         .map(order -> orderService.createOrderDTO(order.getId(), investorId, order.getStock().getId(), portfolioId.intValue()))
@@ -124,4 +136,5 @@ public class PortfolioImplement implements PortfolioService {
 
         return portfolioDTO;
     }
+
 }

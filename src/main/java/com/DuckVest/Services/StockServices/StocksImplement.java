@@ -60,7 +60,7 @@ public class StocksImplement implements StockService { // Добавь пров�
         stockDTO.setBid(stock.getBid());
         return stockDTO;
     }
-
+/*
     @Override
     public OrderDTO buyStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee) {
         Stocks stock = stocksRepo.findById(stockId).get();
@@ -148,4 +148,5 @@ public class StocksImplement implements StockService { // Добавь пров�
 
         return orderService.createOrderDTO(order.getId(), portfolio.getInvestor().getId(), stockId, portfolioId.intValue());
     }
+ */
 }

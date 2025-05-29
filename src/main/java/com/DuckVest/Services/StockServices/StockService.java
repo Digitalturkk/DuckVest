@@ -13,6 +13,6 @@ public interface StockService {
      List<Stocks> getAllStocks();
      StockDTO createStockDTO(Long id);
 
-     OrderDTO buyStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee);
-     OrderDTO sellStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee);
+     // OrderDTO buyStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee);
+     // OrderDTO sellStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee);
 }

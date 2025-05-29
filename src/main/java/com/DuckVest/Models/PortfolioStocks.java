@@ -11,14 +11,13 @@ public class PortfolioStocks {
     private Long id;
 
     @NotNull(message = "Quantity is required")
-
     private Double quantity;
 
     @ManyToOne
-    @JoinColumn(name = "portfolio_id", referencedColumnName = "id")
+    @JoinColumn(name = "portfolioId")
     private Portfolio portfolio;
     @ManyToOne
-    @JoinColumn(name = "stock_id", referencedColumnName = "id")
+    @JoinColumn(name = "stockId")
     private Stocks stock;
 
     private Double averagePrice;

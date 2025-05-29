@@ -28,7 +28,7 @@ public class Stocks {
     private Double bid;
     @OneToMany(mappedBy = "stock", cascade = CascadeType.PERSIST)
     private List<Orders> orders;
-    @OneToMany(mappedBy = "stocks", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "stock", cascade = CascadeType.PERSIST)
     private List<PortfolioStocks> portfolioStocks;
 
     public Stocks() {

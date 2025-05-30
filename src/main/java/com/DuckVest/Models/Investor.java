@@ -40,9 +40,6 @@ public class Investor {
     @OneToMany(mappedBy = "investor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Portfolio> portfolios;
 
-
-    // Work with Portfolio
-
     public Investor() {}
 
     public Investor(String name, String password, String email, String phone, String address, AccountType accountType, Boolean isInvestorAccountEnable, int age, List<Portfolio> portfolios) {

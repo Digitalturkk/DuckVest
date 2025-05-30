@@ -8,8 +8,6 @@ import com.DuckVest.Repositories.InvestorsRepo;
 import com.DuckVest.Repositories.PortfolioRepo;
 import com.DuckVest.Repositories.PortfolioStocksRepo;
 import com.DuckVest.Services.OrdersServices.OrderService;
-import com.DuckVest.Services.PortfolioStocksServices.PortfolioStocksService;
-import com.DuckVest.Services.StockServices.StockService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

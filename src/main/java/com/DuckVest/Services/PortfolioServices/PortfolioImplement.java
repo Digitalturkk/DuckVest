@@ -2,14 +2,16 @@ package com.DuckVest.Services.PortfolioServices;
 
 import com.DuckVest.CustomEnums.OrderStatus;
 import com.DuckVest.DTOs.PortfolioDTO;
-import com.DuckVest.DTOs.StockDTO;
+import com.DuckVest.DTOs.PortfolioStocksDTO;
 import com.DuckVest.Models.*;
 import com.DuckVest.Repositories.InvestorsRepo;
 import com.DuckVest.Repositories.PortfolioRepo;
 import com.DuckVest.Repositories.PortfolioStocksRepo;
 import com.DuckVest.Services.OrdersServices.OrderService;
+import com.DuckVest.Services.PortfolioStocksServices.PortfolioStocksService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,6 +30,9 @@ public class PortfolioImplement implements PortfolioService {
     PortfolioStocksRepo portfolioStocksRepo;
     @Autowired
     ModelMapper modelMapper;
+    @Autowired
+    @Lazy
+    PortfolioStocksService portfolioStocksService;
 
     @Override
     public List<Portfolio> getAllPortfolios() {
@@ -53,20 +58,17 @@ public class PortfolioImplement implements PortfolioService {
     @Override
     public Double getTotalBalance(Long id) {
         Portfolio workingPortfolio = portfolioRepo.findById(id).get();
-        double reservedBalance = getReservedBalance(id);
-
-        List<Orders> portfolioOrders = workingPortfolio.getOrdersList();
+        List<PortfolioStocks> portfolioStocks = portfolioStocksRepo.findAllByPortfolio(workingPortfolio);
 
         double totalBalance = 0.0;
+        totalBalance += workingPortfolio.getAvailableBalance();
+        totalBalance += getReservedBalance(id);
 
-        for (Orders o : portfolioOrders) { // Getting all stocks' bid price, then + available balance on account
-            if (o.getOrderStatus() == OrderStatus.COMPLETED) {
-                totalBalance += o.getStockPrice() * o.getQuantity();
-            }
+        for (PortfolioStocks ps : portfolioStocks) {
+            double stockPrice = ps.getStock().getPrice() * ps.getQuantity();
+            totalBalance += stockPrice;
         }
 
-        totalBalance += workingPortfolio.getAvailableBalance();
-        totalBalance += reservedBalance;
         workingPortfolio.setTotalBalance(totalBalance);
 
         portfolioRepo.save(workingPortfolio);
@@ -103,19 +105,15 @@ public class PortfolioImplement implements PortfolioService {
 
         List<PortfolioStocks> portfolioStocksList = portfolioStocksRepo.findAllByPortfolio(portfolio);
 
-        List<StockDTO> stocksList = new ArrayList<>();
+        List<PortfolioStocksDTO> stocksList = new ArrayList<>();
 
         for (PortfolioStocks ps : portfolioStocksList) {
-            Stocks stock = ps.getStock();
-            StockDTO stockDTO = new StockDTO();
-            stockDTO.setStockID(stock.getId());
-            stockDTO.setCompanyName(stock.getCompanyName());
-            stockDTO.setCurrency(stock.getCurrency());
-            stockDTO.setStockExchange(stock.getStockExchange());
-            stockDTO.setPrice(stock.getPrice());
-            stockDTO.setAsk(stock.getAsk());
-            stockDTO.setBid(stock.getBid());
-            stocksList.add(stockDTO);
+            PortfolioStocksDTO psDTO = portfolioStocksService.createPortfolioStocksDTO(ps);
+            if (psDTO.getQuantity() <= 0) {
+                portfolioStocksRepo.delete(ps);
+                continue;
+            }
+            stocksList.add(psDTO);
         }
 
 

@@ -1,10 +1,10 @@
 package com.DuckVest.DTOs;
 
+// PortfolioStocksDTO service is in com.DuckVest.Services.PortfolioStocksService
 public class PortfolioStocksDTO {
     private Long Id;
 
     private StockDTO stock;
-    private PortfolioDTO portfolio;
 
     private Double quantity;
     private Double averagePrice;
@@ -12,12 +12,11 @@ public class PortfolioStocksDTO {
 
     public PortfolioStocksDTO() {}
 
-    public PortfolioStocksDTO(Long id, Double quantity, Double averagePrice, Double totalCost, PortfolioDTO portfolio, StockDTO stock) {
+    public PortfolioStocksDTO(Long id, Double quantity, Double averagePrice, Double totalCost, StockDTO stock) {
         this.Id = id;
         this.quantity = quantity;
         this.averagePrice = averagePrice;
         this.totalCost = totalCost;
-        this.portfolio = portfolio;
         this.stock = stock;
     }
 
@@ -51,14 +50,6 @@ public class PortfolioStocksDTO {
 
     public void setTotalCost(Double totalCost) {
         this.totalCost = totalCost;
-    }
-
-    public PortfolioDTO getPortfolio() {
-        return portfolio;
-    }
-
-    public void setPortfolio(PortfolioDTO portfolio) {
-        this.portfolio = portfolio;
     }
 
     public StockDTO getStock() {

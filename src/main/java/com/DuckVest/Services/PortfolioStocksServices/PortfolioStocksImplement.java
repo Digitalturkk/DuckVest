@@ -3,6 +3,8 @@ package com.DuckVest.Services.PortfolioStocksServices;
 import com.DuckVest.CustomEnums.OrderStatus;
 import com.DuckVest.CustomEnums.OrderType;
 import com.DuckVest.DTOs.OrderDTO;
+import com.DuckVest.DTOs.PortfolioStocksDTO;
+import com.DuckVest.DTOs.StockDTO;
 import com.DuckVest.Models.Orders;
 import com.DuckVest.Models.Portfolio;
 import com.DuckVest.Models.PortfolioStocks;
@@ -62,6 +64,18 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
             existingPortfolioStock.setStock(portfolioStock.getStock());
             portfolioStocksRepo.save(existingPortfolioStock);
         }
+    }
+
+    @Override
+    public PortfolioStocksDTO createPortfolioStocksDTO(PortfolioStocks portfolioStocks) {
+        Stocks stock = portfolioStocks.getStock();
+        return new PortfolioStocksDTO(
+                portfolioStocks.getId(),
+                portfolioStocks.getQuantity(),
+                portfolioStocks.getAveragePrice(),
+                portfolioStocks.getTotalCost(),
+                new StockDTO(stock.getId(), stock.getCompanyName(), stock.getCurrency(), stock.getStockExchange(), stock.getPrice(), stock.getAsk(), stock.getBid())
+        );
     }
 
     @Override
@@ -189,8 +203,7 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
         portfolioStocksRepo.save(existingPortfolioStock);
 
         Double stockAskPrice = stock.getAsk();
-
-        portfolio.setReservedBalance(portfolio.getReservedBalance() + stockAskPrice * quantity);
+        
         portfolio.setAvailableBalance(portfolio.getAvailableBalance() - stockAskPrice * quantity - brokerFee);
         portfolioService.getTotalBalance(portfolioId); // Updating total balance
         portfolioService.updatePortfolio(portfolio);
@@ -204,7 +217,6 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
         portfolioStocksRepo.save(existingPortfolioStock);
 
         Double stockBidPrice = stock.getBid();
-
 
         portfolio.setAvailableBalance(portfolio.getAvailableBalance() + stockBidPrice * quantity - brokerFee);
         portfolioService.getTotalBalance(portfolioId); // Updating total balance

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface StockExchangeService {
      StockExchange getExchangeById(Long id);
-     List<StockExchange> getAllExchange();
+     List<StockExchangeDTO> getAllExchangeDTOs();
      void saveExchange(StockExchange exchange);
      void deleteExchange(Long id);
 

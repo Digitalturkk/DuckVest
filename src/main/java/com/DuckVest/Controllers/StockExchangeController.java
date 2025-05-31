@@ -1,5 +1,6 @@
 package com.DuckVest.Controllers;
 
+import com.DuckVest.DTOs.StockExchangeDTO;
 import com.DuckVest.Models.StockExchange;
 import com.DuckVest.Services.ExchangeServices.StockExchangeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,14 @@ public class StockExchangeController {
     @Autowired
     StockExchangeService stockExchangeService;
 
-    @GetMapping("/all")
-    public List<StockExchange> getExchange() {
-        return stockExchangeService.getAllExchange();
+    @GetMapping("/get-dto-{id}")
+    public StockExchangeDTO getExchangeById(@PathVariable Long id) {
+        return stockExchangeService.createStockExchangeDTO(id);
+    }
+
+    @GetMapping("/all-dto")
+    public List<StockExchangeDTO> getExchange() {
+        return stockExchangeService.getAllExchangeDTOs();
     }
 
     @PostMapping("/add")

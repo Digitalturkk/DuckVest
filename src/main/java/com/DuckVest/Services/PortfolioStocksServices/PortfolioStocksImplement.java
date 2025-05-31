@@ -5,11 +5,13 @@ import com.DuckVest.CustomEnums.OrderType;
 import com.DuckVest.DTOs.OrderDTO;
 import com.DuckVest.DTOs.PortfolioStocksDTO;
 import com.DuckVest.DTOs.StockDTO;
+import com.DuckVest.DTOs.StockExchangeSummaryDTO;
 import com.DuckVest.Models.Orders;
 import com.DuckVest.Models.Portfolio;
 import com.DuckVest.Models.PortfolioStocks;
 import com.DuckVest.Models.Stocks;
 import com.DuckVest.Repositories.PortfolioStocksRepo;
+import com.DuckVest.Services.ExchangeServices.StockExchangeService;
 import com.DuckVest.Services.OrdersServices.OrderService;
 import com.DuckVest.Services.PortfolioServices.PortfolioService;
 import com.DuckVest.Services.StockServices.StocksService;
@@ -32,6 +34,8 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
     PortfolioService portfolioService;
     @Autowired
     OrderService orderService;
+    @Autowired
+    StockExchangeService stockExchangeService;
 
     @Override
     public List<PortfolioStocks> getAllPortfolioStocks() {
@@ -69,12 +73,14 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
     @Override
     public PortfolioStocksDTO createPortfolioStocksDTO(PortfolioStocks portfolioStocks) {
         Stocks stock = portfolioStocks.getStock();
+        StockExchangeSummaryDTO stockExchangeSummaryDTO = stockExchangeService.createStockExchangeSummaryDTO(stock.getStockExchange());
+
         return new PortfolioStocksDTO(
                 portfolioStocks.getId(),
                 portfolioStocks.getQuantity(),
                 portfolioStocks.getAveragePrice(),
                 portfolioStocks.getTotalCost(),
-                new StockDTO(stock.getId(), stock.getCompanyName(), stock.getCurrency(), stock.getStockExchange(), stock.getPrice(), stock.getAsk(), stock.getBid())
+                new StockDTO(stock.getId(), stock.getCompanyName(), stock.getCurrency(), stockExchangeSummaryDTO, stock.getPrice(), stock.getAsk(), stock.getBid())
         );
     }
 

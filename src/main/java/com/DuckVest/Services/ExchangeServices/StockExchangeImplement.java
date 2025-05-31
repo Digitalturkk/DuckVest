@@ -7,6 +7,7 @@ import com.DuckVest.Repositories.StockExchangeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,8 +22,14 @@ public class StockExchangeImplement implements StockExchangeService {
     }
 
     @Override
-    public List<StockExchange> getAllExchange() {
-        return stockExchangeRepo.findAll();
+    public List<StockExchangeDTO> getAllExchangeDTOs() {
+        List<StockExchangeDTO> stockExchangeDTOList = new ArrayList<>();
+
+        for (StockExchange stockExchange : stockExchangeRepo.findAll()) {
+            stockExchangeDTOList.add(createStockExchangeDTO(stockExchange.getId()));
+        }
+
+        return stockExchangeDTOList;
     }
 
     @Override

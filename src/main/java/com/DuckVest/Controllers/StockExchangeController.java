@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/exchanges")
-public class ExchangeController {
+public class StockExchangeController {
 
     @Autowired
     StockExchangeService stockExchangeService;

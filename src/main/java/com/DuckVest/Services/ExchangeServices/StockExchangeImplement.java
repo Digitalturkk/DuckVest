@@ -1,5 +1,6 @@
 package com.DuckVest.Services.ExchangeServices;
 
+import com.DuckVest.DTOs.StockExchangeSummaryDTO;
 import com.DuckVest.Models.StockExchange;
 import com.DuckVest.Repositories.ExchangeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ExchangeImplement implements ExchangeService {
+public class StockExchangeImplement implements StockExchangeService {
 
     @Autowired
     ExchangeRepo exchangeRepo;
@@ -26,6 +27,15 @@ public class ExchangeImplement implements ExchangeService {
     @Override
     public List<StockExchange> getAllExchange() {
         return exchangeRepo.findAll();
+    }
+
+    @Override
+    public StockExchangeSummaryDTO createStockExchangeSummaryDTO(StockExchange stockExchange) {
+        StockExchangeSummaryDTO exchangeSummary = new StockExchangeSummaryDTO();
+        exchangeSummary.setId(stockExchange.getId());
+        exchangeSummary.setName(stockExchange.getName());
+        exchangeSummary.setCountry(stockExchange.getCountry());
+        return exchangeSummary;
     }
 
 }

@@ -1,10 +1,10 @@
 package com.DuckVest.Services.StockServices;
 
 import com.DuckVest.DTOs.StockDTO;
+import com.DuckVest.DTOs.StockExchangeSummaryDTO;
 import com.DuckVest.Models.Stocks;
 import com.DuckVest.Repositories.StocksRepo;
-import com.DuckVest.Services.OrdersServices.OrderService;
-import com.DuckVest.Services.PortfolioServices.PortfolioService;
+import com.DuckVest.Services.ExchangeServices.StockExchangeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +16,7 @@ public class StocksImplement implements StockService { // Добавь пров�
     @Autowired
     StocksRepo stocksRepo;
     @Autowired
-    PortfolioService portfolioService;
-    @Autowired
-    OrderService orderService;
+    StockExchangeService stockExchangeService;
 
     @Override
     public void saveStocks(Stocks stock) {
@@ -43,10 +41,12 @@ public class StocksImplement implements StockService { // Добавь пров�
     @Override
     public StockDTO createStockDTO(Long id) {
         Stocks stock = stocksRepo.findById(id).get();
+        StockExchangeSummaryDTO stockExchangeSummaryDTO = stockExchangeService.createStockExchangeSummaryDTO(stock.getStockExchange());
+
         StockDTO stockDTO = new StockDTO();
         stockDTO.setStockID(stock.getId());
         stockDTO.setCompanyName(stock.getCompanyName());
-        stockDTO.setStockExchange(stock.getStockExchange());
+        stockDTO.setStockExchangeSummaryDTO(stockExchangeSummaryDTO);
         stockDTO.setCurrency(stock.getCurrency());
         stockDTO.setPrice(stock.getPrice());
         stockDTO.setAsk(stock.getAsk());

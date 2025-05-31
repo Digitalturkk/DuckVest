@@ -7,18 +7,18 @@ public class StockDTO {
     private Long stockID;
     private String companyName;
     private String currency;
-    private StockExchange stockExchange;
+    private StockExchangeSummaryDTO stockExchangeSummaryDTO;
     private Double price;
     private Double ask;
     private Double bid;
 
     public StockDTO() {}
 
-    public StockDTO(Long stockID, String companyName, String currency, StockExchange stockExchange, Double price, Double ask, Double bid) {
+    public StockDTO(Long stockID, String companyName, String currency, StockExchangeSummaryDTO stockExchangeSummaryDTO, Double price, Double ask, Double bid) {
         this.stockID = stockID;
         this.companyName = companyName;
         this.currency = currency;
-        this.stockExchange = stockExchange;
+        this.stockExchangeSummaryDTO = stockExchangeSummaryDTO;
         this.price = price;
         this.ask = ask;
         this.bid = bid;
@@ -48,12 +48,12 @@ public class StockDTO {
         this.currency = currency;
     }
 
-    public StockExchange getStockExchange() {
-        return stockExchange;
+    public StockExchangeSummaryDTO getStockExchangeSummaryDTO() {
+        return stockExchangeSummaryDTO;
     }
 
-    public void setStockExchange(StockExchange stockExchange) {
-        this.stockExchange = stockExchange;
+    public void setStockExchangeSummaryDTO(StockExchangeSummaryDTO stockExchangeSummaryDTO) {
+        this.stockExchangeSummaryDTO = stockExchangeSummaryDTO;
     }
 
     public Double getPrice() {

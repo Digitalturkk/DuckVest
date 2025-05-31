@@ -1,8 +1,9 @@
 package com.DuckVest.Services.ExchangeServices;
 
+import com.DuckVest.DTOs.StockExchangeDTO;
 import com.DuckVest.DTOs.StockExchangeSummaryDTO;
 import com.DuckVest.Models.StockExchange;
-import com.DuckVest.Repositories.ExchangeRepo;
+import com.DuckVest.Repositories.StockExchangeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,21 +13,26 @@ import java.util.List;
 public class StockExchangeImplement implements StockExchangeService {
 
     @Autowired
-    ExchangeRepo exchangeRepo;
+    StockExchangeRepo stockExchangeRepo;
 
     @Override
-    public void saveExchange(StockExchange stockExchange) {
-        exchangeRepo.save(stockExchange);
-    }
-
-    @Override
-    public void deleteExchange(Long id) {
-        exchangeRepo.deleteById(id);
+    public StockExchange getExchangeById(Long id) {
+        return stockExchangeRepo.findById(id).orElse(null);
     }
 
     @Override
     public List<StockExchange> getAllExchange() {
-        return exchangeRepo.findAll();
+        return stockExchangeRepo.findAll();
+    }
+
+    @Override
+    public void saveExchange(StockExchange stockExchange) {
+        stockExchangeRepo.save(stockExchange);
+    }
+
+    @Override
+    public void deleteExchange(Long id) {
+        stockExchangeRepo.deleteById(id);
     }
 
     @Override
@@ -36,6 +42,26 @@ public class StockExchangeImplement implements StockExchangeService {
         exchangeSummary.setName(stockExchange.getName());
         exchangeSummary.setCountry(stockExchange.getCountry());
         return exchangeSummary;
+    }
+
+    @Override
+    public StockExchangeDTO createStockExchangeDTO(Long id) {
+        StockExchange stockExchange = stockExchangeRepo.findById(id).orElse(null);
+        if (stockExchange == null) {
+            return null;
+        }
+
+        StockExchangeDTO stockExchangeDTO = new StockExchangeDTO();
+        stockExchangeDTO.setId(stockExchange.getId());
+        stockExchangeDTO.setName(stockExchange.getName());
+        stockExchangeDTO.setCountry(stockExchange.getCountry());
+        stockExchangeDTO.setCity(stockExchange.getCity());
+        stockExchangeDTO.setCurrency(stockExchange.getCurrency());
+        stockExchangeDTO.setIsActive(stockExchange.getIsActive());
+        stockExchangeDTO.setOpenTime(stockExchange.getOpenTime());
+        stockExchangeDTO.setCloseTime(stockExchange.getCloseTime());
+
+        return stockExchangeDTO;
     }
 
 }

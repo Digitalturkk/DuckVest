@@ -12,7 +12,7 @@ import com.DuckVest.Models.Stocks;
 import com.DuckVest.Repositories.PortfolioStocksRepo;
 import com.DuckVest.Services.OrdersServices.OrderService;
 import com.DuckVest.Services.PortfolioServices.PortfolioService;
-import com.DuckVest.Services.StockServices.StockService;
+import com.DuckVest.Services.StockServices.StocksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,7 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
     @Autowired
     PortfolioStocksRepo portfolioStocksRepo;
     @Autowired
-    StockService stockService;
+    StocksService stocksService;
     @Autowired
     PortfolioService portfolioService;
     @Autowired
@@ -85,7 +85,7 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
             throw new IllegalArgumentException("Invalid quantity or broker fee");
         }
 
-        Stocks stock = stockService.getStockById(stockId);
+        Stocks stock = stocksService.getStockById(stockId);
         Portfolio portfolio = portfolioService.getPortfolioById(portfolioId);
 
         Double stockPrice = stock.getAsk();
@@ -143,7 +143,7 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
             throw new IllegalArgumentException("Invalid quantity or broker fee");
         }
 
-        Stocks stock = stockService.getStockById(stockId);
+        Stocks stock = stocksService.getStockById(stockId);
         Portfolio portfolio = portfolioService.getPortfolioById(portfolioId);
 
         Double stockPrice = stock.getBid();

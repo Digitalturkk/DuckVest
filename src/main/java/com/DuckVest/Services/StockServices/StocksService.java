@@ -5,7 +5,7 @@ import com.DuckVest.Models.Stocks;
 
 import java.util.List;
 
-public interface StockService {
+public interface StocksService {
      void saveStocks(Stocks stocks);
      void deleteStocks(Long id);
      Stocks getStockById(Long id);

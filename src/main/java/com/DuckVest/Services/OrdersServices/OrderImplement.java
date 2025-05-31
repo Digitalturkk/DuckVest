@@ -4,7 +4,7 @@ import com.DuckVest.DTOs.OrderDTO;
 import com.DuckVest.Models.Orders;
 import com.DuckVest.Repositories.OrdersRepo;
 import com.DuckVest.Services.InvestorServices.InvestorService;
-import com.DuckVest.Services.StockServices.StockService;
+import com.DuckVest.Services.StockServices.StocksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class OrderImplement implements OrderService {
     InvestorService investorService;
     @Autowired
     @Lazy
-    StockService stockService;
+    StocksService stocksService;
 
     @Override
     public List<Orders> getOrders() {
@@ -57,7 +57,7 @@ public class OrderImplement implements OrderService {
         orderDTO.setId(orderId);
         orderDTO.setOrderType(order.getOrderType());
         orderDTO.setInvestor(investorService.createInvestorDTO(investorId, portfolioId));
-        orderDTO.setStock(stockService.createStockDTO(stockId));
+        orderDTO.setStock(stocksService.createStockDTO(stockId));
         orderDTO.setQuantity(order.getQuantity());
         orderDTO.setStockPrice(order.getStockPrice());
         orderDTO.setBrokerFee(order.getBrokerFee());

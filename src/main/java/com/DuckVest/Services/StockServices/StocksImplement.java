@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StocksImplement implements StockService { // Добавь проверку количества акций в портфеле перед продажей!!! 
+public class StocksImplement implements StocksService { // Добавь проверку количества акций в портфеле перед продажей!!!
 
     @Autowired
     StocksRepo stocksRepo;

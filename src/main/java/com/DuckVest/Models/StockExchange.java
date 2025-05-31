@@ -66,8 +66,8 @@ public class StockExchange {
     public String getCurrency() { return currency; }
     public void setCurrency(String currency) { this.currency = currency; }
 
-    public Boolean isActive() { return isActive; }
-    public void setActive(Boolean active) { isActive = active; }
+    public Boolean getIsActive() { return isActive; }
+    public void setIsActive(Boolean active) { isActive = active; }
 
     public ZonedDateTime getOpenTime() { return openTime; }
     public void setOpenTime(ZonedDateTime openTime) { this.openTime = openTime; }

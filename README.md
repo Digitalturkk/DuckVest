@@ -1,36 +1,34 @@
 # 🦆 DuckVest — Investment Brokerage Platform
 
-**DuckVest** is a backend simulation of an investment brokerage system built with Java and Spring Boot. It models essential features of a stock trading platform: users, stocks, exchanges, balances, and scheduled trading events.
+**DuckVest** is a powerful backend simulation of an investment brokerage system built with Java and Spring Boot. It models essential features of a stock trading platform: users, stocks, exchanges, balances, and scheduled trading events.
 
 ---
 ## 🐣 Why DuckVest?
 
-Because a wise duck always invests smart. Be like the duck.
+### Because a wise duck always invests smart. Be like the duck.
+
+This project streamlines the development of investment applications by providing a comprehensive simulation of brokerage operations. The core 🚀 **Features** 
+are:
+
+- 🛠️ **Modular & Layered Architecture:** Easily extensible for future enhancements and integrations.
+- 📈 **Stock Tranding Simulation:** Models buting and selling of stocks and simulate stock price updates.
+- 👤 **User Managment:** Manage investors, their accounts, portfolios and balances easily.
+- 🏛️ **Simulate multiple stock exchanges** with working hours.
+- 💰 **Balance Updates:** Buy and sell stocks with automatic balance updates.
+- 🌐 **REST API Support** for all operations.
 
 ---
 
-## 🚀 Features
-
-- 📈 Manage stocks ~and simulate stock price updates~
-- 🧑 Manage users and their account balances
-- 🏛️ Simulate multiple stock exchanges
-- 💸 Buy and sell stocks with automatic balance updates
-- ⏱️ Scheduled tasks for periodic operations
-- 📡 REST API for all operations
-- 🛠️ Modular, layered architecture
-
----
-
-## 🧱 Tech Stack
+## ⚙️ Tech Stack
 
 - **Java 24**
 - **Spring Boot 3**
 - **Spring Security**
-- **PostgreSQL** for persistent storage
+- **PostgreSQL**
 - **ModelMapper**
 ---
 
-## ⚙️ Getting Started
+## 🏁 Getting Started
 
 > Requirements: Java 8+, PostgreSQL, Docker (optional)
 
@@ -52,7 +50,9 @@ cd duckvest
 
     📱 Frontend interface (Web or Mobile)
 
+    ⏱️ Scheduled tasks for periodic operations
+
 ## ✍️ Author
 
-Made with passion and caffeine.
+Made with passion and love.
 If you like the project — give it a ⭐!

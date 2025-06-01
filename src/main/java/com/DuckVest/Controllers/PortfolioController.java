@@ -25,24 +25,10 @@ public class PortfolioController {
         return portfolioService.getPortfolioById(id);
     }
 
-    @GetMapping("/get-total-balance={id}")
-    public Double getTotalBalance(@PathVariable Long id) {
-        return portfolioService.getTotalBalance(id);
-    }
 
     @GetMapping("/get-reserved-balance={id}")
     public Double getReservedBalance(@PathVariable Long id) {
         return portfolioService.getReservedBalance(id);
-    }
-
-    @GetMapping("/get-available-balance={id}")
-    public Double getAvailableBalance(@PathVariable Long id) {
-        return portfolioService.getTotalBalance(id) - portfolioService.getReservedBalance(id);
-    }
-
-    @GetMapping("/get-portfolio-value={id}")
-    public Double getPortfolioValue(@PathVariable Long id) {
-        return portfolioService.getTotalBalance(id) + portfolioService.getReservedBalance(id);
     }
 
     @GetMapping("/get-portfolio-info={portfolioId}&{investorId}")

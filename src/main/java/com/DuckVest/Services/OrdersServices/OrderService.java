@@ -12,5 +12,5 @@ public interface OrderService {
     Orders getOrderByID(Long id);
     List<Orders> getOrders();
 
-    OrderDTO createOrderDTO(Long orderId, Long investorId, Long stockId, int PortfolioID);
+    OrderDTO createOrderDTO(Long orderId, Long investorId, Long stockId);
 }

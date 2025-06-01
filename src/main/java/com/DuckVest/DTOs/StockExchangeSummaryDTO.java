@@ -1,8 +1,7 @@
 package com.DuckVest.DTOs;
 
-// StockExchangeSummaryDTO service is in com.DuckVest.Services.StockExchangeService
 // This DTO is mostly used for summarizing stock exchange data for StockDTOs
-
+// StockExchangeSummaryDTO's service is in com.DuckVest.Services.StockExchangeService
 public class StockExchangeSummaryDTO {
     private Long id;
     private String name;

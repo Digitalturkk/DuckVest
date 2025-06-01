@@ -2,6 +2,7 @@ package com.DuckVest.Services.InvestorServices;
 
 import com.DuckVest.CustomEnums.AccountType;
 import com.DuckVest.DTOs.InvestorAccountDTO;
+import com.DuckVest.DTOs.InvestorSummaryDTO;
 import com.DuckVest.Models.Investor;
 import com.DuckVest.Models.Portfolio;
 import com.DuckVest.Repositories.InvestorsRepo;
@@ -74,6 +75,12 @@ public class InvestorImplement implements InvestorService {
         investorAccountDTO.setBuyingPower(portfolio.getAvailableBalance());
         investorAccountDTO.setIsAccountActive(investor.getIsInvestorAccountEnable());
         return investorAccountDTO;
+    }
+
+    @Override
+    public InvestorSummaryDTO creatInvestorSummaryDTO(Long id) {
+        Investor investor = investorsRepo.findById(id).get();
+        return new InvestorSummaryDTO(investor.getName(), investor.getEmail(), investor.getPhone());
     }
 
 }

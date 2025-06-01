@@ -10,8 +10,8 @@ public interface PortfolioService {
     Portfolio getPortfolioById(Long id);
     void savePortfolio(Portfolio portfolio);
     void updatePortfolio(Portfolio portfolio);
+    void updateTotalBalance(Long id);
 
-    Double getTotalBalance(Long id);
     Double getReservedBalance(Long id);
 
     PortfolioDTO createPortfolioDTO(Long portfolioId, Long investorId, Long portfolioStocksID);

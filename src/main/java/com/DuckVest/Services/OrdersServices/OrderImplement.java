@@ -50,13 +50,13 @@ public class OrderImplement implements OrderService {
     }
 
     @Override
-    public OrderDTO createOrderDTO(Long orderId, Long investorId, Long stockId, int portfolioId) {
+    public OrderDTO createOrderDTO(Long orderId, Long investorId, Long stockId) {
         Orders order = ordersRepo.findById(orderId).get();
 
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setId(orderId);
         orderDTO.setOrderType(order.getOrderType());
-        orderDTO.setInvestor(investorService.createInvestorDTO(investorId, portfolioId));
+        orderDTO.setInvestorSummaryDTO(investorService.creatInvestorSummaryDTO(investorId));
         orderDTO.setStock(stocksService.createStockDTO(stockId));
         orderDTO.setQuantity(order.getQuantity());
         orderDTO.setStockPrice(order.getStockPrice());

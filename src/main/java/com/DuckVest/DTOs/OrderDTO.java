@@ -5,11 +5,11 @@ import com.DuckVest.CustomEnums.OrderType;
 
 import java.util.Date;
 
-// OrderDTOs service is in com.DuckVest.Services.OrderService
+// OrderDTO's service is in com.DuckVest.Services.OrderService
 public class OrderDTO {
     private Long id;
     private OrderType orderType;
-    private InvestorAccountDTO investor;
+    private InvestorSummaryDTO investorSummaryDTO;
     private StockDTO stock;
     private Double quantity;
     private Double stockPrice;
@@ -20,10 +20,10 @@ public class OrderDTO {
 
     public OrderDTO() {}
 
-    public OrderDTO(Long id, OrderType orderType, InvestorAccountDTO investor, StockDTO stock, Double quantity, Double stockPrice, Double brokerFee, OrderStatus orderStatus, String orderMessage, Date date) {
+    public OrderDTO(Long id, OrderType orderType, InvestorSummaryDTO investorSummaryDTO, StockDTO stock, Double quantity, Double stockPrice, Double brokerFee, OrderStatus orderStatus, String orderMessage, Date date) {
         this.id = id;
         this.orderType = orderType;
-        this.investor = investor;
+        this.investorSummaryDTO = investorSummaryDTO;
         this.stock = stock;
         this.quantity = quantity;
         this.stockPrice = stockPrice;
@@ -49,12 +49,12 @@ public class OrderDTO {
         this.orderType = orderType;
     }
 
-    public InvestorAccountDTO getInvestor() {
-        return investor;
+    public InvestorSummaryDTO getInvestorSummaryDTO() {
+        return investorSummaryDTO;
     }
 
-    public void setInvestor(InvestorAccountDTO investor) {
-        this.investor = investor;
+    public void setInvestorSummaryDTO(InvestorSummaryDTO investorSummaryDTO) {
+        this.investorSummaryDTO = investorSummaryDTO;
     }
 
     public StockDTO getStock() {

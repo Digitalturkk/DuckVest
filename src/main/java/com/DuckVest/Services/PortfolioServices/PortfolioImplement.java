@@ -56,7 +56,7 @@ public class PortfolioImplement implements PortfolioService {
     }
 
     @Override
-    public Double getTotalBalance(Long id) {
+    public void updateTotalBalance(Long id) {
         Portfolio workingPortfolio = portfolioRepo.findById(id).get();
         List<PortfolioStocks> portfolioStocks = portfolioStocksRepo.findAllByPortfolio(workingPortfolio);
 
@@ -72,8 +72,6 @@ public class PortfolioImplement implements PortfolioService {
         workingPortfolio.setTotalBalance(totalBalance);
 
         portfolioRepo.save(workingPortfolio);
-
-        return totalBalance;
     }
 
     @Override
@@ -122,11 +120,11 @@ public class PortfolioImplement implements PortfolioService {
         portfolioDTO.setInvestorName(investor.getName());
         portfolioDTO.setAvailableBalance(portfolio.getAvailableBalance());
         portfolioDTO.setReservedBalance(getReservedBalance(portfolioId));
-        portfolioDTO.setTotalBalance(getTotalBalance(portfolioId));
+        portfolioDTO.setTotalBalance(portfolio.getTotalBalance());
         portfolioDTO.setStocksList(stocksList);
         portfolioDTO.setOrdersList(
                 portfolio.getOrdersList().stream()
-                        .map(order -> orderService.createOrderDTO(order.getId(), investorId, order.getStock().getId(), portfolioId.intValue()))
+                        .map(order -> orderService.createOrderDTO(order.getId(), investorId, order.getStock().getId()))
                         .toList()
         );
 

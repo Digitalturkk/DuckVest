@@ -17,7 +17,7 @@ public class Stocks {
     private String currency;
     @Column(name = "industry")
     private String industry;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "stock_exchange_id", referencedColumnName = "id")
     private StockExchange stockExchange;
     @Column(name = "price")

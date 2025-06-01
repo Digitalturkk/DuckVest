@@ -1,7 +1,5 @@
 package com.DuckVest.DTOs;
 
-import com.DuckVest.Models.StockExchange;
-
 // stockDTO's service is in com.DuckVest.Services.StockServices
 public class StockDTO {
     private Long stockID;

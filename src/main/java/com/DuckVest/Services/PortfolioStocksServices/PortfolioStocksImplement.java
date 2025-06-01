@@ -139,7 +139,7 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
         order.setPortfolio(portfolio);
         orderService.saveOrders(order);
 
-        return orderService.createOrderDTO(order.getId(), portfolio.getInvestor().getId(), stockId, portfolioId.intValue());
+        return orderService.createOrderDTO(order.getId(), portfolio.getInvestor().getId(), stockId);
     }
 
     @Override
@@ -202,7 +202,7 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
         order.setPortfolio(portfolio);
         orderService.saveOrders(order);
 
-        return orderService.createOrderDTO(order.getId(), portfolio.getInvestor().getId(), stockId, portfolioId.intValue());
+        return orderService.createOrderDTO(order.getId(), portfolio.getInvestor().getId(), stockId);
     }
 
     private void processSuccessfulBuyOrder(Long portfolioId, Double quantity, Double brokerFee, Stocks stock, Portfolio portfolio, Orders order, PortfolioStocks existingPortfolioStock) {
@@ -211,7 +211,7 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
         Double stockAskPrice = stock.getAsk();
         
         portfolio.setAvailableBalance(portfolio.getAvailableBalance() - stockAskPrice * quantity - brokerFee);
-        portfolioService.getTotalBalance(portfolioId); // Updating total balance
+        portfolioService.updateTotalBalance(portfolioId); // Updating total balance
         portfolioService.updatePortfolio(portfolio);
 
         order.setOrderMessage("Stock bought successfully!");
@@ -225,7 +225,7 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
         Double stockBidPrice = stock.getBid();
 
         portfolio.setAvailableBalance(portfolio.getAvailableBalance() + stockBidPrice * quantity - brokerFee);
-        portfolioService.getTotalBalance(portfolioId); // Updating total balance
+        portfolioService.updateTotalBalance(portfolioId); // Updating total balance
         portfolioService.updatePortfolio(portfolio);
 
         order.setOrderMessage("Stock sold successfully!");

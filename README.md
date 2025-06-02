@@ -16,6 +16,7 @@ are:
 - 🏛️ **Simulate multiple stock exchanges** with working hours.
 - 💰 **Balance Updates:** Buy and sell stocks with automatic balance updates.
 - 🌐 **REST API Support** for all operations.
+- 🧾 *Transaction history:*  orders and operation history
 
 ---
 
@@ -41,8 +42,6 @@ cd duckvest
 ## 📌 Possible Extensions
 
     ✅ Real-time stock price integration (e.g., Alpha Vantage, Yahoo Finance)
-
-    🧾 Transaction history and reporting
 
     📬 Email or notification system
 

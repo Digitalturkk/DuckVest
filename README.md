@@ -16,7 +16,7 @@ are:
 - 🏛️ **Simulate multiple stock exchanges** with working hours.
 - 💰 **Balance Updates:** Buy and sell stocks with automatic balance updates.
 - 🌐 **REST API Support** for all operations.
-- 🧾 *Transaction history:*  orders and operation history
+- 🧾 **Transaction history:** orders and operation history
 
 ---
 

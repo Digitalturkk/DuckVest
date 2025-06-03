@@ -6,6 +6,7 @@ import com.DuckVest.DTOs.OrderDTO;
 import com.DuckVest.DTOs.PortfolioStocksDTO;
 import com.DuckVest.DTOs.StockDTO;
 import com.DuckVest.DTOs.StockExchangeSummaryDTO;
+import com.DuckVest.Exceptions.GlobalNotFound.GlobalNotFoundException;
 import com.DuckVest.Models.Orders;
 import com.DuckVest.Models.Portfolio;
 import com.DuckVest.Models.PortfolioStocks;
@@ -44,7 +45,7 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
 
     @Override
     public PortfolioStocks getPortfolioStockById(Long id) {
-        return portfolioStocksRepo.findById(id).orElse(null);
+        return portfolioStocksRepo.findById(id).orElseThrow( () -> new GlobalNotFoundException("Portfolio-Stock not found with id: " + id, null));
     }
 
     @Override
@@ -54,20 +55,23 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
 
     @Override
     public void deletePortfolioStock(Long id) {
+        if (!portfolioStocksRepo.existsById(id)) {
+            throw new GlobalNotFoundException("Portfolio-Stock not found with id: " + id, null);
+        }
         portfolioStocksRepo.deleteById(id);
     }
 
     @Override
     public void updatePortfolioStock(PortfolioStocks portfolioStock) {
-        PortfolioStocks existingPortfolioStock = portfolioStocksRepo.findById(portfolioStock.getId()).orElse(null);
-        if (existingPortfolioStock != null) {
-            existingPortfolioStock.setQuantity(portfolioStock.getQuantity());
-            existingPortfolioStock.setTotalCost(portfolioStock.getTotalCost());
-            existingPortfolioStock.setAveragePrice(portfolioStock.getAveragePrice());
-            existingPortfolioStock.setPortfolio(portfolioStock.getPortfolio());
-            existingPortfolioStock.setStock(portfolioStock.getStock());
-            portfolioStocksRepo.save(existingPortfolioStock);
-        }
+        PortfolioStocks existingPortfolioStock = portfolioStocksRepo.findById(portfolioStock.getId()).orElseThrow( () -> new GlobalNotFoundException("Portfolio-Stock not found with id: " + portfolioStock.getId(), null));
+
+        existingPortfolioStock.setQuantity(portfolioStock.getQuantity());
+        existingPortfolioStock.setTotalCost(portfolioStock.getTotalCost());
+        existingPortfolioStock.setAveragePrice(portfolioStock.getAveragePrice());
+        existingPortfolioStock.setPortfolio(portfolioStock.getPortfolio());
+        existingPortfolioStock.setStock(portfolioStock.getStock());
+        portfolioStocksRepo.save(existingPortfolioStock);
+
     }
 
     @Override

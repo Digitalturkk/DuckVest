@@ -1,6 +1,7 @@
 package com.DuckVest.Services.OrdersServices;
 
 import com.DuckVest.DTOs.OrderDTO;
+import com.DuckVest.Exceptions.GlobalNotFound.GlobalNotFoundException;
 import com.DuckVest.Models.Orders;
 import com.DuckVest.Repositories.OrdersRepo;
 import com.DuckVest.Services.InvestorServices.InvestorService;
@@ -31,7 +32,7 @@ public class OrderImplement implements OrderService {
 
     @Override
     public Orders getOrderByID(Long id) {
-        return ordersRepo.findById(id).get();
+        return ordersRepo.findById(id).orElseThrow( () -> new GlobalNotFoundException("Orde not found with id: " + id, null));
     }
 
     @Override
@@ -41,17 +42,23 @@ public class OrderImplement implements OrderService {
 
     @Override
     public void deleteOrder(Long id) {
+        if (!ordersRepo.existsById(id)) {
+            throw new GlobalNotFoundException("Order not found with id: " + id, null);
+        }
         ordersRepo.deleteById(id);
     }
 
     @Override
     public void deleteAllOrders() {
+        if (ordersRepo.count() == 0) {
+            throw new GlobalNotFoundException("No orders found to delete", null);
+        }
         ordersRepo.deleteAll();
     }
 
     @Override
     public OrderDTO createOrderDTO(Long orderId, Long investorId, Long stockId) {
-        Orders order = ordersRepo.findById(orderId).get();
+        Orders order = ordersRepo.findById(orderId).orElseThrow( () -> new GlobalNotFoundException("Order not found with id: " + orderId, null));
 
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setId(orderId);

@@ -3,6 +3,7 @@ package com.DuckVest.Services.PortfolioServices;
 import com.DuckVest.CustomEnums.OrderStatus;
 import com.DuckVest.DTOs.PortfolioDTO;
 import com.DuckVest.DTOs.PortfolioStocksDTO;
+import com.DuckVest.Exceptions.GlobalNotFound.GlobalNotFoundException;
 import com.DuckVest.Models.*;
 import com.DuckVest.Repositories.InvestorsRepo;
 import com.DuckVest.Repositories.PortfolioRepo;
@@ -41,7 +42,7 @@ public class PortfolioImplement implements PortfolioService {
 
     @Override
     public Portfolio getPortfolioById(Long id) {
-        return portfolioRepo.findById(id).get();
+        return portfolioRepo.findById(id).orElseThrow(() -> new GlobalNotFoundException("Portfolio not found with id: " + id, null));
     }
 
     @Override
@@ -51,13 +52,13 @@ public class PortfolioImplement implements PortfolioService {
 
     @Override
     public void updatePortfolio(Portfolio portfolio) {
-        Portfolio updatingPortfolio = portfolioRepo.findById(portfolio.getPortfolioId()).get();
+        Portfolio updatingPortfolio = portfolioRepo.findById(portfolio.getPortfolioId()).orElseThrow(() -> new GlobalNotFoundException("Portfolio not found with id: " + portfolio.getPortfolioId(), null));
         modelMapper.map(updatingPortfolio, portfolio);
     }
 
     @Override
     public void updateTotalBalance(Long id) {
-        Portfolio workingPortfolio = portfolioRepo.findById(id).get();
+        Portfolio workingPortfolio = portfolioRepo.findById(id).orElseThrow(() -> new GlobalNotFoundException("Portfolio not found with id: " + id, null));
         List<PortfolioStocks> portfolioStocks = portfolioStocksRepo.findAllByPortfolio(workingPortfolio);
 
         double totalBalance = 0.0;
@@ -76,7 +77,7 @@ public class PortfolioImplement implements PortfolioService {
 
     @Override
     public Double getReservedBalance(Long id) {
-        Portfolio workingPortfolio = portfolioRepo.findById(id).get();
+        Portfolio workingPortfolio = portfolioRepo.findById(id).orElseThrow(() -> new GlobalNotFoundException("Portfolio not found with id: " + id, null));
 
         List<Orders> portfolioOrders = workingPortfolio.getOrdersList();
         double reservedBalance = 0.0;
@@ -98,8 +99,8 @@ public class PortfolioImplement implements PortfolioService {
 
     @Override
     public PortfolioDTO createPortfolioDTO(Long portfolioId, Long investorId, Long portfolioStocksID) {
-        Portfolio portfolio = portfolioRepo.findById(portfolioId).get();
-        Investor investor = investorsRepo.findById(investorId).get();
+        Portfolio portfolio = portfolioRepo.findById(portfolioId).orElseThrow(() -> new GlobalNotFoundException("Portfolio not found with id: " + portfolioId, null));
+        Investor investor = investorsRepo.findById(investorId).orElseThrow(() -> new GlobalNotFoundException("Investor not found with id: " + investorId, null));
 
         List<PortfolioStocks> portfolioStocksList = portfolioStocksRepo.findAllByPortfolio(portfolio);
 

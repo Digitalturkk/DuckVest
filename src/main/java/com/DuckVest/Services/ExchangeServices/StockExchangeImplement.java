@@ -2,6 +2,7 @@ package com.DuckVest.Services.ExchangeServices;
 
 import com.DuckVest.DTOs.StockExchangeDTO;
 import com.DuckVest.DTOs.StockExchangeSummaryDTO;
+import com.DuckVest.Exceptions.GlobalNotFound.GlobalNotFoundException;
 import com.DuckVest.Models.StockExchange;
 import com.DuckVest.Repositories.StockExchangeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +19,19 @@ public class StockExchangeImplement implements StockExchangeService {
 
     @Override
     public StockExchange getExchangeById(Long id) {
-        return stockExchangeRepo.findById(id).orElse(null);
+        return stockExchangeRepo.findById(id).orElseThrow(() -> new GlobalNotFoundException("Stock Exchange not found with id: " + id, null));
     }
 
     @Override
     public List<StockExchangeDTO> getAllExchangeDTOs() {
         List<StockExchangeDTO> stockExchangeDTOList = new ArrayList<>();
+        List<StockExchange> stockExchanges = stockExchangeRepo.findAll();
 
-        for (StockExchange stockExchange : stockExchangeRepo.findAll()) {
+        if (stockExchanges.isEmpty()) {
+            throw new GlobalNotFoundException("No Stock Exchanges found", null);
+        }
+
+        for (StockExchange stockExchange : stockExchanges) {
             stockExchangeDTOList.add(createStockExchangeDTO(stockExchange.getId()));
         }
 
@@ -39,6 +45,9 @@ public class StockExchangeImplement implements StockExchangeService {
 
     @Override
     public void deleteExchange(Long id) {
+        if (!stockExchangeRepo.existsById(id)) {
+            throw new GlobalNotFoundException("Stock Exchange not found with id: " + id, null);
+        }
         stockExchangeRepo.deleteById(id);
     }
 
@@ -53,10 +62,7 @@ public class StockExchangeImplement implements StockExchangeService {
 
     @Override
     public StockExchangeDTO createStockExchangeDTO(Long id) {
-        StockExchange stockExchange = stockExchangeRepo.findById(id).orElse(null);
-        if (stockExchange == null) {
-            return null;
-        }
+        StockExchange stockExchange = stockExchangeRepo.findById(id).orElseThrow(() -> new GlobalNotFoundException("Stock Exchange not found with id: " + id, null));
 
         StockExchangeDTO stockExchangeDTO = new StockExchangeDTO();
         stockExchangeDTO.setId(stockExchange.getId());

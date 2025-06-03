@@ -2,6 +2,7 @@ package com.DuckVest.Services.StockServices;
 
 import com.DuckVest.DTOs.StockDTO;
 import com.DuckVest.DTOs.StockExchangeSummaryDTO;
+import com.DuckVest.Exceptions.GlobalNotFound.GlobalNotFoundException;
 import com.DuckVest.Models.Stocks;
 import com.DuckVest.Repositories.StocksRepo;
 import com.DuckVest.Services.ExchangeServices.StockExchangeService;
@@ -25,22 +26,29 @@ public class StocksImplement implements StocksService { // Добавь пров
 
     @Override
     public void deleteStocks(Long id) {
+        if (!stocksRepo.existsById(id)) {
+            throw new GlobalNotFoundException("Stock not found with id: " + id, null);
+        }
         stocksRepo.deleteById(id);
     }
 
     @Override
     public Stocks getStockById(Long id) {
-        return stocksRepo.findById(id).get();
+        return stocksRepo.findById(id).orElseThrow(() -> new GlobalNotFoundException("Stock not found with id: " + id, null));
     }
 
     @Override
     public List<Stocks> getAllStocks() {
-        return stocksRepo.findAll();
+        List<Stocks> stocks = stocksRepo.findAll();
+        if (stocks.isEmpty()) {
+            throw new GlobalNotFoundException("No stocks found", null);
+        }
+        return stocks;
     }
 
     @Override
     public StockDTO createStockDTO(Long id) {
-        Stocks stock = stocksRepo.findById(id).get();
+        Stocks stock = stocksRepo.findById(id).orElseThrow(() -> new GlobalNotFoundException("Stock not found with id: " + id, null));
         StockExchangeSummaryDTO stockExchangeSummaryDTO = stockExchangeService.createStockExchangeSummaryDTO(stock.getStockExchange());
 
         StockDTO stockDTO = new StockDTO();

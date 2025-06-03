@@ -18,6 +18,9 @@ public class Investor {
     private Long id;
     @NotBlank(message = "Name is required")
     private String name;
+    @Column(unique = true)
+    @NotBlank(message = "Username is required")
+    private String username;
     @NotBlank(message = "Name is required")
     @Size(min=3)
     private String password;
@@ -42,7 +45,7 @@ public class Investor {
 
     public Investor() {}
 
-    public Investor(String name, String password, String email, String phone, String address, AccountType accountType, Boolean isInvestorAccountEnable, int age, List<Portfolio> portfolios) {
+    public Investor(String name, String password, String email, String phone, String address, AccountType accountType, Boolean isInvestorAccountEnable, int age, List<Portfolio> portfolios, String username) {
         this.name = name;
         this.password = password;
         this.age = age;
@@ -52,6 +55,7 @@ public class Investor {
         this.accountType = accountType;
         this.isInvestorAccountEnable = isInvestorAccountEnable;
         this.portfolios = portfolios;
+        this.username = username;
     }
 
     public Long getId() {
@@ -60,6 +64,14 @@ public class Investor {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public @NotBlank(message = "Username is required") String getUsername() {
+        return username;
+    }
+
+    public void setUsername(@NotBlank(message = "Username is required") String username) {
+        this.username = username;
     }
 
     @NotNull

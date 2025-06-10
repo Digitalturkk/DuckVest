@@ -13,7 +13,7 @@ are:
 - 🛠️ **Modular & Layered Architecture:** Easily extensible for future enhancements and integrations.
 - 📈 **Stock Tranding Simulation:** Models buting and selling of stocks and simulate stock price updates.
 - 👤 **User Managment:** Manage investors, their accounts, portfolios and balances easily.
-- 🏛️ **Simulate multiple stock exchanges** with working hours.
+- 🏛️ **Simulate multiple stock exchanges** with working hours in UTC.
 - 💰 **Balance Updates:** Buy and sell stocks with automatic balance updates.
 - 🌐 **REST API Support** for all operations.
 - 🧾 **Transaction history:** orders and operation history

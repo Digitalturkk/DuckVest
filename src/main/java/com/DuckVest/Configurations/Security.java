@@ -14,12 +14,11 @@ import javax.sql.DataSource;
 public class Security {
 
     @Bean
-
     public UserDetailsManager userDetailsManager(DataSource dataSource) {
         JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
 
-        userDetailsManager.setUsersByUsernameQuery("select user_name, user_password, enable from users where user_name=?");
-        userDetailsManager.setAuthoritiesByUsernameQuery("select user_name, role from roles where user_name=?");
+        userDetailsManager.setUsersByUsernameQuery("select username, password, is_investor_account_enable from investors where username=?");
+        userDetailsManager.setAuthoritiesByUsernameQuery("select username, account_type from investors where username=?");
 
         return userDetailsManager;
     }

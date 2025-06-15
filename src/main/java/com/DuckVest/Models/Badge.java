@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "badges")
-public class Badges {
+public class Badge {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long badgeId;
@@ -31,10 +31,10 @@ public class Badges {
     )
     private Set<Investor> investor;
 
-    public Badges() {
+    public Badge() {
     }
 
-    public Badges(Long badgeId, String badgeName, String badgeDescription, String badgeType, String badgeCriteria, Set<Investor> investor) {
+    public Badge(Long badgeId, String badgeName, String badgeDescription, String badgeType, String badgeCriteria, Set<Investor> investor) {
         this.badgeId = badgeId;
         this.badgeName = badgeName;
         this.badgeDescription = badgeDescription;

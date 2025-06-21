@@ -10,7 +10,7 @@ import java.util.List;
 public interface InvestorService {
     void saveInvestor(Investor investor);
     void deleteInvestor(Long id);
-    Investor getInvestor(Long id);
+    Investor getInvestorById(Long id);
     List<Investor> getAllInvestors();
     void enableInvestorAccount(Long id);
     void disableInvestorAccount(Long id);

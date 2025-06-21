@@ -1,16 +1,27 @@
 package com.DuckVest.Services.BadgeServices;
 
+import com.DuckVest.DTOs.BadgeDTO;
 import com.DuckVest.Exceptions.GlobalNotFound.GlobalNotFoundException;
-import com.DuckVest.Models.Badge;
+import com.DuckVest.Models.*;
 import com.DuckVest.Repositories.BadgeRepo;
+import com.DuckVest.Repositories.PortfolioStocksRepo;
+import com.DuckVest.Services.InvestorServices.InvestorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.DuckVest.CustomEnums.BadgeCriteria;
+
+import java.util.List;
 
 @Service
 public class BadgeImplement implements BadgeService {
 
     @Autowired
     private BadgeRepo badgeRepo;
+    @Autowired
+    private InvestorService investorService;
+    @Autowired
+    private PortfolioStocksRepo portfolioStocksRepo;
+
 
     @Override
     public Badge getBadgeById(Long badgeId) {
@@ -41,4 +52,25 @@ public class BadgeImplement implements BadgeService {
         badgeRepo.deleteById(badgeId);
     }
 
+    @Override
+    public BadgeDTO createBadgeDTO(Long badgeId) {
+        Badge badge = getBadgeById(badgeId);
+        return new BadgeDTO(
+                badge.getBadgeName(),
+                badge.getBadgeDescription(),
+                badge.getBadgeCriteria()
+        );
+    }
+
+    @Override
+    public void checkBadgeBuyFirstStockCriteria(Long investorId) {
+        Investor investor = investorService.getInvestorById(investorId);
+        List<Badge> investorBadges = investor.getBadges();
+        List<PortfolioStocks> portfolioStocks = portfolioStocksRepo.findAllByPortfolio(investor.getPortfolios().getFirst());
+        if (!portfolioStocks.isEmpty()) {
+            investorBadges.add(badgeRepo.findBadgeByBadgeCriteria(BadgeCriteria.BUY_FIRST_STOCK));
+            investor.setBadges(investorBadges);
+            investorService.saveInvestor(investor);
+        }
+    }
 }

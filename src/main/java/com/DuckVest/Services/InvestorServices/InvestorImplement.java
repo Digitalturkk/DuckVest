@@ -29,7 +29,7 @@ public class InvestorImplement implements InvestorService {
     }
 
     @Override
-    public Investor getInvestor(Long id) {
+    public Investor getInvestorById(Long id) {
         return investorsRepo.findById(id).orElseThrow( () -> new GlobalNotFoundException("Investor not found with id: " + id, null));
     }
 
@@ -83,7 +83,6 @@ public class InvestorImplement implements InvestorService {
         investorAccountDTO.setAccountType(investor.getAccountType());
         investorAccountDTO.setPortfolioBalance(portfolio.getTotalBalance());
         investorAccountDTO.setBuyingPower(portfolio.getAvailableBalance());
-        investorAccountDTO.setIsAccountActive(investor.getIsInvestorAccountEnable());
         return investorAccountDTO;
     }
 

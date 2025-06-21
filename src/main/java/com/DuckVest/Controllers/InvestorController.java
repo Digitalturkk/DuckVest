@@ -22,7 +22,7 @@ public class InvestorController {
 
     @GetMapping("/get-id={id}")
     public Investor getInvestorById(@PathVariable Long id) {
-        return investorService.getInvestor(id);
+        return investorService.getInvestorById(id);
     }
 
     @PostMapping("/add")

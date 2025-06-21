@@ -43,9 +43,17 @@ public class Investor {
     @OneToMany(mappedBy = "investor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Portfolio> portfolios;
 
+    @ManyToMany
+    @JoinTable(
+            name = "investor_badges",
+            joinColumns = @JoinColumn(name = "investor_id"),
+            inverseJoinColumns = @JoinColumn(name = "badge_id")
+    )
+    private List<Badge> badges;
+
     public Investor() {}
 
-    public Investor(String name, String password, String email, String phone, String address, AccountType accountType, Boolean isInvestorAccountEnable, int age, List<Portfolio> portfolios, String username) {
+    public Investor(String name, String password, String email, String phone, String address, AccountType accountType, Boolean isInvestorAccountEnable, int age, List<Portfolio> portfolios, String username, List<Badge> badges) {
         this.name = name;
         this.password = password;
         this.age = age;
@@ -56,6 +64,7 @@ public class Investor {
         this.isInvestorAccountEnable = isInvestorAccountEnable;
         this.portfolios = portfolios;
         this.username = username;
+        this.badges = badges;
     }
 
     public Long getId() {
@@ -146,5 +155,13 @@ public class Investor {
 
     public void setPortfolios(List<Portfolio> portfolios) {
         this.portfolios = portfolios;
+    }
+
+    public List<Badge> getBadges() {
+        return badges;
+    }
+
+    public void setBadges(List<Badge> badges) {
+        this.badges = badges;
     }
 }

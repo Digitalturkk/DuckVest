@@ -12,8 +12,9 @@ public class PortfolioDTO {
     private Double availableBalance;
     private List<PortfolioStocksDTO> stocksList;
     private List<OrderDTO> ordersList;
+    private List<BadgeDTO> badgesList;
 
-    public PortfolioDTO(Long portfolioId, String investorName, Double totalBalance, Double reservedBalance, Double availableBalance, List<PortfolioStocksDTO> stocksList, List<OrderDTO> ordersList) {
+    public PortfolioDTO(Long portfolioId, String investorName, Double totalBalance, Double reservedBalance, Double availableBalance, List<PortfolioStocksDTO> stocksList, List<OrderDTO> ordersList, List<BadgeDTO> badgesList) {
         this.portfolioId = portfolioId;
         this.investorName = investorName;
         this.totalBalance = totalBalance;
@@ -21,6 +22,7 @@ public class PortfolioDTO {
         this.availableBalance = availableBalance;
         this.stocksList = stocksList;
         this.ordersList = ordersList;
+        this.badgesList = badgesList;
     }
 
     public PortfolioDTO() {
@@ -80,5 +82,13 @@ public class PortfolioDTO {
 
     public void setPortfolioId(Long portfolioId) {
         this.portfolioId = portfolioId;
+    }
+
+    public List<BadgeDTO> getBadgesList() {
+        return badgesList;
+    }
+
+    public void setBadgesList(List<BadgeDTO> badgesList) {
+        this.badgesList = badgesList;
     }
 }

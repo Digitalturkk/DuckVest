@@ -11,9 +11,8 @@ public class InvestorAccountDTO {
     private AccountType AccountType;
     private Double PortfolioBalance;
     private Double BuyingPower;
-    private boolean isAccountActive;
 
-    public InvestorAccountDTO(String username,String name, String email, String phone, AccountType accountType, Double portfolioBalance, Double buyingPower, boolean isAccountActive) {
+    public InvestorAccountDTO(String username,String name, String email, String phone, AccountType accountType, Double portfolioBalance, Double buyingPower) {
         this.username = username;
         this.name = name;
         this.email = email;
@@ -21,7 +20,6 @@ public class InvestorAccountDTO {
         this.AccountType = accountType;
         this.PortfolioBalance = portfolioBalance;
         this.BuyingPower = buyingPower;
-        this.isAccountActive = isAccountActive;
     }
 
     public InvestorAccountDTO() {
@@ -83,11 +81,4 @@ public class InvestorAccountDTO {
         this.BuyingPower = buyingPower;
     }
 
-    public boolean getIsAccountActive() {
-        return this.isAccountActive;
-    }
-
-    public void setIsAccountActive(boolean isAccountActive) {
-        this.isAccountActive = isAccountActive;
-    }
 }

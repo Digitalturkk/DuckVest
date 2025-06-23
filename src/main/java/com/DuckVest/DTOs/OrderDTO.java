@@ -2,6 +2,7 @@ package com.DuckVest.DTOs;
 
 import com.DuckVest.CustomEnums.OrderStatus;
 import com.DuckVest.CustomEnums.OrderType;
+import com.DuckVest.DTOs.InvestorDTOs.InvestorSummaryDTO;
 
 import java.util.Date;
 

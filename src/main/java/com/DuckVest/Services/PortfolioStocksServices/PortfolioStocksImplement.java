@@ -5,13 +5,14 @@ import com.DuckVest.CustomEnums.OrderType;
 import com.DuckVest.DTOs.OrderDTO;
 import com.DuckVest.DTOs.PortfolioStocksDTO;
 import com.DuckVest.DTOs.StockDTO;
-import com.DuckVest.DTOs.StockExchangeSummaryDTO;
+import com.DuckVest.DTOs.StockExchangeDTOs.StockExchangeSummaryDTO;
 import com.DuckVest.Exceptions.GlobalNotFound.GlobalNotFoundException;
 import com.DuckVest.Models.Orders;
 import com.DuckVest.Models.Portfolio;
 import com.DuckVest.Models.PortfolioStocks;
 import com.DuckVest.Models.Stocks;
 import com.DuckVest.Repositories.PortfolioStocksRepo;
+import com.DuckVest.Services.BadgeServices.BadgeService;
 import com.DuckVest.Services.ExchangeServices.StockExchangeService;
 import com.DuckVest.Services.OrdersServices.OrderService;
 import com.DuckVest.Services.PortfolioServices.PortfolioService;
@@ -37,6 +38,8 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
     OrderService orderService;
     @Autowired
     StockExchangeService stockExchangeService;
+    @Autowired
+    BadgeService badgeService;
 
     @Override
     public List<PortfolioStocks> getAllPortfolioStocks() {
@@ -142,6 +145,8 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
 
         order.setPortfolio(portfolio);
         orderService.saveOrders(order);
+
+        badgeService.checkAllBuyBadgeCriteria(portfolio.getInvestor().getId());
 
         return orderService.createOrderDTO(order.getId(), portfolio.getInvestor().getId(), stockId);
     }

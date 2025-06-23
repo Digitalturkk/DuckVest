@@ -1,4 +1,4 @@
-package com.DuckVest.DTOs;
+package com.DuckVest.DTOs.InvestorDTOs;
 
 import com.DuckVest.CustomEnums.AccountType;
 

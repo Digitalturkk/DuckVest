@@ -1,4 +1,4 @@
-package com.DuckVest.DTOs;
+package com.DuckVest.DTOs.InvestorDTOs;
 
 // InvestorSummaryDTOs service is in com.DuckVest.Services.InvestorService
 public class InvestorSummaryDTO {

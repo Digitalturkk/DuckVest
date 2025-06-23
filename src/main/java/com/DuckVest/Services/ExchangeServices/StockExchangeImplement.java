@@ -1,7 +1,7 @@
 package com.DuckVest.Services.ExchangeServices;
 
-import com.DuckVest.DTOs.StockExchangeDTO;
-import com.DuckVest.DTOs.StockExchangeSummaryDTO;
+import com.DuckVest.DTOs.StockExchangeDTOs.StockExchangeDTO;
+import com.DuckVest.DTOs.StockExchangeDTOs.StockExchangeSummaryDTO;
 import com.DuckVest.Exceptions.GlobalNotFound.GlobalNotFoundException;
 import com.DuckVest.Models.StockExchange;
 import com.DuckVest.Repositories.StockExchangeRepo;

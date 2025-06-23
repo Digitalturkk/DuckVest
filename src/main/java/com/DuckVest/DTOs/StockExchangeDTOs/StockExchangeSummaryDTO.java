@@ -1,4 +1,4 @@
-package com.DuckVest.DTOs;
+package com.DuckVest.DTOs.StockExchangeDTOs;
 
 // This DTO is mostly used for summarizing stock exchange data for StockDTOs
 // StockExchangeSummaryDTO's service is in com.DuckVest.Services.StockExchangeService

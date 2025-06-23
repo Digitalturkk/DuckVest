@@ -1,6 +1,7 @@
 package com.DuckVest.Services.BadgeServices;
 
-import com.DuckVest.DTOs.BadgeDTO;
+import com.DuckVest.DTOs.BadgeDTOs.BadgeDTO;
+import com.DuckVest.DTOs.BadgeDTOs.InvestorBadgesDTO;
 import com.DuckVest.Exceptions.GlobalNotFound.GlobalNotFoundException;
 import com.DuckVest.Models.*;
 import com.DuckVest.Repositories.BadgeRepo;
@@ -8,9 +9,11 @@ import com.DuckVest.Repositories.PortfolioStocksRepo;
 import com.DuckVest.Repositories.StocksRepo;
 import com.DuckVest.Services.InvestorServices.InvestorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import com.DuckVest.CustomEnums.BadgeCriteria;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -66,6 +69,13 @@ public class BadgeImplement implements BadgeService {
     }
 
     @Override
+    public BadgeDTO transformBadgeToBadgeDTO(Badge badge) {
+        Long badgeId = badge.getBadgeId();
+        return createBadgeDTO(badgeId);
+    }
+
+    @Override
+    @Async
     public void checkBadgeBuyFirstStockCriteria(Long investorId) {
         Investor investor = investorService.getInvestorById(investorId);
         List<Badge> investorBadges = investor.getBadges();
@@ -78,6 +88,7 @@ public class BadgeImplement implements BadgeService {
     }
 
     @Override
+    @Async
     public void checkBadgeOwnTeslaCriteria(Long investorId) {
         Investor investor = investorService.getInvestorById(investorId);
         List<Badge> investorBadges = investor.getBadges();
@@ -90,9 +101,27 @@ public class BadgeImplement implements BadgeService {
     }
 
     @Override
-    public void checkAllBadgeCriteria(Long investorId) {
+    @Async
+    public void checkAllBuyBadgeCriteria(Long investorId) {
         checkBadgeBuyFirstStockCriteria(investorId);
         checkBadgeOwnTeslaCriteria(investorId);
+    }
+
+    @Override
+    public InvestorBadgesDTO createInvestorBadgesDTO(Long investorId) {
+        Investor investor = investorService.getInvestorById(investorId);
+        checkAllBuyBadgeCriteria(investorId);
+        List <Badge> investorBadges = investor.getBadges();
+        List<BadgeDTO> badgesDTO = new ArrayList<>();
+        for (Badge badge : investorBadges) {
+            BadgeDTO transferedBadgeDTO = transformBadgeToBadgeDTO(badge);
+            badgesDTO.add(transferedBadgeDTO);
+        }
+
+        return new InvestorBadgesDTO(
+                investor.getUsername(),
+                investor.getName(),
+                badgesDTO);
     }
 
 }

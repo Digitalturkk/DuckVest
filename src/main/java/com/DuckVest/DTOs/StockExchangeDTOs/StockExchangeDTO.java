@@ -1,4 +1,4 @@
-package com.DuckVest.DTOs;
+package com.DuckVest.DTOs.StockExchangeDTOs;
 
 import java.time.ZonedDateTime;
 

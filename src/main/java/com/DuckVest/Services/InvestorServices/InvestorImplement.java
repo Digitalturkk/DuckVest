@@ -1,8 +1,8 @@
 package com.DuckVest.Services.InvestorServices;
 
 import com.DuckVest.CustomEnums.AccountType;
-import com.DuckVest.DTOs.InvestorAccountDTO;
-import com.DuckVest.DTOs.InvestorSummaryDTO;
+import com.DuckVest.DTOs.InvestorDTOs.InvestorAccountDTO;
+import com.DuckVest.DTOs.InvestorDTOs.InvestorSummaryDTO;
 import com.DuckVest.Exceptions.GlobalNotFound.GlobalNotFoundException;
 import com.DuckVest.Models.Investor;
 import com.DuckVest.Models.Portfolio;

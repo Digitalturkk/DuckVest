@@ -1,5 +1,7 @@
 package com.DuckVest.DTOs;
 
+import com.DuckVest.DTOs.BadgeDTOs.BadgeDTO;
+
 import java.util.List;
 
 // portfolioDTOs service is in com.DuckVest.Services.PortfolioService

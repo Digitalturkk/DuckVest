@@ -1,6 +1,7 @@
 package com.DuckVest.Services.BadgeServices;
 
-import com.DuckVest.DTOs.BadgeDTO;
+import com.DuckVest.DTOs.BadgeDTOs.BadgeDTO;
+import com.DuckVest.DTOs.BadgeDTOs.InvestorBadgesDTO;
 import com.DuckVest.Models.Badge;
 
 public interface BadgeService {
@@ -10,8 +11,10 @@ public interface BadgeService {
     void deleteBadge(Long badgeId);
 
     BadgeDTO createBadgeDTO(Long BadgeId);
+    BadgeDTO transformBadgeToBadgeDTO(Badge badge);
+    InvestorBadgesDTO createInvestorBadgesDTO(Long InvestorId);
 
     void checkBadgeBuyFirstStockCriteria(Long InvestorId);
     void checkBadgeOwnTeslaCriteria(Long InvestorId);
-    void checkAllBadgeCriteria(Long InvestorId);
+    void checkAllBuyBadgeCriteria(Long InvestorId);
 }

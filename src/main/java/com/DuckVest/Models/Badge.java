@@ -15,7 +15,7 @@ public class Badge {
     @Column(name = "badge_name", unique = true)
     @NotBlank(message = "Badge name cannot be blank")
     private String badgeName;
-    @Column(name = "badge_description")
+    @Column(name = "badge_description", columnDefinition = "TEXT")
     private String badgeDescription;
     //@Column(name = "badge_image") commented as we will use it in future for frontend
     //private String badgeImage;

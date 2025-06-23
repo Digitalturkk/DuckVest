@@ -1,6 +1,6 @@
 package com.DuckVest.Controllers;
 
-import com.DuckVest.DTOs.InvestorAccountDTO;
+import com.DuckVest.DTOs.InvestorDTOs.InvestorAccountDTO;
 import com.DuckVest.Models.Investor;
 import com.DuckVest.Services.InvestorServices.InvestorService;
 import org.springframework.beans.factory.annotation.Autowired;

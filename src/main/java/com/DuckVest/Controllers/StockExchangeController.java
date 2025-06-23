@@ -1,6 +1,6 @@
 package com.DuckVest.Controllers;
 
-import com.DuckVest.DTOs.StockExchangeDTO;
+import com.DuckVest.DTOs.StockExchangeDTOs.StockExchangeDTO;
 import com.DuckVest.Models.StockExchange;
 import com.DuckVest.Services.ExchangeServices.StockExchangeService;
 import org.springframework.beans.factory.annotation.Autowired;

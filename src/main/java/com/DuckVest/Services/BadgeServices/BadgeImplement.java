@@ -5,6 +5,7 @@ import com.DuckVest.Exceptions.GlobalNotFound.GlobalNotFoundException;
 import com.DuckVest.Models.*;
 import com.DuckVest.Repositories.BadgeRepo;
 import com.DuckVest.Repositories.PortfolioStocksRepo;
+import com.DuckVest.Repositories.StocksRepo;
 import com.DuckVest.Services.InvestorServices.InvestorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ public class BadgeImplement implements BadgeService {
 
     @Autowired
     private BadgeRepo badgeRepo;
+    @Autowired
+    private StocksRepo stocksRepo;
     @Autowired
     private InvestorService investorService;
     @Autowired
@@ -73,4 +76,23 @@ public class BadgeImplement implements BadgeService {
             investorService.saveInvestor(investor);
         }
     }
+
+    @Override
+    public void checkBadgeOwnTeslaCriteria(Long investorId) {
+        Investor investor = investorService.getInvestorById(investorId);
+        List<Badge> investorBadges = investor.getBadges();
+        List<PortfolioStocks> portfolioStocks = portfolioStocksRepo.findAllByPortfolio(investor.getPortfolios().getFirst());
+        if (portfolioStocks.stream().anyMatch(portfolioStock -> portfolioStock.getStock().getCompanyName().equals("Tesla"))) {
+            investorBadges.add(badgeRepo.findBadgeByBadgeCriteria(BadgeCriteria.OWN_TESLA_STOCK));
+            investor.setBadges(investorBadges);
+            investorService.saveInvestor(investor);
+        }
+    }
+
+    @Override
+    public void checkAllBadgeCriteria(Long investorId) {
+        checkBadgeBuyFirstStockCriteria(investorId);
+        checkBadgeOwnTeslaCriteria(investorId);
+    }
+
 }

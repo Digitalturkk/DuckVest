@@ -10,5 +10,8 @@ public interface BadgeService {
     void deleteBadge(Long badgeId);
 
     BadgeDTO createBadgeDTO(Long BadgeId);
+
     void checkBadgeBuyFirstStockCriteria(Long InvestorId);
+    void checkBadgeOwnTeslaCriteria(Long InvestorId);
+    void checkAllBadgeCriteria(Long InvestorId);
 }

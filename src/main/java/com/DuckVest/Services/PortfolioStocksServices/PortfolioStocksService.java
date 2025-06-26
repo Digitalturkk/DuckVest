@@ -3,6 +3,7 @@ package com.DuckVest.Services.PortfolioStocksServices;
 import com.DuckVest.DTOs.OrderDTO;
 import com.DuckVest.DTOs.PortfolioStocksDTO;
 import com.DuckVest.Models.PortfolioStocks;
+import jakarta.mail.MessagingException;
 
 import java.util.List;
 
@@ -16,6 +17,6 @@ public interface PortfolioStocksService {
 
     PortfolioStocksDTO createPortfolioStocksDTO(PortfolioStocks portfolioStocks);
 
-    OrderDTO buyStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee);
-    OrderDTO sellStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee);
+    OrderDTO buyStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee) throws MessagingException;
+    OrderDTO sellStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee) throws MessagingException;
 }

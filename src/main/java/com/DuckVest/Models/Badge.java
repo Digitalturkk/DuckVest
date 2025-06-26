@@ -4,6 +4,7 @@ import com.DuckVest.CustomEnums.BadgeCriteria;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -32,25 +33,17 @@ public class Badge {
             inverseJoinColumns = @JoinColumn(name = "investor_id")
     )
     private Set<Investor> investor;
-    @ManyToMany
-    @JoinTable(
-            name = "badge_stocks",
-            joinColumns = @JoinColumn(name = "badge_id"),
-            inverseJoinColumns = @JoinColumn(name = "stock_id")
-    )
-    private Set<Stocks> stocks;
 
     public Badge() {
     }
 
-    public Badge(Long badgeId, String badgeName, String badgeDescription, String badgeType, BadgeCriteria badgeCriteria, Set<Investor> investor, Set<Stocks> stocks) {
+    public Badge(Long badgeId, String badgeName, String badgeDescription, String badgeType, BadgeCriteria badgeCriteria, Set<Investor> investor) {
         this.badgeId = badgeId;
         this.badgeName = badgeName;
         this.badgeDescription = badgeDescription;
         this.badgeType = badgeType;
         this.badgeCriteria = badgeCriteria;
         this.investor = investor;
-        this.stocks = stocks;
     }
 
     public Long getBadgeId() {
@@ -99,12 +92,5 @@ public class Badge {
 
     public void setInvestor(Set<Investor> investor) {
         this.investor = investor;
-    }
-
-    public Set<Stocks> getStocks() {
-        return stocks;
-    }
-    public void setStocks(Set<Stocks> stocks) {
-        this.stocks = stocks;
     }
 }

@@ -6,12 +6,12 @@ import com.DuckVest.Exceptions.GlobalNotFound.GlobalNotFoundException;
 import com.DuckVest.Models.*;
 import com.DuckVest.Repositories.BadgeRepo;
 import com.DuckVest.Repositories.PortfolioStocksRepo;
-import com.DuckVest.Repositories.StocksRepo;
 import com.DuckVest.Services.InvestorServices.InvestorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import com.DuckVest.CustomEnums.BadgeCriteria;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +21,6 @@ public class BadgeImplement implements BadgeService {
 
     @Autowired
     private BadgeRepo badgeRepo;
-    @Autowired
-    private StocksRepo stocksRepo;
     @Autowired
     private InvestorService investorService;
     @Autowired
@@ -78,11 +76,11 @@ public class BadgeImplement implements BadgeService {
     @Async
     public void checkBadgeBuyFirstStockCriteria(Long investorId) {
         Investor investor = investorService.getInvestorById(investorId);
-        List<Badge> investorBadges = investor.getBadges();
-        List<PortfolioStocks> portfolioStocks = portfolioStocksRepo.findAllByPortfolio(investor.getPortfolios().getFirst());
-        if (!portfolioStocks.isEmpty()) {
-            investorBadges.add(badgeRepo.findBadgeByBadgeCriteria(BadgeCriteria.BUY_FIRST_STOCK));
-            investor.setBadges(investorBadges);
+        Portfolio portfolio = investor.getPortfolio();
+        Badge badge = badgeRepo.findBadgeByBadgeCriteria(BadgeCriteria.BUY_FIRST_STOCK);
+
+        if (!investor.getBadges().contains(badge) && !portfolio.getPortfolioStocks().isEmpty()) {
+            investor.getBadges().add(badge); // связь ManyToMany
             investorService.saveInvestor(investor);
         }
     }
@@ -91,17 +89,20 @@ public class BadgeImplement implements BadgeService {
     @Async
     public void checkBadgeOwnTeslaCriteria(Long investorId) {
         Investor investor = investorService.getInvestorById(investorId);
+        Badge badge = badgeRepo.findBadgeByBadgeCriteria(BadgeCriteria.OWN_TESLA_STOCK);
         List<Badge> investorBadges = investor.getBadges();
-        List<PortfolioStocks> portfolioStocks = portfolioStocksRepo.findAllByPortfolio(investor.getPortfolios().getFirst());
-        if (portfolioStocks.stream().anyMatch(portfolioStock -> portfolioStock.getStock().getCompanyName().equals("Tesla"))) {
-            investorBadges.add(badgeRepo.findBadgeByBadgeCriteria(BadgeCriteria.OWN_TESLA_STOCK));
+        List<PortfolioStocks> portfolioStocks = portfolioStocksRepo.findAllByPortfolio(investor.getPortfolio());
+        if (portfolioStocks.stream().anyMatch(portfolioStock -> portfolioStock.getStock().getCompanyName().equals("Tesla")) && !investorBadges.contains(badge)) {
+            investorBadges.add(badge);
             investor.setBadges(investorBadges);
             investorService.saveInvestor(investor);
+            System.out.println("Badge added: " + badge.getBadgeName());
         }
     }
 
     @Override
     @Async
+    @Transactional
     public void checkAllBuyBadgeCriteria(Long investorId) {
         checkBadgeBuyFirstStockCriteria(investorId);
         checkBadgeOwnTeslaCriteria(investorId);
@@ -112,12 +113,15 @@ public class BadgeImplement implements BadgeService {
         Investor investor = investorService.getInvestorById(investorId);
         checkAllBuyBadgeCriteria(investorId);
         List <Badge> investorBadges = investor.getBadges();
+        investorBadges.size(); // Ensure the badges are loaded
         List<BadgeDTO> badgesDTO = new ArrayList<>();
         for (Badge badge : investorBadges) {
             BadgeDTO transferedBadgeDTO = transformBadgeToBadgeDTO(badge);
+            System.out.println("Transformed BadgeDTO: " + transferedBadgeDTO);
             badgesDTO.add(transferedBadgeDTO);
         }
 
+        System.out.println("Badges in DTO: " + badgesDTO);
         return new InvestorBadgesDTO(
                 investor.getUsername(),
                 investor.getName(),

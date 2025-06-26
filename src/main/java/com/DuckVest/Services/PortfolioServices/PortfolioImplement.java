@@ -1,6 +1,11 @@
 package com.DuckVest.Services.PortfolioServices;
 
+import com.DuckVest.CustomEnums.Currency;
 import com.DuckVest.CustomEnums.OrderStatus;
+import com.DuckVest.CustomEnums.TransactionStatus;
+import com.DuckVest.CustomEnums.TransactionType;
+import com.DuckVest.DTOs.BadgeDTOs.InvestorBadgesDTO;
+import com.DuckVest.DTOs.BankMoneyTransactionDTO;
 import com.DuckVest.DTOs.PortfolioDTO;
 import com.DuckVest.DTOs.PortfolioStocksDTO;
 import com.DuckVest.Exceptions.GlobalNotFound.GlobalNotFoundException;
@@ -8,6 +13,9 @@ import com.DuckVest.Models.*;
 import com.DuckVest.Repositories.InvestorsRepo;
 import com.DuckVest.Repositories.PortfolioRepo;
 import com.DuckVest.Repositories.PortfolioStocksRepo;
+import com.DuckVest.Services.BadgeServices.BadgeService;
+import com.DuckVest.Services.BankTransactionServices.BankTransactionService;
+import com.DuckVest.Services.Additional.JavaMailSenderServices.JMSService;
 import com.DuckVest.Services.OrdersServices.OrderService;
 import com.DuckVest.Services.PortfolioStocksServices.PortfolioStocksService;
 import org.modelmapper.ModelMapper;
@@ -18,17 +26,25 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.DuckVest.Services.Additional.DuckVestorServices.DuckVestorTipsService.getRandomAdvice;
+
 @Service
 public class PortfolioImplement implements PortfolioService {
 
     @Autowired
     PortfolioRepo portfolioRepo;
     @Autowired
+    BadgeService badgeService;
+    @Autowired
     InvestorsRepo investorsRepo;
     @Autowired
     OrderService orderService;
     @Autowired
     PortfolioStocksRepo portfolioStocksRepo;
+    @Autowired
+    BankTransactionService bankTransactionService;
+    @Autowired
+    JMSService jmsService;
     @Autowired
     ModelMapper modelMapper;
     @Autowired
@@ -98,9 +114,40 @@ public class PortfolioImplement implements PortfolioService {
     }
 
     @Override
+
+    public BankMoneyTransactionDTO addMoneyToPortfolio(Long id, Double amount) {
+        Portfolio portfolio = portfolioRepo.findById(id).orElseThrow(() -> new GlobalNotFoundException("Portfolio not found with id: " + id, null));
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Amount to add must be greater than zero.");
+        }
+        portfolio.setAvailableBalance(portfolio.getAvailableBalance() + amount);
+        portfolioRepo.save(portfolio);
+        updateTotalBalance(id);
+
+        BankTransaction bankTransaction = new BankTransaction(
+                amount,
+                TransactionType.DEPOSIT,
+                TransactionStatus.COMPLETED,
+                Currency.USD,
+                0.0,
+                amount + " USD deposited to your portfolio.\n" +
+                        "Your available balance is now: " + portfolio.getAvailableBalance() + " USD.\n" +
+                        "Use it wisely!\n" + getRandomAdvice(),
+                null, // No fromPortfolio for deposit
+                portfolio
+        );
+        bankTransactionService.saveBankTransaction(bankTransaction);
+        jmsService.sendBankTransactionToMail(bankTransaction);
+
+        return bankTransactionService.transferBankTransactionToBankMoneyTransactionDTO(bankTransaction);
+    }
+
+    @Override
     public PortfolioDTO createPortfolioDTO(Long portfolioId, Long investorId, Long portfolioStocksID) {
         Portfolio portfolio = portfolioRepo.findById(portfolioId).orElseThrow(() -> new GlobalNotFoundException("Portfolio not found with id: " + portfolioId, null));
         Investor investor = investorsRepo.findById(investorId).orElseThrow(() -> new GlobalNotFoundException("Investor not found with id: " + investorId, null));
+
+        InvestorBadgesDTO badgesList = badgeService.createInvestorBadgesDTO(investorId);
 
         List<PortfolioStocks> portfolioStocksList = portfolioStocksRepo.findAllByPortfolio(portfolio);
 
@@ -115,7 +162,6 @@ public class PortfolioImplement implements PortfolioService {
             stocksList.add(psDTO);
         }
 
-
         PortfolioDTO portfolioDTO = new PortfolioDTO();
         portfolioDTO.setPortfolioId(portfolio.getPortfolioId());
         portfolioDTO.setInvestorName(investor.getName());
@@ -128,7 +174,7 @@ public class PortfolioImplement implements PortfolioService {
                         .map(order -> orderService.createOrderDTO(order.getId(), investorId, order.getStock().getId()))
                         .toList()
         );
-
+        portfolioDTO.setBadgesList(badgesList);
         return portfolioDTO;
     }
 

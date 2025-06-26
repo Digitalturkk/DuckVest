@@ -1,6 +1,7 @@
 package com.DuckVest.DTOs;
 
 import com.DuckVest.DTOs.BadgeDTOs.BadgeDTO;
+import com.DuckVest.DTOs.BadgeDTOs.InvestorBadgesDTO;
 
 import java.util.List;
 
@@ -14,9 +15,9 @@ public class PortfolioDTO {
     private Double availableBalance;
     private List<PortfolioStocksDTO> stocksList;
     private List<OrderDTO> ordersList;
-    private List<BadgeDTO> badgesList;
+    private InvestorBadgesDTO badgesList;
 
-    public PortfolioDTO(Long portfolioId, String investorName, Double totalBalance, Double reservedBalance, Double availableBalance, List<PortfolioStocksDTO> stocksList, List<OrderDTO> ordersList, List<BadgeDTO> badgesList) {
+    public PortfolioDTO(Long portfolioId, String investorName, Double totalBalance, Double reservedBalance, Double availableBalance, List<PortfolioStocksDTO> stocksList, List<OrderDTO> ordersList, InvestorBadgesDTO badgesList) {
         this.portfolioId = portfolioId;
         this.investorName = investorName;
         this.totalBalance = totalBalance;
@@ -86,11 +87,11 @@ public class PortfolioDTO {
         this.portfolioId = portfolioId;
     }
 
-    public List<BadgeDTO> getBadgesList() {
+    public InvestorBadgesDTO getBadgesList() {
         return badgesList;
     }
 
-    public void setBadgesList(List<BadgeDTO> badgesList) {
+    public void setBadgesList(InvestorBadgesDTO badgesList) {
         this.badgesList = badgesList;
     }
 }

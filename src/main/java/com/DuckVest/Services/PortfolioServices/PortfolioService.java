@@ -1,5 +1,6 @@
 package com.DuckVest.Services.PortfolioServices;
 
+import com.DuckVest.DTOs.BankMoneyTransactionDTO;
 import com.DuckVest.DTOs.PortfolioDTO;
 import com.DuckVest.Models.Portfolio;
 
@@ -12,6 +13,7 @@ public interface PortfolioService {
     void updatePortfolio(Portfolio portfolio);
     void updateTotalBalance(Long id);
 
+    BankMoneyTransactionDTO addMoneyToPortfolio(Long id, Double amount);
     Double getReservedBalance(Long id);
 
     PortfolioDTO createPortfolioDTO(Long portfolioId, Long investorId, Long portfolioStocksID);

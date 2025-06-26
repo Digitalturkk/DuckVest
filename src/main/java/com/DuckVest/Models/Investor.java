@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -40,20 +41,20 @@ public class Investor {
     @NotNull
     private Boolean isInvestorAccountEnable;
 
-    @OneToMany(mappedBy = "investor", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Portfolio> portfolios;
+    @OneToOne(mappedBy = "investor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Portfolio portfolio;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "investor_badges",
             joinColumns = @JoinColumn(name = "investor_id"),
             inverseJoinColumns = @JoinColumn(name = "badge_id")
     )
-    private List<Badge> badges;
+    private List<Badge> badges = new ArrayList<>();
 
     public Investor() {}
 
-    public Investor(String name, String password, String email, String phone, String address, AccountType accountType, Boolean isInvestorAccountEnable, int age, List<Portfolio> portfolios, String username, List<Badge> badges) {
+    public Investor(String name, String password, String email, String phone, String address, AccountType accountType, Boolean isInvestorAccountEnable, int age, Portfolio portfolio, String username, List<Badge> badges) {
         this.name = name;
         this.password = password;
         this.age = age;
@@ -62,7 +63,7 @@ public class Investor {
         this.address = address;
         this.accountType = accountType;
         this.isInvestorAccountEnable = isInvestorAccountEnable;
-        this.portfolios = portfolios;
+        this.portfolio = portfolio;
         this.username = username;
         this.badges = badges;
     }
@@ -149,12 +150,12 @@ public class Investor {
         isInvestorAccountEnable = investorAccountEnable;
     }
 
-    public List<Portfolio> getPortfolios() {
-        return portfolios;
+    public Portfolio getPortfolio() {
+        return portfolio;
     }
 
-    public void setPortfolios(List<Portfolio> portfolios) {
-        this.portfolios = portfolios;
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
     }
 
     public List<Badge> getBadges() {

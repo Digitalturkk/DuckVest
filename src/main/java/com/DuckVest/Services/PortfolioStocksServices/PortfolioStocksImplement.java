@@ -14,9 +14,11 @@ import com.DuckVest.Models.Stocks;
 import com.DuckVest.Repositories.PortfolioStocksRepo;
 import com.DuckVest.Services.BadgeServices.BadgeService;
 import com.DuckVest.Services.ExchangeServices.StockExchangeService;
+import com.DuckVest.Services.Additional.JavaMailSenderServices.JMSService;
 import com.DuckVest.Services.OrdersServices.OrderService;
 import com.DuckVest.Services.PortfolioServices.PortfolioService;
 import com.DuckVest.Services.StockServices.StocksService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +42,8 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
     StockExchangeService stockExchangeService;
     @Autowired
     BadgeService badgeService;
+    @Autowired
+    private JMSService jmsService;
 
     @Override
     public List<PortfolioStocks> getAllPortfolioStocks() {
@@ -92,7 +96,7 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
     }
 
     @Override
-    public OrderDTO buyStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee) {
+    public OrderDTO buyStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee) throws MessagingException {
 
         if (quantity <= 0 || brokerFee < 0) {
             throw new IllegalArgumentException("Invalid quantity or broker fee");
@@ -148,11 +152,13 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
 
         badgeService.checkAllBuyBadgeCriteria(portfolio.getInvestor().getId());
 
+        jmsService.sendOrderToMail(order);
+
         return orderService.createOrderDTO(order.getId(), portfolio.getInvestor().getId(), stockId);
     }
 
     @Override
-    public OrderDTO sellStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee) {
+    public OrderDTO sellStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee) throws MessagingException {
 
         if (quantity <= 0 || brokerFee < 0) {
             throw new IllegalArgumentException("Invalid quantity or broker fee");
@@ -210,6 +216,8 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
 
         order.setPortfolio(portfolio);
         orderService.saveOrders(order);
+
+        jmsService.sendOrderToMail(order);
 
         return orderService.createOrderDTO(order.getId(), portfolio.getInvestor().getId(), stockId);
     }

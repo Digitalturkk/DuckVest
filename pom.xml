@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>try</groupId>
-	<artifactId>stocks-backend</artifactId>
+	<artifactId>DuckVest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>test</name>
 	<description>try my self</description>

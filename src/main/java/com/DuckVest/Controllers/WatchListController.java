@@ -7,6 +7,7 @@ import com.DuckVest.Services.WatchListServices.WatchListService;
 
 @RestController
 @RequestMapping("/watchlist")
+@CrossOrigin(origins = "*")
 public class WatchListController {
 
     @Autowired
@@ -20,6 +21,11 @@ public class WatchListController {
     @PostMapping("/add-stock={stockId}-to-wl={watchListId}")
     public void addStockToWatchList(@PathVariable Long watchListId, @PathVariable Long stockId) {
         watchListService.addStockToWatchList(watchListId, stockId);
+    }
+
+    @PostMapping("/rmv-stock={stockId}-to-wl={watchListId}")
+    public void removeStockFromWatchList(@PathVariable Long watchListId, @PathVariable Long stockId) {
+        watchListService.removeStockFromWatchList(watchListId, stockId);
     }
 
 }

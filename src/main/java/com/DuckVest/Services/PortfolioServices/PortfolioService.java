@@ -17,5 +17,5 @@ public interface PortfolioService {
     BankMoneyTransactionDTO addMoneyToPortfolio(Long id, Double amount) throws MessagingException;
     Double getReservedBalance(Long id);
 
-    PortfolioDTO createPortfolioDTO(Long portfolioId, Long investorId, Long portfolioStocksID);
+    PortfolioDTO createPortfolioDTO(Long portfolioId);
 }

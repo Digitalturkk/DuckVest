@@ -11,4 +11,5 @@ public interface WatchListService {
 
     WatchListDTO createWatchListDTO(Long watchListId);
     void addStockToWatchList(Long watchListId, Long stockId);
+    void removeStockFromWatchList(Long watchListId, Long stockId);
 }

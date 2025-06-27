@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/portfolios")
+@CrossOrigin(origins = "*")
 public class PortfolioController {
 
     @Autowired
@@ -25,15 +26,14 @@ public class PortfolioController {
         return portfolioService.getPortfolioById(id);
     }
 
-
     @GetMapping("/get-reserved-balance={id}")
     public Double getReservedBalance(@PathVariable Long id) {
         return portfolioService.getReservedBalance(id);
     }
 
-    @GetMapping("/get-portfolio-info={portfolioId}&{investorId}")
-    public PortfolioDTO getPortfolioInformantion(@PathVariable Long portfolioId, @PathVariable Long investorId) {
-        return portfolioService.createPortfolioDTO(portfolioId, investorId, portfolioId);
+    @GetMapping("/get-portfolio-info={portfolioId}")
+    public PortfolioDTO getPortfolioInformantion(@PathVariable Long portfolioId) {
+        return portfolioService.createPortfolioDTO(portfolioId);
     }
 
     @PostMapping("/add")

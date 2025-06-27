@@ -21,6 +21,7 @@ import com.DuckVest.Services.StockServices.StocksService;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.Date;
@@ -96,6 +97,7 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
     }
 
     @Override
+    @Transactional
     public OrderDTO buyStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee) throws MessagingException {
 
         if (quantity <= 0 || brokerFee < 0) {
@@ -158,6 +160,7 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
     }
 
     @Override
+    @Transactional
     public OrderDTO sellStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee) throws MessagingException {
 
         if (quantity <= 0 || brokerFee < 0) {

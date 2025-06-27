@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/exchanges")
+@CrossOrigin(origins = "*")
 public class StockExchangeController {
 
     @Autowired

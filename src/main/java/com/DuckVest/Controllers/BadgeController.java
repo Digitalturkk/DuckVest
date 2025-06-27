@@ -3,13 +3,11 @@ package com.DuckVest.Controllers;
 import com.DuckVest.DTOs.BadgeDTOs.InvestorBadgesDTO;
 import com.DuckVest.Services.BadgeServices.BadgeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/badges")
+@CrossOrigin(origins = "*")
 public class BadgeController {
 
     @Autowired

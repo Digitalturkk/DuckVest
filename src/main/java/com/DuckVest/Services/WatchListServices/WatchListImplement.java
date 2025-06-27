@@ -70,11 +70,20 @@ public class WatchListImplement implements WatchListService {
         WatchList watchList = getWatchListByInvestorId(watchListId);
         Stocks stock = stocksService.getStockById(stockId);
 
-        if (watchList.getStocks() == null) {
-            watchList.setStocks(new HashSet<>());
-        }
-
         watchList.getStocks().add(stock);
         updateWatchList(watchList);
+    }
+
+    @Override
+    public void removeStockFromWatchList(Long watchListId, Long stockId) {
+        WatchList watchList = getWatchListByInvestorId(watchListId);
+        Stocks stock = stocksService.getStockById(stockId);
+
+        if (watchList.getStocks() != null && watchList.getStocks().contains(stock)) {
+            watchList.getStocks().remove(stock);
+            updateWatchList(watchList);
+        } else {
+            throw new GlobalNotFoundException("Stock not found in the WatchList", null);
+        }
     }
 }

@@ -18,6 +18,7 @@ import com.DuckVest.Services.BankTransactionServices.BankTransactionService;
 import com.DuckVest.Services.Additional.JavaMailSenderServices.JMSService;
 import com.DuckVest.Services.OrdersServices.OrderService;
 import com.DuckVest.Services.PortfolioStocksServices.PortfolioStocksService;
+import jakarta.mail.MessagingException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -115,7 +116,7 @@ public class PortfolioImplement implements PortfolioService {
 
     @Override
 
-    public BankMoneyTransactionDTO addMoneyToPortfolio(Long id, Double amount) {
+    public BankMoneyTransactionDTO addMoneyToPortfolio(Long id, Double amount) throws MessagingException {
         Portfolio portfolio = portfolioRepo.findById(id).orElseThrow(() -> new GlobalNotFoundException("Portfolio not found with id: " + id, null));
         if (amount <= 0) {
             throw new IllegalArgumentException("Amount to add must be greater than zero.");

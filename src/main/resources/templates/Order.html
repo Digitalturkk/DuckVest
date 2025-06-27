@@ -3,123 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <title>Order Confirmation</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        .layout {
-            width: 100vw;
-            height: 100vh;
-            background-color: #181c31;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: "Inter", sans-serif;
-        }
-        .check {
-            display: flex;
-            flex-direction: column;
-            padding: 50px;
-            border: 1px solid white;
-            width: 500px;
-            height: 700px;
-            justify-content: space-between;
-            border-radius: 10px;
-            background-color: #272d4e;
-            box-shadow: rgba(169, 168, 168, 0.35) 0px 5px 15px;
-            position: relative;
-        }
-        img {
-            position: absolute;
-            height: 70px;
-            width: 70px;
-            right: 40px;
-            top: 110px;
-            border-radius: 50%;
-            box-shadow: #3d1b08 0px 7px 10px;
-        }
-        .check h2 {
-            color: #3a62be;
-            font-size: 30px;
-            text-align: center;
-            text-shadow: 5px 4px 12px rgba(0,0,0,0.78);
-        }
-        .nav1 {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-        .nav1 p {
-            font-size: 20px;
-            color: #fff;
-        }
-        .normal {
-            color: #ff7124;
-            font-weight: 800;
-        }
-        .special {
-            color: aquamarine;
-            text-shadow: 3px 0px 10px rgb(98, 197, 164);
-        }
-        hr {
-            background-color: #3356aa;
-            height: 3px;
-            border: none;
-            border-radius: 5px;
-        }
-        .nav2 {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            font-size: 18px;
-            color: #fff;
-        }
-        .nav2 .foot {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .tip {
-            background-color: #3356aa;
-            border: none;
-            width: 8px;
-            height: 100%;
-            border-radius: 5px;
-        }
-    </style>
 </head>
-<body>
-<div class="layout">
-    <div class="check">
-        <img th:src="'data:image/jpeg;base64,' + ${logoBase64}" alt="Logo" />
-        <h2><span th:text="${orderDTO.orderType}">BUY</span> Order Confirmation</h2>
-        <nav class="nav1">
-            <p><span class="normal">Stock:</span> <span th:text="${orderDTO.stock.companyName}">Tesla</span></p>
-            <p><span class="normal">Quantity:</span> <span th:text="${orderDTO.quantity}">1.0</span></p>
-            <p><span class="normal">Price per Stock:</span> $<span th:text="${orderDTO.stockPrice}">601.0</span></p>
-            <p><span class="normal">Total Price:</span> $<span th:text="${orderDTO.totalPrice}">603.0</span></p>
-            <p><span class="normal">Broker Fee:</span> $<span th:text="${orderDTO.brokerFee}">2.0</span></p>
-            <p>
-                <span class="normal">Order Status:</span>
-                <span class="special" th:text="${orderDTO.orderStatus}">COMPLETED</span>
-            </p>
-            <p>
-                <span class="normal">Order Message:</span> <br>
-                <span th:text="${orderDTO.orderMessage}">Stock bought successfully!</span>
-            </p>
-        </nav>
-        <hr>
-        <nav class="nav2">
-            <h4>Tip from DuckVestor</h4>
-            <div class="foot">
-                <hr class="tip">
-                <p th:text="${tip}">
-                    Tip from DuckVestor: Warren Buffett once said: "Be fearful when others are greedy." Duckvestor says: "Quack when others cluck."
-                </p>
-            </div>
-        </nav>
-    </div>
-</div>
+<body style="margin:0; padding:0; background-color:#181c31; font-family:Arial, sans-serif;">
+<table width="100%" height="100%" bgcolor="#181c31" cellpadding="0" cellspacing="0" style="padding: 30px 0;">
+    <tr>
+        <td align="center">
+            <table width="500" cellpadding="0" cellspacing="0" bgcolor="#272d4e" style="border:1px solid #ffffff; border-radius:10px; padding:30px; color:#ffffff;">
+
+                <tr>
+                    <td align="center" style="color:#3a62be; font-size:24px; font-weight:bold; padding-bottom:30px;">
+                        <span th:text="${orderDTO.orderType}">BUY</span> Order Confirmation
+                    </td>
+                </tr>
+
+                <tr><td style="padding-bottom:15px;"><strong style="color:#ff7124;">Stock:</strong> <span th:text="${orderDTO.stock.companyName}">Tesla</span></td></tr>
+                <tr><td style="padding-bottom:15px;"><strong style="color:#ff7124;">Quantity:</strong> <span th:text="${orderDTO.quantity}">1.0</span></td></tr>
+                <tr><td style="padding-bottom:15px;"><strong style="color:#ff7124;">Price per Stock:</strong> $<span th:text="${orderDTO.stockPrice}">601.0</span></td></tr>
+                <tr><td style="padding-bottom:15px;"><strong style="color:#ff7124;">Total Price:</strong> $<span th:text="${orderDTO.totalPrice}">603.0</span></td></tr>
+                <tr><td style="padding-bottom:15px;"><strong style="color:#ff7124;">Broker Fee:</strong> $<span th:text="${orderDTO.brokerFee}">2.0</span></td></tr>
+                <tr>
+                    <td style="padding-bottom:15px;">
+                        <strong style="color:#ff7124;">Order Status:</strong>
+                        <span style="color:aquamarine;" th:text="${orderDTO.orderStatus}">COMPLETED</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-bottom:25px;">
+                        <strong style="color:#ff7124;">Order Message:</strong><br>
+                        <span th:text="${orderDTO.orderMessage}">Stock bought successfully!</span>
+                    </td>
+                </tr>
+
+                <tr><td style="border-top: 3px solid #3356aa; padding-top: 20px;"></td></tr>
+
+                <tr>
+                    <td style="padding-top: 20px; font-size:16px;">
+                        <strong>Tip from DuckVestor:</strong>
+                        <table cellpadding="0" cellspacing="0" style="margin-top:10px;">
+                            <tr>
+                                <td style="background-color:#3356aa; width:8px; border-radius:5px;"></td>
+                                <td style="padding-left:15px; color:#e0e0e0;" th:text="${tip}">
+                                    Warren Buffett once said: "Be fearful when others are greedy." Duckvestor says: "Quack when others cluck."
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

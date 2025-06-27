@@ -13,6 +13,8 @@ public class Stocks {
     private Long id;
     @Column(name = "company_name")
     private String companyName;
+    @Column(name = "symbol")
+    private String symbol;
     @Column(name = "currency")
     private String currency;
     @Column(name = "industry")
@@ -34,7 +36,7 @@ public class Stocks {
     public Stocks() {
     }
 
-    public Stocks(Long id, String companyName, String currency, String industry, StockExchange stockExchange, Double ask, Double price, Double bid, List<Orders> orders, List<PortfolioStocks> portfolioStocks) {
+    public Stocks(Long id, String companyName, String currency, String industry, StockExchange stockExchange, Double ask, Double price, Double bid, List<Orders> orders, List<PortfolioStocks> portfolioStocks, String symbol) {
         this.id = id;
         this.companyName = companyName;
         this.currency = currency;
@@ -45,6 +47,7 @@ public class Stocks {
         this.bid = bid;
         this.orders = orders;
         this.portfolioStocks = portfolioStocks;
+        this.symbol = symbol;
     }
 
     public List<Orders> getOrders() {
@@ -127,4 +130,11 @@ public class Stocks {
         this.portfolioStocks = portfolioStocks;
     }
 
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
 }

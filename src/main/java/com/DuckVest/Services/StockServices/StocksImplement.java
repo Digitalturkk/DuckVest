@@ -48,17 +48,34 @@ public class StocksImplement implements StocksService { // Добавь пров
 
     @Override
     public StockDTO createStockDTO(Long id) {
-        Stocks stock = stocksRepo.findById(id).orElseThrow(() -> new GlobalNotFoundException("Stock not found with id: " + id, null));
+        Stocks stock = getStockById(id);
         StockExchangeSummaryDTO stockExchangeSummaryDTO = stockExchangeService.createStockExchangeSummaryDTO(stock.getStockExchange());
 
         StockDTO stockDTO = new StockDTO();
         stockDTO.setStockID(stock.getId());
+        stockDTO.setSymbol(stock.getSymbol());
         stockDTO.setCompanyName(stock.getCompanyName());
         stockDTO.setStockExchangeSummaryDTO(stockExchangeSummaryDTO);
         stockDTO.setCurrency(stock.getCurrency());
         stockDTO.setPrice(stock.getPrice());
         stockDTO.setAsk(stock.getAsk());
         stockDTO.setBid(stock.getBid());
+        return stockDTO;
+    }
+
+    @Override
+    public StockDTO StockToDTO(Stocks stocks) {
+        StockExchangeSummaryDTO stockExchangeSummaryDTO = stockExchangeService.createStockExchangeSummaryDTO(stocks.getStockExchange());
+
+        StockDTO stockDTO = new StockDTO();
+        stockDTO.setStockID(stocks.getId());
+        stockDTO.setSymbol(stocks.getSymbol());
+        stockDTO.setCompanyName(stocks.getCompanyName());
+        stockDTO.setStockExchangeSummaryDTO(stockExchangeSummaryDTO);
+        stockDTO.setCurrency(stocks.getCurrency());
+        stockDTO.setPrice(stocks.getPrice());
+        stockDTO.setAsk(stocks.getAsk());
+        stockDTO.setBid(stocks.getBid());
         return stockDTO;
     }
 }

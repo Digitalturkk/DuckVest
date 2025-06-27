@@ -92,7 +92,7 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
                 portfolioStocks.getQuantity(),
                 portfolioStocks.getAveragePrice(),
                 portfolioStocks.getTotalCost(),
-                new StockDTO(stock.getId(), stock.getCompanyName(), stock.getCurrency(), stockExchangeSummaryDTO, stock.getPrice(), stock.getAsk(), stock.getBid())
+                stocksService.StockToDTO(stock)
         );
     }
 

@@ -1,3 +1,4 @@
+/*
 package com.DuckVest.Configurations;
 
 import org.springframework.context.annotation.Bean;
@@ -33,3 +34,4 @@ public class Security {
         return http.build();
     }
 }
+*/

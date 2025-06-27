@@ -11,4 +11,5 @@ public interface StocksService {
      Stocks getStockById(Long id);
      List<Stocks> getAllStocks();
      StockDTO createStockDTO(Long id);
+     StockDTO StockToDTO(Stocks stocks);
 }

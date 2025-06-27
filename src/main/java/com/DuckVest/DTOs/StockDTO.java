@@ -5,6 +5,7 @@ import com.DuckVest.DTOs.StockExchangeDTOs.StockExchangeSummaryDTO;
 // stockDTO's service is in com.DuckVest.Services.StockServices
 public class StockDTO {
     private Long stockID;
+    private String symbol;
     private String companyName;
     private String currency;
     private StockExchangeSummaryDTO stockExchangeSummaryDTO;
@@ -14,7 +15,7 @@ public class StockDTO {
 
     public StockDTO() {}
 
-    public StockDTO(Long stockID, String companyName, String currency, StockExchangeSummaryDTO stockExchangeSummaryDTO, Double price, Double ask, Double bid) {
+    public StockDTO(Long stockID, String companyName, String currency, StockExchangeSummaryDTO stockExchangeSummaryDTO, Double price, Double ask, Double bid, String symbol) {
         this.stockID = stockID;
         this.companyName = companyName;
         this.currency = currency;
@@ -22,6 +23,7 @@ public class StockDTO {
         this.price = price;
         this.ask = ask;
         this.bid = bid;
+        this.symbol = symbol;
     }
 
     public Long getStockID() {
@@ -78,5 +80,13 @@ public class StockDTO {
 
     public void setBid(Double bid) {
         this.bid = bid;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 }

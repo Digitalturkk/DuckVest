@@ -17,6 +17,7 @@ public class Investor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "profile_picture_url")
     private String profilePictureUrl;
     @NotBlank(message = "Name is required")
     private String name;
@@ -176,5 +177,5 @@ public class Investor {
     public void setProfilePictureUrl(String profilePictureUrl) {
         this.profilePictureUrl = profilePictureUrl;
     }
-    
+
 }

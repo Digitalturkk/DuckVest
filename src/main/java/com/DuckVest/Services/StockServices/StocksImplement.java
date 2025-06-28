@@ -5,6 +5,7 @@ import com.DuckVest.DTOs.StockExchangeDTOs.StockExchangeSummaryDTO;
 import com.DuckVest.Exceptions.GlobalNotFound.GlobalNotFoundException;
 import com.DuckVest.Models.Stocks;
 import com.DuckVest.Repositories.StocksRepo;
+import com.DuckVest.Services.Additional.StockPriceUpdater;
 import com.DuckVest.Services.ExchangeServices.StockExchangeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class StocksImplement implements StocksService { // Добавь пров
     StocksRepo stocksRepo;
     @Autowired
     StockExchangeService stockExchangeService;
+    @Autowired
+    StockPriceUpdater stockPriceUpdater;
 
     @Override
     public void saveStocks(Stocks stock) {
@@ -43,6 +46,7 @@ public class StocksImplement implements StocksService { // Добавь пров
         if (stocks.isEmpty()) {
             throw new GlobalNotFoundException("No stocks found", null);
         }
+        stockPriceUpdater.updateAllPrices();
         return stocks;
     }
 
@@ -56,6 +60,8 @@ public class StocksImplement implements StocksService { // Добавь пров
     public StockDTO createStockDTO(Long id) {
         Stocks stock = getStockById(id);
         StockExchangeSummaryDTO stockExchangeSummaryDTO = stockExchangeService.createStockExchangeSummaryDTO(stock.getStockExchange());
+
+        stockPriceUpdater.updatePrice(stock);
 
         StockDTO stockDTO = new StockDTO();
         stockDTO.setStockID(stock.getId());
@@ -72,6 +78,7 @@ public class StocksImplement implements StocksService { // Добавь пров
     @Override
     public StockDTO StockToDTO(Stocks stocks) {
         StockExchangeSummaryDTO stockExchangeSummaryDTO = stockExchangeService.createStockExchangeSummaryDTO(stocks.getStockExchange());
+        stockPriceUpdater.updatePrice(stocks);
 
         StockDTO stockDTO = new StockDTO();
         stockDTO.setStockID(stocks.getId());

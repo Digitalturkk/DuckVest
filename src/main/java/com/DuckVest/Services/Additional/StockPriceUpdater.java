@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class StockPriceUpdater {
 
-    private static final String API_KEY = "30e27540747a4d198692fa426f77f33a";
+    private static final String API_KEY = "you_api_key_here"; // Замените на ваш реальный API ключ
     private static final String API_URL = "https://api.twelvedata.com/price?symbol=%s&apikey=" + API_KEY;
 
     @Autowired

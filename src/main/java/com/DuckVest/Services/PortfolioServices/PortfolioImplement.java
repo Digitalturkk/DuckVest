@@ -55,6 +55,18 @@ public class PortfolioImplement implements PortfolioService {
     }
 
     @Override
+    public List<PortfolioDTO> createAllPortfoliosDTOs() {
+        List<Portfolio> portfolios = getAllPortfolios();
+        List<PortfolioDTO> portfolioDTOs = new ArrayList<>();
+
+        for (Portfolio portfolio : portfolios) {
+            PortfolioDTO portfolioDTO = createPortfolioDTO(portfolio.getPortfolioId());
+            portfolioDTOs.add(portfolioDTO);
+        }
+        return portfolioDTOs;
+    }
+
+    @Override
     public Portfolio getPortfolioById(Long id) {
         return portfolioRepo.findById(id).orElseThrow(() -> new GlobalNotFoundException("Portfolio not found with id: " + id, null));
     }

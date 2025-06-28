@@ -29,6 +29,24 @@ public class InvestorImplement implements InvestorService {
     }
 
     @Override
+    public List<InvestorAccountDTO> createAllInvestorAccountDTOs() {
+        List<Investor> investors = investorsRepo.findAll();
+        if (investors.isEmpty()) {
+            throw new RuntimeException("No investors found");
+        }
+        return investors.stream()
+                .map(investor -> new InvestorAccountDTO(
+                        investor.getUsername(),
+                        investor.getName(),
+                        investor.getEmail(),
+                        investor.getPhone(),
+                        investor.getAccountType(),
+                        investor.getPortfolio().getTotalBalance(),
+                        investor.getPortfolio().getAvailableBalance()))
+                .toList();
+    }
+
+    @Override
     public Investor getInvestorById(Long id) {
         return investorsRepo.findById(id).orElseThrow( () -> new GlobalNotFoundException("Investor not found with id: " + id, null));
     }

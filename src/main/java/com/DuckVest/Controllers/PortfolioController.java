@@ -17,28 +17,18 @@ public class PortfolioController {
     PortfolioService portfolioService;
 
     @GetMapping("/get-all")
-    public List<Portfolio> getAllPortfolios() {
-        return portfolioService.getAllPortfolios();
+    public List<PortfolioDTO> getAllPortfolios() {
+        return portfolioService.createAllPortfoliosDTOs();
     }
 
     @GetMapping("/get-id={id}")
-    public Portfolio getPortfolioById(@PathVariable Long id) {
-        return portfolioService.getPortfolioById(id);
+    public PortfolioDTO getPortfolioById(@PathVariable Long id) {
+        return portfolioService.createPortfolioDTO(id);
     }
 
     @GetMapping("/get-reserved-balance={id}")
     public Double getReservedBalance(@PathVariable Long id) {
         return portfolioService.getReservedBalance(id);
-    }
-
-    @GetMapping("/get-portfolio-info={portfolioId}")
-    public PortfolioDTO getPortfolioInformantion(@PathVariable Long portfolioId) {
-        return portfolioService.createPortfolioDTO(portfolioId);
-    }
-
-    @PostMapping("/add")
-    public void addPortfolio(@RequestBody Portfolio portfolio) {
-        portfolioService.savePortfolio(portfolio);
     }
 
 }

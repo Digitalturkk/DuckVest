@@ -18,4 +18,5 @@ public interface PortfolioService {
     Double getReservedBalance(Long id);
 
     PortfolioDTO createPortfolioDTO(Long portfolioId);
+    List<PortfolioDTO> createAllPortfoliosDTOs();
 }

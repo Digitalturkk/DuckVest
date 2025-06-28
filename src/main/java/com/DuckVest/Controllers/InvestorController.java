@@ -16,9 +16,14 @@ public class InvestorController {
     @Autowired
     InvestorService investorService;
 
+    @GetMapping("/get-account-information-id={investorId}")
+    public InvestorAccountDTO getInvestorAccountInformation(@PathVariable Long investorId) {
+        return investorService.createInvestorDTO(investorId);
+    }
+
     @GetMapping("/get-all")
-    public List<Investor> getAllInvestors() {
-        return investorService.getAllInvestors();
+    public List<InvestorAccountDTO> getAllInvestors() {
+        return investorService.createAllInvestorAccountDTOs();
     }
 
     @GetMapping("/get-id={id}")
@@ -36,8 +41,4 @@ public class InvestorController {
         investorService.deleteInvestor(id);
     }
 
-    @GetMapping("/get-account-information-id={investorId}")
-    public InvestorAccountDTO getInvestorAccountInformation(@PathVariable Long investorId) {
-        return investorService.createInvestorDTO(investorId);
-    }
 }

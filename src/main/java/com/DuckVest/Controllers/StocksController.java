@@ -1,6 +1,7 @@
 package com.DuckVest.Controllers;
 
 import com.DuckVest.DTOs.OrderDTO;
+import com.DuckVest.DTOs.StockDTO;
 import com.DuckVest.Models.Stocks;
 import com.DuckVest.Services.PortfolioStocksServices.PortfolioStocksService;
 import com.DuckVest.Services.StockServices.StocksService;
@@ -21,13 +22,13 @@ public class StocksController {
     PortfolioStocksService portfolioStocksService;
 
     @GetMapping("/all")
-    public List<Stocks> getAllStocks() {
-        return stocksService.getAllStocks();
+    public List<StockDTO> getAllStocks() {
+        return stocksService.getAllStocksDTO();
     }
 
     @GetMapping("/{id}")
-    public Stocks getStocks(@PathVariable Long id) {
-        return stocksService.getStockById(id);
+    public StockDTO getStocks(@PathVariable Long id) {
+        return stocksService.createStockDTO(id);
     }
 
     @PostMapping("/add")

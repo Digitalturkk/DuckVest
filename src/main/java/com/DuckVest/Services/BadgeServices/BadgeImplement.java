@@ -33,6 +33,17 @@ public class BadgeImplement implements BadgeService {
     }
 
     @Override
+    public List<BadgeDTO> getAllBadges() {
+        List<Badge> badges = badgeRepo.findAll();
+        List<BadgeDTO> badgeDTOs = new ArrayList<>();
+        for (Badge badge : badges) {
+            BadgeDTO badgeDTO = transformBadgeToBadgeDTO(badge);
+            badgeDTOs.add(badgeDTO);
+        }
+        return badgeDTOs;
+    }
+
+    @Override
     public Badge updateBadge(Long badgeId, Badge badge) {
         Badge existingBadge = getBadgeById(badgeId);
         existingBadge.setBadgeName(badge.getBadgeName());

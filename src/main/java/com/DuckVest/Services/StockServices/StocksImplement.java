@@ -47,6 +47,12 @@ public class StocksImplement implements StocksService { // Добавь пров
     }
 
     @Override
+    public List<StockDTO> getAllStocksDTO() {
+        List<Stocks> stocks = getAllStocks();
+        return stocks.stream().map(this::StockToDTO).toList();
+    }
+
+    @Override
     public StockDTO createStockDTO(Long id) {
         Stocks stock = getStockById(id);
         StockExchangeSummaryDTO stockExchangeSummaryDTO = stockExchangeService.createStockExchangeSummaryDTO(stock.getStockExchange());

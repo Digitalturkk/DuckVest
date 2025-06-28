@@ -4,6 +4,7 @@ import com.DuckVest.CustomEnums.AccountType;
 
 // investorAccountDTOs service is in com.DuckVest.Services.InvestorAccountService
 public class InvestorAccountDTO {
+    private String profilePictureUrl;
     private String username;
     private String name;
     private String email;
@@ -12,7 +13,7 @@ public class InvestorAccountDTO {
     private Double PortfolioBalance;
     private Double BuyingPower;
 
-    public InvestorAccountDTO(String username,String name, String email, String phone, AccountType accountType, Double portfolioBalance, Double buyingPower) {
+    public InvestorAccountDTO(String username,String name, String email, String phone, AccountType accountType, Double portfolioBalance, Double buyingPower, String profilePictureUrl) {
         this.username = username;
         this.name = name;
         this.email = email;
@@ -20,6 +21,7 @@ public class InvestorAccountDTO {
         this.AccountType = accountType;
         this.PortfolioBalance = portfolioBalance;
         this.BuyingPower = buyingPower;
+        this.profilePictureUrl = profilePictureUrl;
     }
 
     public InvestorAccountDTO() {
@@ -79,6 +81,14 @@ public class InvestorAccountDTO {
 
     public void setBuyingPower(Double buyingPower) {
         this.BuyingPower = buyingPower;
+    }
+
+    public String getProfilePictureUrl() {
+        return profilePictureUrl;
+    }
+
+    public void setProfilePictureUrl(String profilePictureUrl) {
+        this.profilePictureUrl = profilePictureUrl;
     }
 
 }

@@ -4,6 +4,7 @@ import com.DuckVest.CustomEnums.BadgeCriteria;
 
 // BadgeDTO's service is in com.DuckVest.Services.BadgeService
 public class BadgeDTO {
+    private String badgeImageUrl;
     private String badgeName;
     private String badgeDescription;
     private BadgeCriteria badgeCriteria;
@@ -11,10 +12,11 @@ public class BadgeDTO {
     public BadgeDTO() {
     }
 
-    public BadgeDTO(String badgeName, String badgeDescription, BadgeCriteria badgeCriteria) {
+    public BadgeDTO(String badgeName, String badgeDescription, BadgeCriteria badgeCriteria, String badgeImageUrl) {
         this.badgeName = badgeName;
         this.badgeDescription = badgeDescription;
         this.badgeCriteria = badgeCriteria;
+        this.badgeImageUrl = badgeImageUrl;
     }
 
     public String getBadgeName() {
@@ -39,5 +41,13 @@ public class BadgeDTO {
 
     public void setBadgeCriteria(BadgeCriteria badgeCriteria) {
         this.badgeCriteria = badgeCriteria;
+    }
+
+    public String getBadgeImageUrl() {
+        return badgeImageUrl;
+    }
+
+    public void setBadgeImageUrl(String badgeImageUrl) {
+        this.badgeImageUrl = badgeImageUrl;
     }
 }

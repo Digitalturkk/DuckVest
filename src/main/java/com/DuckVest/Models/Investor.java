@@ -17,13 +17,14 @@ public class Investor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String profilePictureUrl;
     @NotBlank(message = "Name is required")
     private String name;
     @Column(unique = true)
     @NotBlank(message = "Username is required")
     private String username;
     @NotBlank(message = "Name is required")
-    @Size(min=3)
+    @Size(min = 3)
     private String password;
     @NotBlank(message = "Mail is required")
     @Column(unique = true)
@@ -52,9 +53,10 @@ public class Investor {
     )
     private List<Badge> badges = new ArrayList<>();
 
-    public Investor() {}
+    public Investor() {
+    }
 
-    public Investor(String name, String password, String email, String phone, String address, AccountType accountType, Boolean isInvestorAccountEnable, int age, Portfolio portfolio, String username, List<Badge> badges) {
+    public Investor(String name, String password, String email, String phone, String address, AccountType accountType, Boolean isInvestorAccountEnable, int age, Portfolio portfolio, String username, List<Badge> badges, String profilePictureUrl) {
         this.name = name;
         this.password = password;
         this.age = age;
@@ -66,6 +68,7 @@ public class Investor {
         this.portfolio = portfolio;
         this.username = username;
         this.badges = badges;
+        this.profilePictureUrl = profilePictureUrl;
     }
 
     public Long getId() {
@@ -165,4 +168,13 @@ public class Investor {
     public void setBadges(List<Badge> badges) {
         this.badges = badges;
     }
+
+    public String getProfilePictureUrl() {
+        return profilePictureUrl;
+    }
+
+    public void setProfilePictureUrl(String profilePictureUrl) {
+        this.profilePictureUrl = profilePictureUrl;
+    }
+    
 }

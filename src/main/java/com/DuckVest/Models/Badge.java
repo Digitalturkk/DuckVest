@@ -18,8 +18,8 @@ public class Badge {
     private String badgeName;
     @Column(name = "badge_description", columnDefinition = "TEXT")
     private String badgeDescription;
-    //@Column(name = "badge_image") commented as we will use it in future for frontend
-    //private String badgeImage;
+    @Column(name = "badge_image")
+    private String badgeImage;
     @Column(name = "badge_type", nullable = true)
     private String badgeType;
     @Column(name = "badge_criteria")
@@ -37,13 +37,14 @@ public class Badge {
     public Badge() {
     }
 
-    public Badge(Long badgeId, String badgeName, String badgeDescription, String badgeType, BadgeCriteria badgeCriteria, Set<Investor> investor) {
+    public Badge(Long badgeId, String badgeName, String badgeDescription, String badgeType, BadgeCriteria badgeCriteria, Set<Investor> investor, String badgeImage) {
         this.badgeId = badgeId;
         this.badgeName = badgeName;
         this.badgeDescription = badgeDescription;
         this.badgeType = badgeType;
         this.badgeCriteria = badgeCriteria;
         this.investor = investor;
+        this.badgeImage = badgeImage;
     }
 
     public Long getBadgeId() {
@@ -92,5 +93,13 @@ public class Badge {
 
     public void setInvestor(Set<Investor> investor) {
         this.investor = investor;
+    }
+
+    public String getBadgeImage() {
+        return badgeImage;
+    }
+
+    public void setBadgeImage(String badgeImage) {
+        this.badgeImage = badgeImage;
     }
 }

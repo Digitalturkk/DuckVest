@@ -73,7 +73,8 @@ public class BadgeImplement implements BadgeService {
         return new BadgeDTO(
                 badge.getBadgeName(),
                 badge.getBadgeDescription(),
-                badge.getBadgeCriteria()
+                badge.getBadgeCriteria(),
+                badge.getBadgeImage()
         );
     }
 

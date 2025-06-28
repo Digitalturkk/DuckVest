@@ -34,16 +34,19 @@ public class InvestorImplement implements InvestorService {
         if (investors.isEmpty()) {
             throw new RuntimeException("No investors found");
         }
-        return investors.stream()
-                .map(investor -> new InvestorAccountDTO(
-                        investor.getUsername(),
-                        investor.getName(),
-                        investor.getEmail(),
-                        investor.getPhone(),
-                        investor.getAccountType(),
-                        investor.getPortfolio().getTotalBalance(),
-                        investor.getPortfolio().getAvailableBalance()))
-                .toList();
+        return investors.stream().map(investor -> {
+            Portfolio portfolio = investor.getPortfolio(); // Assuming the investor has at least one portfolio
+            InvestorAccountDTO investorAccountDTO = new InvestorAccountDTO();
+            investorAccountDTO.setProfilePictureUrl(investor.getProfilePictureUrl());
+            investorAccountDTO.setUsername(investor.getUsername());
+            investorAccountDTO.setName(investor.getName());
+            investorAccountDTO.setEmail(investor.getEmail());
+            investorAccountDTO.setPhone(investor.getPhone());
+            investorAccountDTO.setAccountType(investor.getAccountType());
+            investorAccountDTO.setPortfolioBalance(portfolio.getTotalBalance());
+            investorAccountDTO.setBuyingPower(portfolio.getAvailableBalance());
+            return investorAccountDTO;
+        }).toList();
     }
 
     @Override
@@ -94,6 +97,7 @@ public class InvestorImplement implements InvestorService {
         Portfolio portfolio = investor.getPortfolio(); // Assuming the investor has at least one portfolio and portfolioId is 1-based index
 
         InvestorAccountDTO investorAccountDTO = new InvestorAccountDTO();
+        investorAccountDTO.setProfilePictureUrl(investor.getProfilePictureUrl());
         investorAccountDTO.setUsername(investor.getUsername());
         investorAccountDTO.setName(investor.getName());
         investorAccountDTO.setEmail(investor.getEmail());
@@ -107,7 +111,7 @@ public class InvestorImplement implements InvestorService {
     @Override
     public InvestorSummaryDTO creatInvestorSummaryDTO(Long id) {
         Investor investor = investorsRepo.findById(id).orElseThrow( () -> new GlobalNotFoundException("Investor not found with id: " + id, null));
-        return new InvestorSummaryDTO(investor.getName(), investor.getEmail(), investor.getPhone());
+        return new InvestorSummaryDTO(investor.getProfilePictureUrl(), investor.getName(), investor.getEmail(), investor.getPhone());
     }
 
 }

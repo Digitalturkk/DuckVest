@@ -2,6 +2,7 @@ package com.DuckVest.Services.InvestorServices;
 
 import com.DuckVest.CustomEnums.AccountType;
 import com.DuckVest.DTOs.InvestorDTOs.InvestorAccountDTO;
+import com.DuckVest.DTOs.InvestorDTOs.InvestorCredentialsDTO;
 import com.DuckVest.DTOs.InvestorDTOs.InvestorSummaryDTO;
 import com.DuckVest.Models.Investor;
 
@@ -20,6 +21,7 @@ public interface InvestorService {
 
     InvestorAccountDTO createInvestorDTO(Long id);
     InvestorSummaryDTO creatInvestorSummaryDTO(Long id);
+    InvestorCredentialsDTO createInvestorCredentialsDTO(String username);
     List<InvestorAccountDTO> createAllInvestorAccountDTOs();
 
     Long checkInvestorCredentials(String username, String password);

@@ -2,6 +2,7 @@ package com.DuckVest.Services.InvestorServices;
 
 import com.DuckVest.CustomEnums.AccountType;
 import com.DuckVest.DTOs.InvestorDTOs.InvestorAccountDTO;
+import com.DuckVest.DTOs.InvestorDTOs.InvestorCredentialsDTO;
 import com.DuckVest.DTOs.InvestorDTOs.InvestorSummaryDTO;
 import com.DuckVest.Exceptions.GlobalNotFound.GlobalNotFoundException;
 import com.DuckVest.Models.Investor;
@@ -121,6 +122,15 @@ public class InvestorImplement implements InvestorService {
             throw new GlobalNotFoundException("Invalid credentials for username: " + username, null);
         }
         return investor.getId();
+    }
+
+    @Override
+    public InvestorCredentialsDTO createInvestorCredentialsDTO(String username) {
+        Investor investor = investorsRepo.findByUsername(username);
+        if (investor == null) {
+            throw new GlobalNotFoundException("Investor not found with username: " + username, null);
+        }
+        return new InvestorCredentialsDTO(investor.getUsername(), investor.getPassword(), investor.getEmail());
     }
 
 }

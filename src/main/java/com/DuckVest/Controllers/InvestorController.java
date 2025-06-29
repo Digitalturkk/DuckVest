@@ -1,6 +1,7 @@
 package com.DuckVest.Controllers;
 
 import com.DuckVest.DTOs.InvestorDTOs.InvestorAccountDTO;
+import com.DuckVest.DTOs.InvestorDTOs.InvestorCredentialsDTO;
 import com.DuckVest.Models.Investor;
 import com.DuckVest.Services.InvestorServices.InvestorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ public class InvestorController {
     @PostMapping("/login-user={username}&pwd={password}") // returns the investor ID if credentials are valid
     public Long checkInvestorCredentials(@PathVariable String username, @PathVariable String password) {
         return investorService.checkInvestorCredentials(username, password);
+    }
+
+    @GetMapping("/get-investor-credentials-username={username}")
+    public InvestorCredentialsDTO getInvestorCredentials(@PathVariable String username) {
+        return investorService.createInvestorCredentialsDTO(username);
     }
 
     @GetMapping("/get-account-information-id={investorId}")

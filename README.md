@@ -17,6 +17,9 @@ are:
 - 💰 **Balance Updates:** Buy and sell stocks with automatic balance updates.
 - 🌐 **REST API Support** for all operations.
 - 🧾 **Transaction history:** orders and operation history
+- ✅ **Real-time stock price** integration with <a href="https://twelvedata.com/">TwelveData</a> API
+- 📬 **Email or notification system:** HTML notification using Thymeleaf
+- 💳 **Banking simulation** Deposit money to your acoount
 
 ---
 
@@ -40,12 +43,6 @@ git clone https://github.com/DigitalTurkk/DuckVest.git
 cd duckvest
 ```
 ## 📌 Possible Extensions
-
-    ✅ Real-time stock price integration (e.g., Alpha Vantage, Yahoo Finance)
-
-    📬 Email or notification system
-
-    💳 Banking simulation and fund transfers
 
     📱 Frontend interface (Web or Mobile)
 

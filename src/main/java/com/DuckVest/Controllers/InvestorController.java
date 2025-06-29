@@ -16,6 +16,11 @@ public class InvestorController {
     @Autowired
     InvestorService investorService;
 
+    @PostMapping("/login-user={username}&pwd={password}") // returns the investor ID if credentials are valid
+    public Long checkInvestorCredentials(@PathVariable String username, @PathVariable String password) {
+        return investorService.checkInvestorCredentials(username, password);
+    }
+
     @GetMapping("/get-account-information-id={investorId}")
     public InvestorAccountDTO getInvestorAccountInformation(@PathVariable Long investorId) {
         return investorService.createInvestorDTO(investorId);

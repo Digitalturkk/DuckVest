@@ -114,4 +114,13 @@ public class InvestorImplement implements InvestorService {
         return new InvestorSummaryDTO(investor.getProfilePictureUrl(), investor.getName(), investor.getEmail(), investor.getPhone());
     }
 
+    @Override
+    public Long checkInvestorCredentials(String username, String password) {
+        Investor investor = investorsRepo.findByUsername(username);
+        if (investor == null || !investor.getPassword().equals(password)) {
+            throw new GlobalNotFoundException("Invalid credentials for username: " + username, null);
+        }
+        return investor.getId();
+    }
+
 }

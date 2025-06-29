@@ -21,4 +21,6 @@ public interface InvestorService {
     InvestorAccountDTO createInvestorDTO(Long id);
     InvestorSummaryDTO creatInvestorSummaryDTO(Long id);
     List<InvestorAccountDTO> createAllInvestorAccountDTOs();
+
+    Long checkInvestorCredentials(String username, String password);
  }

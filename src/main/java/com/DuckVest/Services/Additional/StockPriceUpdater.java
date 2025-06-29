@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class StockPriceUpdater {
 
-    private static final String API_KEY = "you_api_key_here"; // Замените на ваш реальный API ключ
+    private static final String API_KEY = "f7b20df80cf14f4a9817676ff26d1e98"; // Замените на ваш API ключ, этот я украл с GitHub
     private static final String API_URL = "https://api.twelvedata.com/price?symbol=%s&apikey=" + API_KEY;
 
     @Autowired
@@ -43,7 +43,7 @@ public class StockPriceUpdater {
                                 stocksRepo.save(stock);
                                 System.out.println("Updated: " + symbol + " to $" + newPrice);
                             } catch (Exception e) {
-                                System.err.println("Error updating " + symbol);
+                                System.err.println("Error updating " + symbol + stock.getId());
                             }
                         });
             }

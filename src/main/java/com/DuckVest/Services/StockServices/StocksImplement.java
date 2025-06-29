@@ -77,6 +77,7 @@ public class StocksImplement implements StocksService { // Добавь пров
     @Override
     public StockDTO StockToDTO(Stocks stocks) {
         StockExchangeSummaryDTO stockExchangeSummaryDTO = stockExchangeService.createStockExchangeSummaryDTO(stocks.getStockExchange());
+        stockPriceUpdater.updatePrice(stocks);
 
         StockDTO stockDTO = new StockDTO();
         stockDTO.setStockID(stocks.getId());

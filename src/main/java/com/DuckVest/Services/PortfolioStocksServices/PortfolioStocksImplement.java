@@ -12,6 +12,7 @@ import com.DuckVest.Models.Portfolio;
 import com.DuckVest.Models.PortfolioStocks;
 import com.DuckVest.Models.Stocks;
 import com.DuckVest.Repositories.PortfolioStocksRepo;
+import com.DuckVest.Services.Additional.StockPriceUpdater;
 import com.DuckVest.Services.BadgeServices.BadgeService;
 import com.DuckVest.Services.ExchangeServices.StockExchangeService;
 import com.DuckVest.Services.Additional.JavaMailSenderServices.JMSService;
@@ -45,6 +46,8 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
     BadgeService badgeService;
     @Autowired
     private JMSService jmsService;
+    @Autowired
+    private StockPriceUpdater stockPriceUpdater;
 
     @Override
     public List<PortfolioStocks> getAllPortfolioStocks() {
@@ -105,6 +108,7 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
 
         Stocks stock = stocksService.getStockById(stockId);
         Portfolio portfolio = portfolioService.getPortfolioById(portfolioId);
+        stockPriceUpdater.updatePrice(stock);
 
         Double stockPrice = stock.getAsk();
         Double availableBalance = portfolio.getAvailableBalance();
@@ -170,6 +174,8 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
 
         Stocks stock = stocksService.getStockById(stockId);
         Portfolio portfolio = portfolioService.getPortfolioById(portfolioId);
+        stockPriceUpdater.updatePrice(stock);
+        stock = stocksService.getStockById(stockId);
 
         Double stockPrice = stock.getBid();
 

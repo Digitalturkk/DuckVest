@@ -1,8 +1,8 @@
 package com.DuckVest.Controllers;
 
-import com.DuckVest.DTOs.IndustryDiversificationDTO;
+import com.DuckVest.DTOs.AnalyticalDTOs.IndustryDiversificationDTO;
+import com.DuckVest.DTOs.AnalyticalDTOs.StockDiversificationDTO;
 import com.DuckVest.DTOs.PortfolioDTO;
-import com.DuckVest.Models.Portfolio;
 import com.DuckVest.Services.Additional.PortfolioAnalyticsService;
 import com.DuckVest.Services.PortfolioServices.PortfolioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +37,14 @@ public class PortfolioController {
 
     // Analytics of the portfolio
 
-    @GetMapping("/get-industry-diversification={id}")
+    @GetMapping("/get-industry-diversification={id}") // investorId
     public IndustryDiversificationDTO getIndustryDiversification(@PathVariable Long id) {
         return portfolioAnalyticsService.calculateIndustryDiversification(id);
+    }
+
+    @GetMapping("/get-stock-diversification={id}") // investorId
+    public StockDiversificationDTO getStockDiversification(@PathVariable Long id) {
+        return portfolioAnalyticsService.getDiversificationByStock(id);
     }
 
 }

@@ -98,9 +98,8 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
 
     @Override
     @Transactional
-    public OrderDTO buyStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee) throws MessagingException {
-
-        if (quantity <= 0 || brokerFee < 0) {
+    public OrderDTO buyStock(Long portfolioId, Long stockId, Double quantity) throws MessagingException {
+        if (quantity <= 0) {
             throw new IllegalArgumentException("Invalid quantity or broker fee");
         }
 
@@ -111,6 +110,9 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
         Double availableBalance = portfolio.getAvailableBalance();
 
         Double stockCost = stockPrice * quantity;
+
+        Double brokerFee = getBrokerFee(stockCost);
+
         Double totalPrice = stockCost + brokerFee;
 
         Optional<PortfolioStocks> portfolioStock = portfolioStocksRepo.findByPortfolioAndStock(portfolio, stock);
@@ -161,9 +163,8 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
 
     @Override
     @Transactional
-    public OrderDTO sellStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee) throws MessagingException {
-
-        if (quantity <= 0 || brokerFee < 0) {
+    public OrderDTO sellStock(Long portfolioId, Long stockId, Double quantity) throws MessagingException {
+        if (quantity <= 0) {
             throw new IllegalArgumentException("Invalid quantity or broker fee");
         }
 
@@ -173,6 +174,9 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
         Double stockPrice = stock.getBid();
 
         Double stockCost = stockPrice * quantity;
+
+        Double brokerFee = getBrokerFee(stockCost);
+
         Double totalPrice  = stockCost - brokerFee;
 
         Optional<PortfolioStocks> portfolioStock = portfolioStocksRepo.findByPortfolioAndStock(portfolio, stock);
@@ -251,5 +255,14 @@ public class PortfolioStocksImplement implements PortfolioStocksService {
         order.setOrderMessage("Stock sold successfully!");
         order.setOrderStatus(OrderStatus.COMPLETED);
         order.setThereExecution(false);
+    }
+
+    private Double getBrokerFee(Double stockCost) {
+        return switch (stockCost) {
+            case Double v when v < 1000.0 -> 2.0;
+            case Double v when stockCost >= 1000.0 && v < 100000.0 -> stockCost * 0.002;
+            case Double v when stockCost >= 100000.0 && v < 150000.0 -> stockCost * 0.0015;
+            case null, default -> stockCost * 0.001;
+        };
     }
 }

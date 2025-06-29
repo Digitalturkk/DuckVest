@@ -44,14 +44,14 @@ public class StocksController {
         stocksService.deleteStocks(id);
     }
 
-    @PostMapping("/buy-stk={stockId}-prtfl={portfolioId}-qnt={quantity}-fee={brokerFee}")
-    public OrderDTO buyStock(@PathVariable Long portfolioId, @PathVariable Long stockId, @PathVariable Double quantity, @PathVariable Double brokerFee) throws MessagingException {
-        return portfolioStocksService.buyStock(portfolioId, stockId, quantity, brokerFee);
+    @PostMapping("/buy-stk={stockId}-prtfl={portfolioId}-qnt={quantity}")
+    public OrderDTO buyStock(@PathVariable Long portfolioId, @PathVariable Long stockId, @PathVariable Double quantity) throws MessagingException {
+        return portfolioStocksService.buyStock(portfolioId, stockId, quantity);
     }
 
-    @PostMapping("/sell-stk={stockId}-prtfl={portfolioId}-qnt={quantity}-fee={brokerFee}")
-    public OrderDTO sellStock(@PathVariable Long portfolioId, @PathVariable Long stockId, @PathVariable Double quantity, @PathVariable Double brokerFee) throws MessagingException {
-        return portfolioStocksService.sellStock(portfolioId, stockId, quantity, brokerFee);
+    @PostMapping("/sell-stk={stockId}-prtfl={portfolioId}-qnt={quantity}")
+    public OrderDTO sellStock(@PathVariable Long portfolioId, @PathVariable Long stockId, @PathVariable Double quantity) throws MessagingException {
+        return portfolioStocksService.sellStock(portfolioId, stockId, quantity);
     }
 
     //Updating stock prices manually for all stocks

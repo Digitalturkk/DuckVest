@@ -17,6 +17,6 @@ public interface PortfolioStocksService {
 
     PortfolioStocksDTO createPortfolioStocksDTO(PortfolioStocks portfolioStocks);
 
-    OrderDTO buyStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee) throws MessagingException;
-    OrderDTO sellStock(Long portfolioId, Long stockId, Double quantity, Double brokerFee) throws MessagingException;
+    OrderDTO buyStock(Long portfolioId, Long stockId, Double quantity) throws MessagingException;
+    OrderDTO sellStock(Long portfolioId, Long stockId, Double quantity) throws MessagingException;
 }

@@ -188,5 +188,4 @@ public class PortfolioImplement implements PortfolioService {
         portfolioDTO.setBadgesList(badgesList);
         return portfolioDTO;
     }
-
 }

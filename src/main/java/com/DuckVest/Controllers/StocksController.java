@@ -3,6 +3,7 @@ package com.DuckVest.Controllers;
 import com.DuckVest.DTOs.OrderDTO;
 import com.DuckVest.DTOs.StockDTO;
 import com.DuckVest.Models.Stocks;
+import com.DuckVest.Services.Additional.StockPriceUpdater;
 import com.DuckVest.Services.PortfolioStocksServices.PortfolioStocksService;
 import com.DuckVest.Services.StockServices.StocksService;
 import jakarta.mail.MessagingException;
@@ -20,6 +21,8 @@ public class StocksController {
     StocksService stocksService;
     @Autowired
     PortfolioStocksService portfolioStocksService;
+    @Autowired
+    StockPriceUpdater stockPriceUpdater;
 
     @GetMapping("/all")
     public List<StockDTO> getAllStocks() {
@@ -49,5 +52,11 @@ public class StocksController {
     @PostMapping("/sell-stk={stockId}-prtfl={portfolioId}-qnt={quantity}-fee={brokerFee}")
     public OrderDTO sellStock(@PathVariable Long portfolioId, @PathVariable Long stockId, @PathVariable Double quantity, @PathVariable Double brokerFee) throws MessagingException {
         return portfolioStocksService.sellStock(portfolioId, stockId, quantity, brokerFee);
+    }
+
+    //Updating stock prices manually for all stocks
+    @PostMapping("/update-prices")
+    public void updateAllPrices() {
+        stockPriceUpdater.updateAllPrices();
     }
 }

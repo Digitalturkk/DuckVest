@@ -46,7 +46,6 @@ public class StocksImplement implements StocksService { // Добавь пров
         if (stocks.isEmpty()) {
             throw new GlobalNotFoundException("No stocks found", null);
         }
-        stockPriceUpdater.updateAllPrices();
         return stocks;
     }
 
@@ -78,7 +77,6 @@ public class StocksImplement implements StocksService { // Добавь пров
     @Override
     public StockDTO StockToDTO(Stocks stocks) {
         StockExchangeSummaryDTO stockExchangeSummaryDTO = stockExchangeService.createStockExchangeSummaryDTO(stocks.getStockExchange());
-        stockPriceUpdater.updatePrice(stocks);
 
         StockDTO stockDTO = new StockDTO();
         stockDTO.setStockID(stocks.getId());

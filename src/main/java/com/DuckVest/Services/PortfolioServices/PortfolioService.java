@@ -3,6 +3,7 @@ package com.DuckVest.Services.PortfolioServices;
 import com.DuckVest.DTOs.BankMoneyTransactionDTO;
 import com.DuckVest.DTOs.PortfolioDTO;
 import com.DuckVest.Models.Portfolio;
+import com.DuckVest.DTOs.IndustryDiversificationDTO;
 import jakarta.mail.MessagingException;
 
 import java.util.List;

@@ -16,12 +16,12 @@ public class StockExchangeController {
     @Autowired
     StockExchangeService stockExchangeService;
 
-    @GetMapping("/get-dto-{id}")
+    @GetMapping("/get-id={id}")
     public StockExchangeDTO getExchangeById(@PathVariable Long id) {
         return stockExchangeService.createStockExchangeDTO(id);
     }
 
-    @GetMapping("/all-dto")
+    @GetMapping("/all")
     public List<StockExchangeDTO> getExchange() {
         return stockExchangeService.getAllExchangeDTOs();
     }

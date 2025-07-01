@@ -15,7 +15,6 @@ import java.util.Properties;
 public class MailConfig {
     @Bean
     public JavaMailSenderImpl mailSender() throws Exception {
-        // Отключаем SSL-проверку
         TrustManager[] trustAllCerts = new TrustManager[]{
                 new X509TrustManager() {
                     public X509Certificate[] getAcceptedIssuers() { return new X509Certificate[0]; }

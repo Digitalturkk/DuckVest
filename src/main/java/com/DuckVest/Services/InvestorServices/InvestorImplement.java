@@ -133,4 +133,13 @@ public class InvestorImplement implements InvestorService {
         return new InvestorCredentialsDTO(investor.getUsername(), investor.getPassword(), investor.getEmail());
     }
 
+    @Override
+    public List<Investor> searchInvestorsByUsernameOrName(String username, String name) {
+        List<Investor> investors = investorsRepo.findAllByUsernameOrName(username, name);
+        if (investors.isEmpty()) {
+            throw new GlobalNotFoundException("No investors found with username or name: " + username + " or " + name, null);
+        }
+        return investors;
+    }
+
 }

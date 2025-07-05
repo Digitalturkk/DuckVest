@@ -52,4 +52,9 @@ public class InvestorController {
         investorService.deleteInvestor(id);
     }
 
+    @GetMapping("/search-name={username}")
+    public List<Investor> searchInvestorsByUsernameOrName(@PathVariable String username) {
+        return investorService.searchInvestorsByUsernameOrName(username, username);
+    }
+
 }

@@ -22,6 +22,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,7 @@ public class PortfolioImplement implements PortfolioService {
     }
 
     @Override
+    @Transactional
     public List<PortfolioDTO> createAllPortfoliosDTOs() {
         List<Portfolio> portfolios = getAllPortfolios();
         List<PortfolioDTO> portfolioDTOs = new ArrayList<>();
@@ -153,6 +155,7 @@ public class PortfolioImplement implements PortfolioService {
     }
 
     @Override
+    @Transactional
     public PortfolioDTO createPortfolioDTO(Long portfolioId) {
         Portfolio portfolio = getPortfolioById(portfolioId);
         Investor investor = portfolio.getInvestor();

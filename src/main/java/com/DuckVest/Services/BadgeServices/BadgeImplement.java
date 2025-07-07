@@ -86,6 +86,7 @@ public class BadgeImplement implements BadgeService {
 
     @Override
     @Async
+    @Transactional
     public void checkBadgeBuyFirstStockCriteria(Long investorId) {
         Investor investor = investorService.getInvestorById(investorId);
         Portfolio portfolio = investor.getPortfolio();
@@ -99,6 +100,7 @@ public class BadgeImplement implements BadgeService {
 
     @Override
     @Async
+    @Transactional
     public void checkBadgeOwnTeslaCriteria(Long investorId) {
         Investor investor = investorService.getInvestorById(investorId);
         Badge badge = badgeRepo.findBadgeByBadgeCriteria(BadgeCriteria.OWN_TESLA_STOCK);

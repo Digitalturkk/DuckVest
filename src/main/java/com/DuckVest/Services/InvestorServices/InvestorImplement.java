@@ -135,7 +135,7 @@ public class InvestorImplement implements InvestorService {
 
     @Override
     public List<Investor> searchInvestorsByUsernameOrName(String username, String name) {
-        List<Investor> investors = investorsRepo.findAllByUsernameOrName(username, name);
+        List<Investor> investors = investorsRepo.findByUsernameContainingIgnoreCaseOrNameContainingIgnoreCase(username, name);
         if (investors.isEmpty()) {
             throw new GlobalNotFoundException("No investors found with username or name: " + username + " or " + name, null);
         }

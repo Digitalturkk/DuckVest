@@ -8,6 +8,7 @@ import com.DuckVest.Models.PortfolioStocks;
 import com.DuckVest.Services.InvestorServices.InvestorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ public class PortfolioAnalyticsService {
     @Autowired
     private InvestorService investorService;
 
+    @Transactional
     public IndustryDiversificationDTO calculateIndustryDiversification(Long investorId) {
         Investor investor = investorService.getInvestorById(investorId);
         Portfolio portfolio = investor.getPortfolio();
@@ -68,6 +70,7 @@ public class PortfolioAnalyticsService {
         return new IndustryDiversificationDTO(industryToPercentage, diversificationScore, level);
     }
 
+    @Transactional
     public StockDiversificationDTO getDiversificationByStock(Long investorId) {
         Investor investor = investorService.getInvestorById(investorId);
         Portfolio portfolio = investor.getPortfolio();

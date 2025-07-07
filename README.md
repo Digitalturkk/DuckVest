@@ -30,11 +30,12 @@ are:
 - **Spring Security**
 - **PostgreSQL**
 - **ModelMapper**
+- **TwelveData API**
 ---
 
 ## 🏁 Getting Started
 
-> Requirements: Java 8+, PostgreSQL, Docker (optional)
+> Requirements: Java 21+, PostgreSQL, Docker (optional)
 
 1. Clone the repository:
 

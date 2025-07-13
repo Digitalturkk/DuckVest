@@ -11,15 +11,15 @@ This project streamlines the development of investment applications by providing
 are:
 
 - 🛠️ **Modular & Layered Architecture:** Easily extensible for future enhancements and integrations.
-- 📈 **Stock Tranding Simulation:** Models buting and selling of stocks and simulate stock price updates.
-- 👤 **User Managment:** Manage investors, their accounts, portfolios and balances easily.
+- 📈 **Stock Trading Simulation:** Models buying and selling of stocks and simulate stock price updates.
+- 👤 **User Management:** Manage investors, their accounts, portfolios and balances easily.
 - 🏛️ **Simulate multiple stock exchanges** with working hours in UTC.
 - 💰 **Balance Updates:** Buy and sell stocks with automatic balance updates.
 - 🌐 **REST API Support** for all operations.
 - 🧾 **Transaction history:** orders and operation history
-- ✅ **Real-time stock price** integration with <a href="https://twelvedata.com/">TwelveData</a> API
-- 📬 **Email or notification system:** HTML notification using Thymeleaf
-- 💳 **Banking simulation** Deposit money to your acoount
+- ✅ **Real-time stock price** integrated with <a href="https://twelvedata.com/">TwelveData</a> API
+- 📬 **Email or notification system:** HTML notification via Thymeleaf
+- 💳 **Banking simulation** Deposit money to your account
 
 ---
 
@@ -31,6 +31,7 @@ are:
 - **PostgreSQL**
 - **ModelMapper**
 - **TwelveData API**
+- **Thymeleaf**
 ---
 
 ## 🏁 Getting Started

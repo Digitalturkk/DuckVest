@@ -5,6 +5,7 @@ import com.DuckVest.DTOs.InvestorDTOs.InvestorAccountDTO;
 import com.DuckVest.DTOs.InvestorDTOs.InvestorCredentialsDTO;
 import com.DuckVest.DTOs.InvestorDTOs.InvestorSummaryDTO;
 import com.DuckVest.Exceptions.GlobalNotFound.GlobalNotFoundException;
+import com.DuckVest.Exceptions.UserAuthExceptions.InvalidUserPasswordException;
 import com.DuckVest.Models.Investor;
 import com.DuckVest.Models.Portfolio;
 import com.DuckVest.Repositories.InvestorsRepo;
@@ -118,9 +119,11 @@ public class InvestorImplement implements InvestorService {
     @Override
     public Long checkInvestorCredentials(String username, String password) {
         Investor investor = investorsRepo.findByUsername(username);
-        if (investor == null || !investor.getPassword().equals(password)) {
-            throw new GlobalNotFoundException("Invalid credentials for username: " + username, null);
+
+        if(!investor.getPassword().equals(password)) {
+            throw new InvalidUserPasswordException("Invalid password for investor with username: " + username);
         }
+
         return investor.getId();
     }
 

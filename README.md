@@ -20,6 +20,7 @@ are:
 - ✅ **Real-time stock price** integrated with <a href="https://twelvedata.com/">TwelveData</a> API
 - 📬 **Email or notification system:** HTML notification via Thymeleaf
 - 💳 **Banking simulation** Deposit money to your account
+- 📱 **Responsive Frontend:** React+Vita with TailwindCSS <a href="https://github.com/kerimov4785/DuckVest">*(link to frontend)*</a>
 
 ---
 

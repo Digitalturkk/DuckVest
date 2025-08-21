@@ -47,8 +47,6 @@ cd duckvest
 ```
 ## 📌 Possible Extensions
 
-    📱 Frontend interface (Web or Mobile)
-
     ⏱️ Scheduled tasks for periodic operations
 
 ## ✍️ Author
